@@ -1,0 +1,22 @@
+{
+  "posts": [
+    {
+      "title": "Welcome party!",
+      "body": "lorem ipsim ....",
+      "author": "yoshi",
+      "id": "2"
+    },
+    {
+      "title": "Web dev top tips",
+      "body": "lorem ipsim ....",
+      "author": "mario",
+      "id": "3"
+    },
+    {
+      "id": "92b2",
+      "title": "My nyw website",
+      "body": "csssssssssssssssssssss",
+      "author": "mario"
+    }
+  ]
+}

@@ -1,13 +1,1075 @@
-body {
+:root{
+  --backgroundColor : #333;
+  --headerColor : #000;--headerFontColor : skyblue;
+  --themeColor : skyblue; --themeFontColor : #000 ;
+  --shadow : 0 0 0.5em #000a inset;
+  --statusText : flex; --Emoji : flex;
+  --Country : flex; --Rank : flex;
+}
+
+* {margin: 0;padding: 0;box-sizing: border-box;
+  user-select: none;}
+
+body{
+  height: 98vh;width:95vw;
+  margin: 2.5vw 2.5vw;
+  background: var(--backgroundColor);
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: bold;
+  overflow: hidden;
+}
+
+#root, .App{ width: 100% !important;height: 100% !important; }
+
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+} */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+nav .active{
+  background: #fff;
+  color: red;
+}
+
+/* ===== GAME STYLES START HERE ======================= */
+
+/* ===== Game Home ======================= */
+.game {
+  width: 100%; height: 98%;
+  border: 2px solid red;
+}
+
+.game .game-header{
+  width: 100%; height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid red;
+}
+
+.game .nav_ul{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+
+}
+.game .nav_ul li{
+  width: 130px;height: 30px;
+  margin: 10px auto;position: relative;
+  display: flex;justify-content: center;align-items: center;
+  border-radius: 10px;
+  background: var(--themeColor);
+  color: var(--themeFontColor);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+.game .nav_ul li:hover{
+  transform: scale(1.1);
+  background: linear-gradient(-45deg, var(--themeColor), transparent);
+}
+.game .nav_ul li:active{
+  transform: scale(0.7);
+  background: linear-gradient(-45deg, var(--themeColor), transparent);
+}
+.game .nav_ul li a{
+  width: 100%; height: 100%;
+  text-align: center;
+  /* display: flex;justify-content: space-evenly;align-items: center; */
+}
+
+/* =====TUTORIAL START==================== */
+.game .tutorial{
+  width: 90%;height: 90%;
+  margin: 20px;padding: 10px;
+  line-height: 22px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  display: none;
+}
+.game .tutorial::-webkit-scrollbar{background: inherit}
+.game .tutorial::-webkit-scrollbar-thumb{background: var(--themeColor);border-radius: 20px;box-shadow: var(--shadow);cursor: pointer;border-radius: 20px;}
+.game .tutorial::-webkit-scrollbar-button{background: var(--themeFontColor);height: 2%;border-radius: 20%;}
+
+.game .tutorial h5{
+  text-align: left;
+  font-weight: bolder;
+}
+.game .tutorial ul{
+  margin-left: 15px;text-align: left;
+  line-height: 22px;list-style: disc;
+}
+.tutorial .example{
+  display: flex;justify-content: space-evenly;align-items: center;
+  color: rgb(175, 175, 175);
+}
+.tutorial .arrow{position: relative;text-align: center;color: #000;}
+.tutorial .arrow .arrowPack{
+  transform: translate(-50%, -50%);
+  cursor: default;
+}
+.tutorial .codeout{
+  height: 100%;
+  display: flex;justify-content: center;align-items: center;
+}
+.tutorial .codeout img{
+  width: 35px;height: 35px;
+  border-radius: 10px;
+}
+.tutorial .tutorialSendButton{
+  border-radius: 5px;
+  border: none;outline: none;
+  color: skyblue;
+  background:radial-gradient(#000, skyblue);
+  box-shadow: var(--shadow);
+  font-size: 12px;
+}
+.tutorial .result{
+  height: 100%;
+  display: flex;justify-content: center;align-items: center;
+}
+.tutorial .result .status{
+  position: relative;
+  width: 35px;height: 35px;
+  display: flex;justify-content: center;align-items: center;
+  border-radius: 10px;
+  background-size:100%, 1em 1em;
+}
+.tutorial .tutorialresultsExplanation{
+  margin-left: 55%;
+  text-align: right;
+}
+ .tutorial .status{
+  position: relative;
+  width: 35px;height: 35px;margin-top: 10px;
+  display: flex;justify-content: center;align-items: center;
+  border-radius: 10px;
+  background-size:100%, 1em 1em;
+  color: rgb(175, 175, 175);
+}
+ .tutorial .statusText{
+  position: absolute;left: 50%;
+  transform: translateX(-50%);
+  width: 100%;height: 100%;
+  font-size: 120%;
+  display: flex;justify-content: center;align-items: center;
+  opacity: 1;background: transparent;
+}
+ .tutorial .statusEmoji{
+  width: 100%;height: 100%;
+  font-size: 150%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.1;
+}
+.dead{background: radial-gradient(rgb(26, 26, 26),black);}
+.injured{background: radial-gradient(red,black);}
+.alive{background: radial-gradient(green,black);}
+@media only screen and (max-width:420px) {
+  .tutorial .codeout img,
+  .tutorial .result .status {
+      width: 27px;height: 27px;
+  }
+}
+/* =====TUTORIAL END======================= */
+
+/* =====MORE GAMES START==================== */
+.game .moreGames{
+  width: 90%;height: 90%;
+  margin: 20px;padding: 10px;
+  line-height: 22px;
+  display: flex;justify-content: center;
+  align-items: center;
+  display: none;
+}
+
+.game .moreGames .playMore{
+  position: absolute;left: 50%;
+  transform: translateX(-50%);
+  width: 40%;height: 8%;
+  display: flex;justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: var(--themeColor);
+  color: var(--themeFontColor);
+  box-shadow: var(--shadow);
+  font-weight: bolder;
+  cursor: pointer;
+}
+.game .moreGames .playMore:active{
+  transform: translateX(-50%) scale(0.9);
+}
+/* =====MORE GAMES END==================== */
+
+/* =====SINGLE PLAYER START============= */
+.game .singlePlayer{
+  display: none;
+}
+.game .singlePlayer ul li{
+  width: 130px;height: 30px;
+  margin: 10px auto;position: relative;
+  display: flex;justify-content: center;align-items: center;
+  border-radius: 10px;
+  background: var(--themeColor);
+  color: var(--themeFontColor);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+.game .singlePlayer ul li:hover{
+  transform: scale(1.2);
+  background: linear-gradient(-45deg, var(--themeColor), transparent);
+}
+/* =====SINGLE PLAYER END============= */
+
+/* =====FIND AGENTS DIFFICULTY START============= */
+.game .findAgents,
+.game .multiPlayerOnline{
+  position: relative;
+  width: 90%;height: 90%;
+  display: flex;flex-direction: column;
+  display: none;
+}
+.game .difficultyTable{
+  position: absolute;top: 40%;
+  transform: translateY(-50%);
+  width: 100%; height:90%;
+  padding: 5%;
+  border-radius: 20px;
+}
+.game .difficultyTable .headInfo{
+  display: flex;justify-content: space-around;
+  align-items: center;height: 15%;
+  margin-bottom: 3%;font-weight: bolder;
+  border-bottom: 2px solid var(--themeFontColor);
+}
+.game .difficultyTable .difficulty{
+  display: flex;justify-content: space-around;
+  align-items: center;height: 12%;
+  margin-bottom: 3%;border-radius: 10px;
+  background: var(--themeColor);
+  color: var(--themeFontColor);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  position: relative;
+}
+.game .difficultyTable .difficultyHeader,
+.game .difficultyTable .agentsAvailable, 
+.game .difficultyTable .timeAvailable, 
+.game .difficultyTable .movesAvailable{
+  width: 25%;display: flex;justify-content: center;
+}
+.game .findAgents .difficultyTable .difficulty:active, 
+.game .multiPlayerOnline .difficultyTable .difficulty:active{
+  transform: scale(1.1);
+  box-shadow: 0 0 6em var(--themeFontColor) inset;
+}
+
+.game .difficultyTable .selectAgent{
+  position: absolute;left: 43%;top: 23.5%;
+  width: 5%;border-radius: 5px;
+  background: var(--themeFontColor);
+  color: var(--themeColor);
+  display: flex;align-items: center;
+  justify-content: space-evenly; 
+  cursor: pointer;
+  opacity: 0;z-index: -1;
+}
+
+.game .difficultyTable .selectAgentUl{
+  position: absolute;left: 50%;top: 21%;
+  display: flex;align-items: center;
+  justify-content: space-evenly;
+  width: 40%;height: 9%;
+  border-radius: 5px;
+  opacity: 0;z-index: -1;
+}
+.game .difficultyTable .selectAgentUl li{
+  width: 19%;
+  background: var(--themeColor);
+  color: var(--themeFontColor);
+  box-shadow: var(--shadow);
+  border-radius: inherit;
+  cursor: pointer;
+}
+
+.game .findAgents .toGame, 
+.game .multiPlayerOnline .toGame{
+  position: absolute; bottom: 0%;
+  left: 50%;transform: translateX(-50%);
+  width: 40%;height: 10%;
+  display: flex;justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: var(--themeColor);
+  color: var(--themeFontColor);
+  box-shadow: var(--shadow);
+  font-weight: bolder;
+  cursor: pointer;
+}
+.game .findAgents .toGame:active, 
+.game .multiPlayerOnline .toGame:active{
+  transform: translateX(-50%) scale(0.9);
+}
+/* =====FIND AGENTS DIFFICULTY END============= */
+
+/* =====STORY MODE START======================= */
+.game .storyMode{
+  position: relative;
+  width: 90%;height: 85%;
+  margin-bottom: 7%;
+  display: flex;flex-direction: column;
+  display: none;
+}
+.game .storyMode .stages{
+  position: relative;
+  width: 100%;height: 90%;
+  display: flex;flex-direction: column;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  cursor: pointer;
+  border-radius: 20px;
+}
+.game .storyMode .stages::-webkit-scrollbar{background: inherit}
+.game .storyMode .stages::-webkit-scrollbar-thumb{background: var(--themeColor);box-shadow: var(--shadow);border-radius: 20px;}
+.game .storyMode .stages::-webkit-scrollbar-button{background: var(--themeFontColor);height: 2%;border-radius: 20%;}
+
+.stage{position: absolute;width: 100%;height: 100%;}
+.game .storyMode .stageOne{left: 0%;}
+.game .storyMode .stageTwo{left: 100%;}
+
+.game .storyMode .levelGrid{
+  position:absolute;top: 50%;
+  transform: translateY(-50%);
+  width: 100%;height: 80%;
+  border-radius: inherit;
+  display: grid;grid-template-columns: 1fr 1fr 1fr;
+  text-align: center;
+}
+.game .storyMode .levelGrid::before{
+  content: 'DIA';
+  position: absolute;left: 25%;top: 30%;
+  width: 50%;height: 50%;
+  transform: rotate(-40deg);
+  text-align: center;font-size: 90px;
+  opacity: 0.1;z-index: -1;
+}
+.game .storyMode .stageOne .levelGrid::before{content: 'STAGE ONE';}
+.game .storyMode .stageTwo .levelGrid::before{content: 'STAGE TWO';}
+
+.game .storyMode .levelGrid .level{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  margin: 2%;
+  box-shadow: var(--shadow);
+}
+
+.game .storyMode .levelGrid .level:hover{
+  background: linear-gradient(-45deg, var(--themeColor), transparent);
+}
+.game .storyMode .levelGrid .level:active{
+  transform: scale(0.9);
+}
+/* =====STORY MODE END======================= */
+
+/* =====SURVIVAL MODE START======================= */
+.survivalMode{
+  position: relative;
+  width: 90%;height: 85%;
+  margin-bottom: 7%;
+  display: flex;flex-direction: column;
+  display: none;
+}
+.survivalMode .survivalGraphics{
+  display: flex;justify-content: center;
+  align-items: center;
+  transform: rotateY(180deg);
+  width: 100%; height: 70%;
+  font-size: 500%;
+}
+.game .survivalMode .playSurvival{
+  position: absolute;top: 80%;
+  left: 50%;transform: translateX(-50%);
+  width: 50%;height: 10%;
+  text-align: center;
+  display: flex;justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: var(--themeColor);
+  color: var(--themeFontColor);
+  box-shadow: var(--shadow);
+  font-weight: bolder;
+  cursor: pointer;
+}
+.game .survivalMode .playSurvival:active{
+  transform: translateX(-50%) scale(0.9);
+}
+/* =====SURVIVAL MODE END======================= */
+
+/* =====MUTIPLAYER START============= */
+.game .multiPlayer,
+.game .multiPlayerOnline{
+  display: none;
+}
+.game .multiPlayer ul li{
+  width: 130px;height: 30px;
+  margin: 10px auto;position: relative;
+  display: flex;justify-content: center;align-items: center;
+  border-radius: 10px;
+  background: var(--themeColor);
+  color: var(--themeFontColor);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+.game .multiPlayer ul li:hover{
+  transform: scale(1.1);
+  background: linear-gradient(-45deg, var(--themeColor), transparent);
+}
+.game .multiPlayer ul li:active{
+  transform: scale(0.7);
+  background: linear-gradient(-45deg, var(--themeColor), transparent);
+}
+
+.game .multiplayerChallenge,
+.game .multiplayerOnlineSceneSelect {
+  display: none;
+}
+.game .multiplayerChallenge ul li,
+.game .multiplayerOnlineSceneSelect ul li{
+  width: 130px;height: 30px;
+  margin: 10px auto;position: relative;
+  display: flex;justify-content: center;align-items: center;
+  border-radius: 10px;
+  background: var(--themeColor);
+  color: var(--themeFontColor);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+.game .multiplayerChallenge ul li:hover,
+.game .multiplayerOnlineSceneSelect ul li:hover{
+  transform: scale(1.2);
+  background: linear-gradient(-45deg, var(--themeColor), transparent);
+}
+
+/* =====MUTIPLAYER CHALLENGE START============= */
+.game .multiplayerContinueToSelect{
+display: none;
+  position: relative;
+  width: 100%;height: 90%;
+  display: flex;flex-direction: column;
+  display: none;
+}
+.game .multiplayerContinueToSelect 
+.multiplayerFaceOff{
+  position: absolute;
+  width: 90%; height: 90%;
+  padding: 5%;top: 50%;left: 50%;
+  border-radius: 20px;
+  transform: translate(-50%,-50%);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+}
+
+.game .multiplayerContinueToSelect 
+.multiplayerFaceOff .pic{
+  position: absolute;padding: 5%;
+  width: 80px; height: 80px;
+  border-radius: 100%;border: 2px solid var(--themeColor);
+  display: flex;align-items: center;justify-content: center
+}
+.game .multiplayerContinueToSelect 
+.multiplayerFaceOff .pic img{
+  position: absolute;
+  width: 100%; height: 100%;
+  border-radius: 100%;border: 2px solid var(--themeColor);
+  display: flex;align-items: center;justify-content: center
+}
+.game .multiplayerContinueToSelect 
+.multiplayerFaceOff .pic p{
+  position: absolute;top:70%;
+  width: 100%; height: 100%;
+  display: flex;align-items: center;justify-content: center
+}
+.game .multiplayerContinueToSelect 
+.multiplayerFaceOff .host{
+  top: 10%;
+}
+.game .multiplayerContinueToSelect 
+.multiplayerFaceOff .join,
+.game .multiplayerContinueToSelect 
+.multiplayerFaceOff .waitingForOpponent{
+  top: 50%;
+}                                                            
+.game .multiplayerContinueToSelect 
+.multiplayerFaceOff .versus{
+  font-size: 20px;
+  top: 35%;
+  border: none;outline: none;
+}
+.game .multiplayerContinueToSelect 
+.multiplayerFaceOff .selectYourCode{
+  position: absolute;top: 80%;
+  left: 50%;transform: translateX(-50%);
+  width: 50%;height: 10%;
+  text-align: center;
+  display: flex;justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: var(--themeColor);
+  color: var(--themeFontColor);
+  box-shadow: var(--shadow);
+  font-weight: bolder;
+  cursor: pointer;
+}
+.game .multiplayerContinueToSelect 
+.multiplayerFaceOff .selectYourCode:active{
+  transform: translateX(-50%) scale(0.9);
+}
+
+.game .multiplayerContinueToSelect 
+.hostSettingsButton{
+  position: absolute;
+  width: 40px; height: 40px !important;
+  bottom: 6%;left: 10%;
+  display: flex;align-items: center;justify-content: center;
+  border-radius: 100%;
+  cursor: pointer;
+  background: transparent;
+  color: var(--themeColor);
+  box-shadow: var(--shadow);
+}
+.game .multiplayerContinueToSelect 
+.hostSettingsButton:active{
+  transform: scale(0.9);
+}
+
+/* =====MULTIPLAYER HOST SETTINGS START=====*/
+.game .multiplayerContinueToSelect .hostSettings{
+  position: relative;top: 10%;left: 50%;
+  width: 90%; height: 80%;padding: 5%;
+  transform: translateX(-50%);
+  border-radius: 20px;
+  background: var(--themeFontColor);
+  color: var(--themeColor);
+  display: flex;justify-content: center;
+  align-items: center;
+  display: none;
+}
+  
+/* =====MUTIPLAYER CHALLENGE END============= */
+
+/* =====MUTIPLAYER CONNECT TO HOST(JOIN) START============= */
+.game .multiplayerHostSelect, 
+.game .multiplayerOnlineSceneTwo {
+  position: relative;
+  width: 100%;height: 90%;
+  display: flex;flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+.game .multiplayerHostSelect h4{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.game .multiplayerHostSelect .setHost{
+  position: absolute;
+  top:50%;left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;height: 50%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+}
+.game .multiplayerHostSelect 
+.setHost .selectHost{
+  position: relative;
+  width: 70%;height: 30px;
+  margin: 2%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--themeFontColor);
+  box-shadow: 0 0 0.5em #000a inset;
+  cursor: pointer;
+  border: none;outline: none;
+}
+.game .multiplayerHostSelect 
+.setHost .selectHost .selectedHostValue{
+  width: 100%;height: 100%;
+  padding-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.game .multiplayerHostSelect 
+.setHost .selectHost ul{
+  position: absolute;
+  top: 115%;width: 100%;
+  height: 450%;
+  border-radius: inherit;
+  background: skyblue;
+  color: var(--themeFontColor);
+  cursor: pointer;
+  opacity: 0;z-index: -1;
+  overflow-y:scroll;
+}
+.game .multiplayerHostSelect 
+.setHost .selectHost ul::-webkit-scrollbar{background: inherit; border-radius: 20px;}
+.game .multiplayerHostSelect 
+.setHost .selectHost ul::-webkit-scrollbar-thumb{background: var(--themeColor);box-shadow: var(--shadow);border-radius: 20px;}
+.game .multiplayerHostSelect 
+.setHost .selectHost ul::-webkit-scrollbar-button{background: var(--themeFontColor);height: 0%;width: 0%; border-radius: 20%;}
+
+.game .multiplayerHostSelect 
+.setHost .selectHost ul li{
+  width: 94%;
+  margin: 3%;
+  padding: 2%;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+.game .multiplayerHostSelect 
+.nextToHostButton{
+  width: 50%;height: 15%;
+  display: flex;justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: var(--themeColor);
+  color: var(--themeFontColor);
+  box-shadow: var(--shadow);
+  font-weight: bolder;
+  cursor: pointer;
+}
+.game .multiplayerHostSelect 
+.nextToHostButton:active{
+  transform: scale(0.9);
+}
+/* =====MUTIPLAYER CONNECT TO HOST(JOIN) END============= */
+
+/* =====MULTIPLAYER END============= */
+
+
+/* =====SETTINGS START============= */
+.game .settings{
+  display: none;
+}
+.game .settings ul li{
+  width: 130px;height: 30px;
+  margin: 10px auto;position: relative;
+  display: flex;justify-content: center;align-items: center;
+  border-radius: 10px;
+  background: var(--themeColor);
+  color: var(--themeFontColor);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+.game .settings ul li:hover{
+  transform: scale(1.2);
+  background: linear-gradient(-45deg, var(--themeColor), transparent);
+}
+/* =====SETTINGS END============= */
+
+/* =====SETTINGS PROFILE START============= */
+.game .settingsProfile{
+  position: relative;
+  width: 90%;height: 90%;
+  display: flex;flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  display: none;
+}
+.game .settingsProfile::-webkit-scrollbar{background: inherit;}
+.game .settingsProfile::-webkit-scrollbar-thumb{background: var(--themeColor);border-radius: 20px;box-shadow: var(--shadow);cursor: pointer;}
+.game .settingsProfile::-webkit-scrollbar-button{background: var(--themeFontColor);height: 1%;border-radius: 20%;}
+
+/* =====PROFILE AVATAR SETTINGS START========== */
+.game .settingsProfile .avatar{
+position:relative;width: 80%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 1% auto;
+}
+.game .settingsProfile  .avatarCell{
+display:flex;justify-content:center;align-items:center;
+  padding: 5%;width: 100%; height: 100%;
+}
+.game .settingsProfile .avatar .avatarImageWrapper{
+width: 80px; height: 80px;
+  border-radius: 100%;
+  border: 4px solid var(--themeColor);
+  display: flex;align-items: center;
+  position: relative;
+  box-shadow: var(--shadow);
+}
+.game .settingsProfile  .avatarCell img{
+  position: absolute;
+  width: 96%; height: 96%;margin: 2%;
+  border-radius: 100%;
+  display: flex;align-items: center;justify-content: center;
+
+}
+.avatarImg2{left: 100%;}.avatarImg3{left: 200%;}
+.avatarImg4{left: 300%;}.avatarImg5{left: 400%;}
+
+.game .settingsProfile .avatar .avatarControl{
+  width: 50px;height: 40px;
+background:transparent;
+  cursor: pointer;
+  border-radius: 100%; 
+  border: none;
+  font-weight: bolder;
+  box-shadow: var(--shadow);
+}
+.game .settingsProfile .avatar .avatarControl:active{
+  transform: scale(0.9);
+}
+/* .game .settingsProfile .avatar .controlLeft{
+      left:28%;
+} */
+.game .settingsProfile .avatar .controlRight{
+  /* right:28%; */
+  opacity: 0;
+}
+/* =====PROFILE AVATAR SETTINGS END========== */
+
+/* =====PROFILE USER-DETAILS SETTINGS START========== */
+.game .settingsProfile .profileBox{
+  width: 90%;margin: 5% auto;padding: 5%;
+  border-radius: 20px;
+}
+.game .settingsProfile form div{
+  margin: 2% auto;
+}
+.game .settingsProfile form div label{
+  height: 100%;width: 100%;
+}
+.game .settingsProfile form div input{
+  height: 50;width: 100%;
+  height: 30px;margin: 5px auto;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 0 0 0.5em #000a;
+  border: none; outline: none;
+}
+.game .settingsProfile form button{
+  margin: 10px auto;
+  width: 20%;height: 30px;
+  float: right;font-weight: bold;
+  border-radius: 20px;
+  background: transparent;
+  box-shadow: var(--shadow);
+  border: none;outline: none;
+  cursor: pointer;
+}
+.game .settingsProfile form button:active{
+  transform: scale(0.9);
+  border: none; outline: none;
+}
+.game .settingsProfile .profileForm1{
+  box-shadow: var(--shadow);
+}
+.game .settingsProfile .profileForm1 div{
+  margin: 0% auto;
+}
+.game .settingsProfile 
+.profileForm1 .profilePasswordDiv{
+  display: flex;align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 10% auto;padding-left: 5%;
+  border-radius: 30px;
+  background: var(--themeColor);
+  box-shadow: var(--shadow);
+}
+.game .settingsProfile 
+.profileForm1 .profilePasswordDiv button{
+  font-size: 70%;
+  margin-right: 5%;
+}
+.game .settingsProfile 
+.profileForm1 .profilePasswordDiv button:active{
+  transform: scale(0.9);
+}
+.game .settingsProfile .profilePasswordReset{
+  position: absolute;
+  left: 50%;top: 50%;
+  transform: translate(-50%, -50%);
+  height: 300px;
+  background: #000;
+  color: #eee;
+  box-shadow: var(--shadow);
+  opacity: 0;z-index: -3;
+}
+.game .settingsProfile 
+.profilePasswordReset .passwordResetSubmit{
+  color: #000;
+  background: #eee;
+}
+/* =====PROFILE USER-DETAILS SETTINGS END========== */
+
+/* =====PROFILE GAME-DETAILS DISPLAY START========== */
+.game .settingsProfile .profileGameStats{
+  box-shadow: var(--shadow);   
+}
+.game .settingsProfile .profileGameStats .subdiv{
+  position: relative;
+  width: 100%;padding: 3%;
+}
+.game .settingsProfile 
+.profileGameStats .subdiv .subsubdiv{
+  position: relative;
+  width: 100%;height: 30px ;
+  display: flex;align-items: center;
+  font-weight: bolder;font-size: 16.5px;
+}
+.game .settingsProfile 
+.profileGameStats .subdiv span{
+  position: absolute;
+  top: 50%;right: 2%;
+  transform: translateY(-50%);
+  width: 60%;height: 90%;
+  display: flex;align-items: center;
+  background: whitesmoke;
+  box-shadow: var(--shadow);
+  border-radius: 20px;
+  padding-left: 4%;
+  text-align: left;
+}
+.game .settingsProfile 
+.profileGameStats .subdiv span span{
+  width: 1em !important;height: 1em !important;
+  display: flex;align-items: center;
+  left: 85% !important;
+  padding: 1% 2% !important;
+  border-radius: 100% !important;
+  cursor: pointer;
+}
+.game .settingsProfile 
+.profileGameStats .subdiv span span:active{
+  transform: translateY(-50%) scale(0.9);
+  border: none; outline: none;
+}
+.game .settingsProfile 
+.profileGameStats .subdiv .subsubdiv span{
+  position: absolute;
+  top: 50%;right: 2%;
+  transform: translateY(-50%);
+  width: 30%;height: 90%;
+  display: flex;align-items: center;
+  background: whitesmoke;
+  box-shadow: var(--shadow);
+  border-radius: 20px;
+  padding-left: 4%;
+  text-align: left;
+}
+/* =====PROFILE GAME-DETAILS DISPLAY END========== */
+/* =====SETTINGS PROFILE END========================== */
+
+/* =====SETTINGS DISPLAY START============= */
+.game .settingsDisplay{
+  position: relative;
+  width: 90%;height: 90%;
+  display: flex;flex-direction: column;
+  display: none;
+}
+
+.game .settingsDisplay .displayBox{
+  position: relative;
+  width: 100%;height: 40px;
+  display: flex;align-items: center;
+  margin: 1% auto;padding: 10px 20px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.game .settingsDisplay
+.displayLanguage{
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+.game .settingsDisplay
+.displayLanguage .selectedLanguage{
+  width: 70%;height: 130%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: inherit;
+  box-shadow: var(--shadow);
+  background: var(--themeColor);
+  font-weight: bold;
+  outline:none;border: none;
+  cursor: pointer;
+}
+.game .settingsDisplay
+.displayLanguage .languages{
+  position: absolute;
+  top: 100%;right: 6.5%;
+  width: 60%;
+  border-radius: 10px;
+  background: var(--themeFontColor);
+  color: #eee;
+  opacity: 0; z-index: -3;
+}
+.game .settingsDisplay
+.displayLanguage .languages li{
+  margin: 2% auto;
+  border-bottom: 1px solid var(--themeColor);
+  cursor: pointer;
+}
+.game .settingsDisplay 
+.displayTheme{
+  width: 100%;height: 100px;
+  margin: 1% auto;
+  display: block;
+}
+
+.game .settingsDisplay 
+.displayTheme .theme{
+  position: relative;
+  display: flex;align-items: center;
+  width: 100%;height: 40%;
+  font-size: 14px;
+}
+.game .settingsDisplay 
+.displayTheme .settingsCustomize{
+  position: absolute;right: 5%;
+  width: 20%;height: 80%;
+  display: flex;justify-content: center; align-items: center;
+  background: var(--themeColor);
+  box-shadow: var(--shadow);
+  border-radius: 20px;
+  cursor: pointer;
+}
+.game .settingsDisplay 
+.displayTheme .settingsCustomize:active{
+  transform: scale(0.9);
+}
+.game .settingsDisplay 
+.displayTheme .themeCustomizer{
+  position: absolute;
+  width: 90%;
+  display: flex;justify-content: center;
+  align-items: center;padding: 2%;
+  background: var(--themeFontColor);
+  color: #eee;
+  box-shadow: var(--shadow);
+  border-radius: 10px;
+  display: none;
+}
+.game .settingsDisplay 
+.displayTheme .themeCustomizer .custom{
+  display: flex;
+  justify-content: space-between;
+  margin: 2% auto;
+}
+.game .settingsDisplay 
+.displayTheme .themeCustomizer .custom .colorsHolder{
+  display: flex;justify-content: space-evenly;width: 50%;
+}
+.game .settingsDisplay 
+.displayTheme .themeCustomizer .custom
+.colorsHolder .colorPicker{
+  display: flex;width: 10%;
+  border: 1px solid #eee;
+  border-radius: 5px;cursor: pointer;
+}
+.game .settingsDisplay 
+.displayTheme .themeCustomizer .resetCustomColors{
+  display: flex;align-items: center;
+  justify-content: space-between;
+  padding-left: 2%;
+  padding-right: 2%;
+  border-radius: inherit;
+  background: red;cursor: pointer;
+}
+/* =====SETTINGS DISPLAY END============= */
+
+/* =====SETTINGS AUDIO START============= */
+.game .settingsAudio{
+  position: relative;
+  width: 90%;height: 90%;
+  padding-top: 20%;
+  display: flex;flex-direction: column;
+  display: none;
+}
+
+.game .settingsAudio .audioBox{
+  position: relative;
+  width: 90%;height: 40px;
+  display: flex;align-items: center;
+  margin: 1% auto;padding: 10px 20px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+/* =======SETTINGS AUDIO END ==========*/
+
+/* =======SETTINGS SWITCH START ==========*/
+.game .settingsSwitch{
+  position: absolute;right: 5%;
+  width: 20%;height: 80%;
+  border-radius: 20px;
+  background: var(--themeFontColor);
+}
+.game .switchInner{
+  height: 100%;
+  display: flex;align-items: center;
+  padding: 3%;
+  border: 2px solid var(--themeColor);
+  border-radius: inherit;
+}
+.game .switchButton{
+  width: 50%;height: 100%;
+  margin-left: 50%;
+  border-radius: 18px;
+  background: radial-gradient(#fff,var(--themeColor),#fff);
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+/* =======SETTINGS SWITCH END ==========*/
+
+/* =====SETTINGS  ABOUT START============= */
+.game .settingsAbout{
+display: none;
+}
+
+/* =====SETTINGS CREDITS START============= */
+.game .settingsCredits{
+  position: relative;
+  width: 90%;height: 90%;
+  padding-top: 20%;
+  text-align: center;
+  display: none;
+}
+.game .settingsCredits .backButton{
+  width: 20px;height: 20px;
+  background: var(--themeColor);
+  box-shadow: var(--shadow);
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* =====SETTINGS CREDITS END============= */
+
+/* ===== GAME STYLES ENDS HERE ========================== */

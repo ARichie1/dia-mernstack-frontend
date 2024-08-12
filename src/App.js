@@ -1,7 +1,7 @@
 import React, {Component} from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
-import Links from "./navigation-data/links";
+import GLOBAL from "./global/Global.js";
 import NavPage from "./components/reuseable/NavPage";
 
 import Home from "./components/Home";
@@ -37,6 +37,7 @@ import ProfileSettings from "./components/settings_pages/ProfileSettings"
 
 class App extends Component{ 
   render() {
+    const { Links } = GLOBAL()
     
     return (
       <BrowserRouter>

@@ -1,38 +1,91 @@
 import React from "react";
+import GLOBAL from "../../global/Global";
 
 const StoryModePage = () => {
+    const { Difficulties } = GLOBAL()
+
+    let difficulties = Difficulties
+
+    const levels = [
+        2, 2, 2, 2, 2, 2, 2, 2, 
+        3, 3, 3, 3, 3, 3, 3, 3, 3, 
+        4, 4, 4, 4, 4, 4, 4, 4, 4, 
+        5, 5, 5, 5, 5, 5, 5, 5, 5, 
+        6, 6, 6, 6, 6, 6, 6, 6, 6,
+        7
+    ]
+    let totalStage = 5
+    let levelsPerStage = levels.length / totalStage
+
+    let levelsObject = []
+
+    for (let i = 0; i < levels.length; i++) {
+        if (levels[i] === 2) {
+            levelsObject[i] = {...difficulties[1], id : i + 1}
+        } else if (levels[i] === 3){
+            levelsObject[i] = {...difficulties[2], id : i + 1}
+        } else if (levels[i] === 4){
+            levelsObject[i] = {...difficulties[3], id : i + 1}
+        } else if (levels[i] === 5){
+            levelsObject[i] = {...difficulties[4], id : i + 1}
+        } else if (levels[i] === 6){
+            levelsObject[i] = {...difficulties[5], id : i + 1}
+        } else {
+            levelsObject[i] = {difficulty : "brainfuck", agents : 7, time: null, moves: null, color: "white", id: levels.length}
+        }
+    }
+
+    let stages = {}
+    const createStages = (min, max) => {
+        for (let i = 0; i < totalStage; i++) {
+            stages[`stage${i+1}`] = []  
+            for (let j = min; j < max; j++) { 
+                if (levelsObject[j].id > min && levelsObject[j].id <= max) {
+                    stages[`stage${i+1}`] =  [...stages[`stage${i+1}`], levelsObject[j]]   
+                }
+            } 
+                min = max 
+                max = max + levelsPerStage     
+        }
+    }
+
+    let stagesLvl = {}
+    const createStagesLevels = (min, max) => {
+        for (let i = 0; i < totalStage; i++) {
+            stagesLvl[`stage${i+1}Lvl`]= []
+            stagesLvl[`stage${i+1}Lvl`] = stages[`stage${i+1}`].map( lvl => {
+                return (
+                    <div className="level toGame" id="singlePlayerMainGame" style={{background: lvl.color}} key={lvl.id}>{lvl.id}</div>                     
+                )
+            })
+        }
+    }
+
+    let stagesToRender = []
+    const renderStages = () => {
+        let leftPosition = 0;
+        for (let i = 0; i < totalStage; i++) {
+            stagesToRender[i] = []
+            stagesToRender[i] = [...stagesToRender[i], 
+            <div className={`stage${i+1}Lvl stage`} style={{left: `${leftPosition}%`}} key={i+1}>
+                <div className="levelGrid">            
+                    {stagesLvl[`stage${i+1}Lvl`]}                  
+                </div>
+            </div>]
+            leftPosition += 100
+        }
+        return stagesToRender
+    } 
+
+    createStages(0, levelsPerStage)
+    createStagesLevels()
+    const stageList = renderStages()
 
     return (
-        <div class="storyMode">
-            <h3>Story Mode</h3>
-            <h3>TERMINATE ENEMY SPIES ACROSS THE WORLD</h3>
-            <div class="stages">
-                <div class="stageOne stage">
-                    <div class="levelGrid">                
-                        <div class="level toGame" lvlCode="1" id="singlePlayerMainGame">1</div>
-                        <div class="level toGame" lvlCode="2" id="singlePlayerMainGame">2</div>
-                        <div class="level toGame" lvlCode="3" id="singlePlayerMainGame">3</div>
-                        <div class="level toGame" lvlCode="4" id="singlePlayerMainGame">4</div>
-                        <div class="level toGame" lvlCode="5" id="singlePlayerMainGame">5</div>
-                        <div class="level toGame" lvlCode="6" id="singlePlayerMainGame">6</div>
-                        <div class="level toGame" lvlCode="7" id="singlePlayerMainGame">7</div>
-                        <div class="level toGame" lvlCode="8" id="singlePlayerMainGame">8</div>
-                        <div class="level toGame" lvlCode="9" id="singlePlayerMainGame">9</div>                
-                    </div>
-                </div>
-                <div class="stageTwo stage">
-                    <div class="levelGrid">
-                        <div class="level  toGame" lvlCode="10" id="singlePlayerMainGame">10</div>
-                        <div class="level  toGame" lvlCode="11" id="singlePlayerMainGame">11</div>
-                        <div class="level  toGame" lvlCode="12" id="singlePlayerMainGame">12</div>
-                        <div class="level  toGame" lvlCode="13" id="singlePlayerMainGame">13</div>
-                        <div class="level  toGame" lvlCode="14" id="singlePlayerMainGame">14</div>
-                        <div class="level  toGame" lvlCode="15" id="singlePlayerMainGame">15</div>
-                        <div class="level  toGame" lvlCode="16" id="singlePlayerMainGame">16</div>
-                        <div class="level  toGame" lvlCode="17" id="singlePlayerMainGame">17</div>
-                        <div class="level lv18">...</div>
-                    </div>
-                </div>
+        <div className="storyMode wrapper">
+            <h5>TERMINATE ENEMY SPIES ACROSS THE WORLD</h5>
+            <div className="stages">
+                {stageList}
             </div>
         </div>
     )

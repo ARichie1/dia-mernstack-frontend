@@ -1,4 +1,7 @@
-const Links = {
+
+
+const GLOBAL = () => {
+  const Links = {
     game : [
       {title: "HOW TO PLAY", to: "tutorial", id: 0},
       {title: "SINGLE PLAYER", to: "single-player", id: 1},
@@ -42,4 +45,16 @@ const Links = {
     ]
 }
 
-export default Links
+  const Difficulties = [
+    {difficulty : "endless", agents : null, time: null, moves: null, color: "var(--themeColor)", id: 1} , 
+    {difficulty : "easy", agents : 2, time: 60, moves: 8, color: "green", id: 2}, 
+    {difficulty : "medium", agents : 3, time: 90, moves: 9, color: "lightgreen", id: 3}, 
+    {difficulty : "hard", agents : 4, time: 180, moves: 10, color: "orange", id: 4}, 
+    {difficulty : "detective", agents : 5, time: 210, moves: 11, color: "red", id: 5}, 
+    {difficulty : "wizard", agents : 6, time: 300, moves: 12, color: "purple", id: 6}
+  ]
+
+  return {Links, Difficulties}
+}
+
+export default GLOBAL

@@ -4,8 +4,7 @@ import { Outlet } from "react-router-dom";
 const OnlineChallenge = () => {
 
     return (
-        <div className="container">
-            <h2>OnlineChallenge</h2>
+        <div className="wrapper">
             <Outlet />
         </div> 
     )

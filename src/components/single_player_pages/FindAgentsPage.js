@@ -1,61 +1,47 @@
 import React from "react";
+import GLOBAL from "../../global/Global";
 
-const FindAgentsPage = () => {
+
+const FindAgentsPage = (props) => {
+    const { Difficulties } = GLOBAL()
+
+    const difficultyList = Difficulties.map( diff => {
+        return (
+            <div className={`${diff.difficulty} difficulty`} style={{background: diff.color}} key={diff.id}>  
+                <div className="difficultyHeader" key={Math.random()}>{diff.difficulty}</div>
+                <div className="agentsAvailable" key={Math.random()}>{diff.agents}</div>
+                <div className="timeAvailable" key={Math.random()}>{diff.time}</div>
+                <div className="movesAvailable" key={Math.random()}>{diff.moves}</div>
+            </div>
+        )
+    })
+    
+    let endlessDifficultyList = Difficulties.filter( diff => 
+        diff.difficulty !== "endless"
+    );
+
+    endlessDifficultyList = endlessDifficultyList.map( diff => {
+        return (
+            <option key={diff.agents}>{diff.agents}</option>
+        )
+    })
 
     return (
-        <div class="findAgents">
-            <h3>Find Agents</h3>
-            <div class="difficultyTable">
-                <div class="headInfo">
-                    <div class="difficultyHeader">DIFFICULTY</div>
-                    <div class="agentsAvailable">AGENTS</div>
-                    <div class="timeAvailable">TIME(s)</div>
-                    <div class="movesAvailable">MOVES</div>
+        <div className="findAgents wrapper">
+            <div className="difficultyTable">
+                <div className="headInfo" key={0}>
+                    <div className="difficultyHeader">DIFFICULTY</div>
+                    <div className="agentsAvailable">AGENTS</div>
+                    <div className="timeAvailable">TIME(s)</div>
+                    <div className="movesAvailable">MOVES</div>
                 </div>
-                <div class="endless difficulty">
-                    <div class="difficultyHeader">ENDLESS</div>
-                    <div class="agentsAvailable"></div>
-                    <div class="timeAvailable"></div>
-                    <div class="movesAvailable"></div>
-                </div>
-                <div class="selectAgent">-</div>
-                <ul class="selectAgentUl">
-                    <li>2</li><li>3</li>
-                    <li>4</li><li>5</li>
-                    <li>6</li>
-                </ul>
-                <div class="easy difficulty">
-                    <div class="difficultyHeader">EASY</div>
-                    <div class="agentsAvailable"></div>
-                    <div class="timeAvailable"></div>
-                    <div class="movesAvailable"></div>
-                </div>
-                <div class="medium difficulty">
-                    <div class="difficultyHeader">MEDIUM</div>
-                    <div class="agentsAvailable"></div>
-                    <div class="timeAvailable"></div>
-                    <div class="movesAvailable"></div>
-                </div>
-                <div class="hard difficulty">
-                    <div class="difficultyHeader">HARD</div>
-                    <div class="agentsAvailable"></div>
-                    <div class="timeAvailable"></div>
-                    <div class="movesAvailable"></div>
-                </div>
-                <div class="detective difficulty">
-                    <div class="difficultyHeader">DETECTIVE</div>
-                    <div class="agentsAvailable"></div>
-                    <div class="timeAvailable"></div>
-                    <div class="movesAvailable"></div>
-                </div>
-                <div class="wizard difficulty">
-                    <div class="difficultyHeader">WIZARD</div>
-                    <div class="agentsAvailable"></div>
-                    <div class="timeAvailable"></div>
-                    <div class="movesAvailable"></div>
-                </div>
+                {difficultyList}
+                <select>
+                    <option> Select Agents </option>
+                    {endlessDifficultyList}
+                </select>
             </div>
-            <div class="continueToGame toGame" id="singlePlayerMainGame">CONTINUE</div>
+            <div className="continueToGame toGame" id="singlePlayerMainGame">CONTINUE</div>
         </div>
     )
 }

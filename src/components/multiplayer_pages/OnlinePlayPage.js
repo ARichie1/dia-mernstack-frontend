@@ -4,8 +4,7 @@ import { Outlet } from "react-router-dom";
 const OnlinePlayPage = () => {
 
     return (
-        <div className="container">
-            <h2>Online Play Page</h2>
+        <div className="wrapper">
             <Outlet />
         </div> 
     )

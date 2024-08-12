@@ -16,7 +16,7 @@ class NavPage extends Component {
             })
         ) : ( <div className="center">No Links Yet</div> )
 
-        return (<ul className="nav_ul">{linkList}</ul> )
+        return (<div className="navUlWrapper"><ul className="navUl">{linkList}</ul></div> )
     }
 }
 

@@ -4,8 +4,7 @@ import { Outlet } from "react-router-dom";
 const MultiplayerPage = () => {
 
     return (
-        <div className="container">
-            <h2>Multiplayer Page</h2>
+        <div className="mainWrapper">
             <Outlet />
         </div> 
     )

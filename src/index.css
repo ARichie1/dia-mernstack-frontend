@@ -1,5 +1,6 @@
 :root{
   --backgroundColor : #333;
+  /* --backgroundColor : ghostwhite; */
   --headerColor : #000;--headerFontColor : skyblue;
   --themeColor : skyblue; --themeFontColor : #000 ;
   --shadow : 0 0 0.5em #000a inset;
@@ -47,23 +48,121 @@ nav .active{
   width: 100%; height: 98%;
   border: 2px solid red;
 }
+.dead{background: radial-gradient(rgb(26, 26, 26),black);}
+.injured{background: radial-gradient(red,black);}
+.alive{background: radial-gradient(green,black);}
 
-.game .game-header{
+/* ===== THE ARROWPACK START===============*/
+.game .arrow{
+  position: relative;
+  width: 100%; height: 100%;
+}
+.game .arrowPack{
+  position: absolute;top: 50%;left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;height: 30px;
+  background: transparent;
+  cursor: pointer;
+}
+.game .arrowPack .arrowHolder{
+  position: relative;
+  width: 100%;height: 100%;
+  transform: rotate(180deg);
+}
+.game .arrowPack .arrowParts{
+  position: absolute;
+  width: 50%;height: 50%;
+  top: 50%;transform: translateY(-50%);
+  background: var(--themeColor);
+  box-shadow: var(--shadow);
+}
+.game .arrowPack .arrowHead{
+  left: 15%;transform: translateY(-50%) rotate(-45deg);
+  border-bottom-right-radius: 10px;
+}
+.game .arrowPack .arrowBody{
+  right: 10%;z-index: -1;
+  width: 60%;height: 30%;
+  border-radius: 4px;
+}
+/* =====THE ARROW PACK END==================== */
+
+/* =====Game Header Start ==================== */
+.game .gameHeader{
   width: 100%; height: 10%;
+  border: 2px solid red;
+  display: block;
+  position: relative;
+}
+.game .gameHeader .navBlock{
+  position: absolute;
+  bottom: -50%; left: 1%;
+  width: 10%; height:35%;
+  display: flex;
+  align-items: center; justify-content: center;
+  cursor: pointer !important;
+  z-index: 2;
+}
+.game .gameHeader .gameHeaderInner{
+  width: 100%;height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border: 2px solid pink;
+}
+.game .gameHeader .gameHeaderInner h3{
+  height: 100%; margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+}
+.game .gameHeader .gameHeaderInner ul{
+  width: 70%; height: 100%;
+  margin: 2%;
+  display: flex;
+  align-items: center; justify-content: space-between;
+}
+.game .gameHeader .gameHeaderInner ul li{
+  height: 100%;
+  display: flex;
+  align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.game .gameHeader .gameHeaderInner ul li .accountIcon{
+  width: 30px; height: 30px;
+  display: flex;
+  align-items: center; justify-content: center;
   border: 2px solid red;
+  border-radius: 100%;
+}
+/* =====Game Header End ==================== */
+
+/* =====Game UI Wrapper Start ==================== */
+.gameUiWrapper{
+  width: 100%;height: 90%;
+}
+.gameUiWrapper .mainWrapper{
+  width: 100%;height: 90%;
+}
+.gameUiWrapper .mainWrapper .wrapper{
+  width: 100%;height: 100%;
 }
 
-.game .nav_ul{
+.game .navUlWrapper{
+  width: 100%;height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+.game .navUlWrapper .navUl{
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
-
 }
-.game .nav_ul li{
+.game .navUlWrapper .navUl li{
   width: 130px;height: 30px;
   margin: 10px auto;position: relative;
   display: flex;justify-content: center;align-items: center;
@@ -73,28 +172,27 @@ nav .active{
   box-shadow: var(--shadow);
   cursor: pointer;
 }
-.game .nav_ul li:hover{
+.game .navUlWrapper .navUl li:hover{
   transform: scale(1.1);
   background: linear-gradient(-45deg, var(--themeColor), transparent);
 }
-.game .nav_ul li:active{
+.game .navUlWrapper .navUl li:active{
   transform: scale(0.7);
   background: linear-gradient(-45deg, var(--themeColor), transparent);
 }
-.game .nav_ul li a{
+.game .navUlWrapper .navUl li a{
   width: 100%; height: 100%;
   text-align: center;
-  /* display: flex;justify-content: space-evenly;align-items: center; */
 }
 
-/* =====TUTORIAL START==================== */
+/* ===== Tutorial Wrapper Start ==================== */
 .game .tutorial{
-  width: 90%;height: 90%;
-  margin: 20px;padding: 10px;
+  width: 96%;height: 90%;
+  margin: 2%; margin-top: 0px;
+  padding: 1%;
   line-height: 22px;
   overflow-y: scroll;
   overflow-x: hidden;
-  display: none;
 }
 .game .tutorial::-webkit-scrollbar{background: inherit}
 .game .tutorial::-webkit-scrollbar-thumb{background: var(--themeColor);border-radius: 20px;box-shadow: var(--shadow);cursor: pointer;border-radius: 20px;}
@@ -172,9 +270,6 @@ nav .active{
   align-items: center;
   opacity: 0.1;
 }
-.dead{background: radial-gradient(rgb(26, 26, 26),black);}
-.injured{background: radial-gradient(red,black);}
-.alive{background: radial-gradient(green,black);}
 @media only screen and (max-width:420px) {
   .tutorial .codeout img,
   .tutorial .result .status {
@@ -190,7 +285,6 @@ nav .active{
   line-height: 22px;
   display: flex;justify-content: center;
   align-items: center;
-  display: none;
 }
 
 .game .moreGames .playMore{
@@ -213,7 +307,7 @@ nav .active{
 
 /* =====SINGLE PLAYER START============= */
 .game .singlePlayer{
-  display: none;
+  width: 100%; height: 100%;
 }
 .game .singlePlayer ul li{
   width: 130px;height: 30px;
@@ -235,30 +329,35 @@ nav .active{
 .game .findAgents,
 .game .multiPlayerOnline{
   position: relative;
-  width: 90%;height: 90%;
+  width: 100%;height: 90%;
   display: flex;flex-direction: column;
-  display: none;
 }
 .game .difficultyTable{
-  position: absolute;top: 40%;
-  transform: translateY(-50%);
   width: 100%; height:90%;
-  padding: 5%;
+  padding: 5%; padding-top: 0;
   border-radius: 20px;
 }
 .game .difficultyTable .headInfo{
   display: flex;justify-content: space-around;
-  align-items: center;height: 15%;
+  align-items: center;height: 10%;
   margin-bottom: 3%;font-weight: bolder;
   border-bottom: 2px solid var(--themeFontColor);
 }
 .game .difficultyTable .difficulty{
   display: flex;justify-content: space-around;
   align-items: center;height: 12%;
-  margin-bottom: 3%;border-radius: 10px;
+  margin-bottom: 2.5%;border-radius: 10px;
   background: var(--themeColor);
   color: var(--themeFontColor);
   box-shadow: var(--shadow);
+  cursor: pointer;
+  position: relative;
+}
+.game .difficultyTable .difficultyInner{
+  width: 100%; height: 100%;
+  display: flex;justify-content: space-around;
+  align-items: center;
+  border-radius: 10px;
   cursor: pointer;
   position: relative;
 }
@@ -267,38 +366,32 @@ nav .active{
 .game .difficultyTable .timeAvailable, 
 .game .difficultyTable .movesAvailable{
   width: 25%;display: flex;justify-content: center;
+  text-transform: uppercase;
 }
+
 .game .findAgents .difficultyTable .difficulty:active, 
 .game .multiPlayerOnline .difficultyTable .difficulty:active{
   transform: scale(1.1);
   box-shadow: 0 0 6em var(--themeFontColor) inset;
 }
 
-.game .difficultyTable .selectAgent{
-  position: absolute;left: 43%;top: 23.5%;
-  width: 5%;border-radius: 5px;
+.game .difficultyTable select{
+  position: absolute;left: 30%;top: 13.5%;
+  width: 20%; height: 35px;
+  border-radius: 5px;
   background: var(--themeFontColor);
+  font-weight: bold;
   color: var(--themeColor);
   display: flex;align-items: center;
   justify-content: space-evenly; 
   cursor: pointer;
-  opacity: 0;z-index: -1;
 }
-
-.game .difficultyTable .selectAgentUl{
-  position: absolute;left: 50%;top: 21%;
-  display: flex;align-items: center;
-  justify-content: space-evenly;
-  width: 40%;height: 9%;
+.game .difficultyTable select option{
   border-radius: 5px;
-  opacity: 0;z-index: -1;
-}
-.game .difficultyTable .selectAgentUl li{
-  width: 19%;
   background: var(--themeColor);
   color: var(--themeFontColor);
   box-shadow: var(--shadow);
-  border-radius: inherit;
+  font-weight: bold;
   cursor: pointer;
 }
 
@@ -310,6 +403,7 @@ nav .active{
   display: flex;justify-content: center;
   align-items: center;
   border-radius: 10px;
+  margin-bottom: 2%;
   background: var(--themeColor);
   color: var(--themeFontColor);
   box-shadow: var(--shadow);
@@ -320,15 +414,25 @@ nav .active{
 .game .multiPlayerOnline .toGame:active{
   transform: translateX(-50%) scale(0.9);
 }
+@media only screen and (max-width:420px) {
+  .game .difficultyTable select{
+    position: absolute;left: 30%;top: 12.5%;
+    width: 40%; height: 35px;
+  }
+}
 /* =====FIND AGENTS DIFFICULTY END============= */
 
 /* =====STORY MODE START======================= */
 .game .storyMode{
   position: relative;
-  width: 90%;height: 85%;
+  width: 98%;height: 90%;
   margin-bottom: 7%;
   display: flex;flex-direction: column;
-  display: none;
+}
+.game .storyMode h5{
+  width: 96%; margin: 2%;
+  margin-top: 4%;
+  text-align: center;
 }
 .game .storyMode .stages{
   position: relative;
@@ -341,11 +445,9 @@ nav .active{
 }
 .game .storyMode .stages::-webkit-scrollbar{background: inherit}
 .game .storyMode .stages::-webkit-scrollbar-thumb{background: var(--themeColor);box-shadow: var(--shadow);border-radius: 20px;}
-.game .storyMode .stages::-webkit-scrollbar-button{background: var(--themeFontColor);height: 2%;border-radius: 20%;}
+.game .storyMode .stages::-webkit-scrollbar-button{background: var(--themeFontColor);height: 2%;border-radius: 20%; width: 0%;}
 
 .stage{position: absolute;width: 100%;height: 100%;}
-.game .storyMode .stageOne{left: 0%;}
-.game .storyMode .stageTwo{left: 100%;}
 
 .game .storyMode .levelGrid{
   position:absolute;top: 50%;
@@ -357,14 +459,15 @@ nav .active{
 }
 .game .storyMode .levelGrid::before{
   content: 'DIA';
-  position: absolute;left: 25%;top: 30%;
+  position: absolute;left: 20%;top: 21%;
   width: 50%;height: 50%;
   transform: rotate(-40deg);
   text-align: center;font-size: 90px;
   opacity: 0.1;z-index: -1;
 }
-.game .storyMode .stageOne .levelGrid::before{content: 'STAGE ONE';}
-.game .storyMode .stageTwo .levelGrid::before{content: 'STAGE TWO';}
+.game .storyMode .stage1Lvl .levelGrid::before{content: 'STAGE ONE';}
+.game .storyMode .stage2Lvl .levelGrid::before{content: 'STAGE TWO';}
+.game .storyMode .stage3Lvl .levelGrid::before{content: 'STAGE THREE';}
 
 .game .storyMode .levelGrid .level{
   display: flex;
@@ -381,6 +484,12 @@ nav .active{
 .game .storyMode .levelGrid .level:active{
   transform: scale(0.9);
 }
+@media only screen and (max-width:420px) {
+  .game .storyMode .levelGrid::before{
+    content: 'DIA';
+    position: absolute;left: 10%;top: 28%;
+  }
+}
 /* =====STORY MODE END======================= */
 
 /* =====SURVIVAL MODE START======================= */
@@ -389,20 +498,25 @@ nav .active{
   width: 90%;height: 85%;
   margin-bottom: 7%;
   display: flex;flex-direction: column;
-  display: none;
 }
 .survivalMode .survivalGraphics{
   display: flex;justify-content: center;
   align-items: center;
   transform: rotateY(180deg);
-  width: 100%; height: 70%;
+  width: 100%; height: 50%;
   font-size: 500%;
 }
-.game .survivalMode .playSurvival{
-  position: absolute;top: 80%;
-  left: 50%;transform: translateX(-50%);
-  width: 50%;height: 10%;
-  text-align: center;
+.game .survivalMode h3{
+  height: 20%;text-align: center;
+  margin-top: 0;
+} 
+.game .survivalMode .buttonWrapper{
+  width: 100%;height: 30%;
+  display: flex;justify-content: center;
+  align-items: center;
+}
+.game .survivalMode .buttonWrapper button{
+  width: 50%;height: 30%;
   display: flex;justify-content: center;
   align-items: center;
   border-radius: 10px;
@@ -412,7 +526,7 @@ nav .active{
   font-weight: bolder;
   cursor: pointer;
 }
-.game .survivalMode .playSurvival:active{
+.game .survivalMode .buttonWrapper button:active{
   transform: translateX(-50%) scale(0.9);
 }
 /* =====SURVIVAL MODE END======================= */
@@ -420,7 +534,7 @@ nav .active{
 /* =====MUTIPLAYER START============= */
 .game .multiPlayer,
 .game .multiPlayerOnline{
-  display: none;
+  color: #fff;
 }
 .game .multiPlayer ul li{
   width: 130px;height: 30px;
@@ -441,10 +555,9 @@ nav .active{
   background: linear-gradient(-45deg, var(--themeColor), transparent);
 }
 
-.game .multiplayerChallenge,
+/* .game .multiplayerChallenge,
 .game .multiplayerOnlineSceneSelect {
-  display: none;
-}
+} */
 .game .multiplayerChallenge ul li,
 .game .multiplayerOnlineSceneSelect ul li{
   width: 130px;height: 30px;
@@ -468,7 +581,6 @@ display: none;
   position: relative;
   width: 100%;height: 90%;
   display: flex;flex-direction: column;
-  display: none;
 }
 .game .multiplayerContinueToSelect 
 .multiplayerFaceOff{
@@ -566,7 +678,6 @@ display: none;
   color: var(--themeColor);
   display: flex;justify-content: center;
   align-items: center;
-  display: none;
 }
   
 /* =====MUTIPLAYER CHALLENGE END============= */
@@ -579,7 +690,6 @@ display: none;
   display: flex;flex-direction: column;
   justify-content: center;
   align-items: center;
-  display: none;
 }
 .game .multiplayerHostSelect h4{
   width: 100%;
@@ -669,9 +779,9 @@ display: none;
 
 
 /* =====SETTINGS START============= */
-.game .settings{
+/* .game .settings{
   display: none;
-}
+} */
 .game .settings ul li{
   width: 130px;height: 30px;
   margin: 10px auto;position: relative;
@@ -890,7 +1000,6 @@ background:transparent;
   position: relative;
   width: 90%;height: 90%;
   display: flex;flex-direction: column;
-  display: none;
 }
 
 .game .settingsDisplay .displayBox{
@@ -1011,7 +1120,6 @@ background:transparent;
   width: 90%;height: 90%;
   padding-top: 20%;
   display: flex;flex-direction: column;
-  display: none;
 }
 
 .game .settingsAudio .audioBox{
@@ -1049,9 +1157,9 @@ background:transparent;
 /* =======SETTINGS SWITCH END ==========*/
 
 /* =====SETTINGS  ABOUT START============= */
-.game .settingsAbout{
+/* .game .settingsAbout{
 display: none;
-}
+} */
 
 /* =====SETTINGS CREDITS START============= */
 .game .settingsCredits{

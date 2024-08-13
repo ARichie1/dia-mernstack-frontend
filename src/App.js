@@ -2,7 +2,7 @@ import React, {Component} from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 import GLOBAL from "./global/Global.js";
-import NavPage from "./components/reuseable/NavPage";
+import NavPage from "./components/reuseable/pages/NavPage.js";
 
 import Home from "./components/Home";
 import TutorialPage from "./components/TutorialPage"

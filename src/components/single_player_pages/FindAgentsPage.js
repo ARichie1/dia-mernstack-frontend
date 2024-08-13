@@ -1,5 +1,5 @@
 import React from "react";
-import DifficultySelector from "../reuseable/DifficultySelector";
+import DifficultySelector from "../reuseable/pages/DifficultySelector";
 
 
 const FindAgentsPage = (props) => {

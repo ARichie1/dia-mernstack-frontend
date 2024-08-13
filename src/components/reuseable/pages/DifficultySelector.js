@@ -1,13 +1,16 @@
 import React from "react";
-import GLOBAL from "../../global/Global";
+import GLOBAL from "../../../global/Global";
 
 
-const DifficultySelector = (props) => {
+const DifficultySelector = ({ insertDifficulty }) => {
     const { Difficulties } = GLOBAL()
 
     const difficultyList = Difficulties.map( diff => {
         return (
-            <div className={`${diff.difficulty} difficulty`} style={{background: diff.color}} key={diff.id}>  
+            <div className={`${diff.difficulty} difficulty`} 
+                style={{background: diff.color}} 
+                onClick={() => insertDifficulty(diff)}
+                key={diff.id}>  
                 <div className="difficultyHeader" key={Math.random()}>{diff.difficulty}</div>
                 <div className="agentsAvailable" key={Math.random()}>{diff.agents}</div>
                 <div className="timeAvailable" key={Math.random()}>{diff.time}</div>

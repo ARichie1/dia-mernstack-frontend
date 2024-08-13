@@ -1,10 +1,10 @@
 import React from "react";
+import JoinPage from "../reuseable/pages/JoinPage";
 
 const OnlinePlayJoinPage = () => {
 
     return (
-        <div className="wrapper">
-        </div> 
+        <JoinPage />
     )
 }
 

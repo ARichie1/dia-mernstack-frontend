@@ -144,7 +144,7 @@ nav .active{
   width: 100%;height: 90%;
 }
 .gameUiWrapper .mainWrapper{
-  width: 100%;height: 90%;
+  width: 100%;height: 100%;
 }
 .gameUiWrapper .mainWrapper .wrapper{
   width: 100%;height: 100%;
@@ -163,9 +163,8 @@ nav .active{
   flex-direction: column;
 }
 .game .navUlWrapper .navUl li{
-  width: 130px;height: 30px;
+  width: 180px;height: 40px;
   margin: 10px auto;position: relative;
-  display: flex;justify-content: center;align-items: center;
   border-radius: 10px;
   background: var(--themeColor);
   color: var(--themeFontColor);
@@ -173,16 +172,17 @@ nav .active{
   cursor: pointer;
 }
 .game .navUlWrapper .navUl li:hover{
-  transform: scale(1.1);
   background: linear-gradient(-45deg, var(--themeColor), transparent);
 }
 .game .navUlWrapper .navUl li:active{
-  transform: scale(0.7);
   background: linear-gradient(-45deg, var(--themeColor), transparent);
 }
 .game .navUlWrapper .navUl li a{
   width: 100%; height: 100%;
-  text-align: center;
+  display: flex;justify-content: center;
+  align-items: center;
+  flex-basis: 100%;
+  border-radius: inherit;
 }
 
 /* ===== Tutorial Wrapper Start ==================== */
@@ -555,34 +555,12 @@ nav .active{
   background: linear-gradient(-45deg, var(--themeColor), transparent);
 }
 
-/* .game .multiplayerChallenge,
-.game .multiplayerOnlineSceneSelect {
-} */
-.game .multiplayerChallenge ul li,
-.game .multiplayerOnlineSceneSelect ul li{
-  width: 130px;height: 30px;
-  margin: 10px auto;position: relative;
-  display: flex;justify-content: center;align-items: center;
-  border-radius: 10px;
-  background: var(--themeColor);
-  color: var(--themeFontColor);
-  box-shadow: var(--shadow);
-  cursor: pointer;
-}
-.game .multiplayerChallenge ul li:hover,
-.game .multiplayerOnlineSceneSelect ul li:hover{
-  transform: scale(1.2);
-  background: linear-gradient(-45deg, var(--themeColor), transparent);
-}
-
 /* =====MUTIPLAYER CHALLENGE START============= */
-.game .multiplayerContinueToSelect{
-display: none;
+.game .multiplayerFaceOffPage{
   position: relative;
-  width: 100%;height: 90%;
   display: flex;flex-direction: column;
 }
-.game .multiplayerContinueToSelect 
+.game .multiplayerFaceOffPage 
 .multiplayerFaceOff{
   position: absolute;
   width: 90%; height: 90%;
@@ -592,46 +570,46 @@ display: none;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  flex-direction: column;
+  border: 1px solid red;
 }
 
-.game .multiplayerContinueToSelect 
+.game .multiplayerFaceOffPage 
 .multiplayerFaceOff .pic{
-  position: absolute;padding: 5%;
+  /* position: absolute;padding: 5%; */
   width: 80px; height: 80px;
   border-radius: 100%;border: 2px solid var(--themeColor);
   display: flex;align-items: center;justify-content: center
 }
-.game .multiplayerContinueToSelect 
+.game .multiplayerFaceOffPage 
 .multiplayerFaceOff .pic img{
-  position: absolute;
+  /* position: absolute; */
   width: 100%; height: 100%;
   border-radius: 100%;border: 2px solid var(--themeColor);
   display: flex;align-items: center;justify-content: center
 }
-.game .multiplayerContinueToSelect 
+.game .multiplayerFaceOffPage 
 .multiplayerFaceOff .pic p{
-  position: absolute;top:70%;
+  /* position: absolute;top:70%; */
   width: 100%; height: 100%;
   display: flex;align-items: center;justify-content: center
 }
-.game .multiplayerContinueToSelect 
+.game .multiplayerFaceOffPage 
 .multiplayerFaceOff .host{
   top: 10%;
 }
-.game .multiplayerContinueToSelect 
+.game .multiplayerFaceOffPage 
 .multiplayerFaceOff .join,
-.game .multiplayerContinueToSelect 
+.game .multiplayerFaceOffPage 
 .multiplayerFaceOff .waitingForOpponent{
   top: 50%;
 }                                                            
-.game .multiplayerContinueToSelect 
+.game .multiplayerFaceOffPage 
 .multiplayerFaceOff .versus{
   font-size: 20px;
   top: 35%;
   border: none;outline: none;
 }
-.game .multiplayerContinueToSelect 
+.game .multiplayerFaceOffPage 
 .multiplayerFaceOff .selectYourCode{
   position: absolute;top: 80%;
   left: 50%;transform: translateX(-50%);
@@ -646,38 +624,45 @@ display: none;
   font-weight: bolder;
   cursor: pointer;
 }
-.game .multiplayerContinueToSelect 
+.game .multiplayerFaceOffPage 
 .multiplayerFaceOff .selectYourCode:active{
   transform: translateX(-50%) scale(0.9);
 }
 
-.game .multiplayerContinueToSelect 
+/* =====MULTIPLAYER HOST SETTINGS START=====*/
+.game .multiplayerFaceOffPage .hostSettings{
+  position: relative;
+  top: 2.5%; left: 2.5%;
+  width: 95%; height: 95%;
+  display: flex;justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  background: var(--themeFontColor);
+  color: var(--themeColor);
+}
+.game .multiplayerFaceOffPage .hostSettings 
+  .difficultyTable select{top: 18%;
+}
+.game .multiplayerFaceOffPage 
 .hostSettingsButton{
   position: absolute;
   width: 40px; height: 40px !important;
   bottom: 6%;left: 10%;
   display: flex;align-items: center;justify-content: center;
-  border-radius: 100%;
+  border-radius: 100%; font-size: 20px;
   cursor: pointer;
   background: transparent;
   color: var(--themeColor);
   box-shadow: var(--shadow);
 }
-.game .multiplayerContinueToSelect 
+.game .multiplayerFaceOffPage 
 .hostSettingsButton:active{
   transform: scale(0.9);
 }
 
-/* =====MULTIPLAYER HOST SETTINGS START=====*/
-.game .multiplayerContinueToSelect .hostSettings{
-  position: relative;top: 10%;left: 50%;
-  width: 90%; height: 80%;padding: 5%;
-  transform: translateX(-50%);
-  border-radius: 20px;
-  background: var(--themeFontColor);
-  color: var(--themeColor);
-  display: flex;justify-content: center;
-  align-items: center;
+@media only screen and (max-width:420px) {
+  .game .multiplayerFaceOffPage .hostSettings 
+  .difficultyTable select{top: 17%;}
 }
   
 /* =====MUTIPLAYER CHALLENGE END============= */
@@ -687,21 +672,9 @@ display: none;
 .game .multiplayerOnlineSceneTwo {
   position: relative;
   width: 100%;height: 90%;
-  display: flex;flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.game .multiplayerHostSelect h4{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 .game .multiplayerHostSelect .setHost{
-  position: absolute;
-  top:50%;left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;height: 50%;
+  width: 100%;height: 100%;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -710,36 +683,66 @@ display: none;
 .game .multiplayerHostSelect 
 .setHost .selectHost{
   position: relative;
-  width: 70%;height: 30px;
-  margin: 2%;
+  width: 100%;height: 50%;
   display: flex;
+  justify-content: space-evenly;
   align-items: center;
-  justify-content: center;
+  flex-direction: column;
+}
+.game .multiplayerHostSelect 
+.setHost .selectHost .chooseHostButton,
+.game .multiplayerHostSelect 
+.setHost .selectHost .selectedHost,
+.game .multiplayerHostSelect 
+.setHost .selectHost .selectedDifficultyByHost{
+  position: relative;
+  width: 300px; height: 23%;
   border-radius: 10px;
   background: transparent;
   color: var(--themeFontColor);
   box-shadow: 0 0 0.5em #000a inset;
   cursor: pointer;
   border: none;outline: none;
-}
-.game .multiplayerHostSelect 
-.setHost .selectHost .selectedHostValue{
-  width: 100%;height: 100%;
-  padding-right: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
+  justify-content: space-evenly;
+  padding-left: 4%;
+  padding-right: 4%;
+}
+.game .multiplayerHostSelect 
+.setHost .selectHost .selectedHost p{
+  width: 30%; text-align: left;
+}
+.game .multiplayerHostSelect 
+.setHost .selectHost .selectedHost span{
+  width: 70%; height: 100%; font-weight: bold;
+  display: flex;align-items: center;justify-content: space-evenly
+}
+.game .multiplayerHostSelect 
+.setHost .selectHost .selectedDifficultyByHost p{
+  width: 50%; text-align: left;
+}
+.game .multiplayerHostSelect 
+.setHost .selectHost .selectedDifficultyByHost span{
+  width: 65%; height: 100%; font-weight: bold;
+  display: flex;align-items: center;justify-content: space-evenly
+}
+.game .multiplayerHostSelect 
+.setHost .selectHost .selectedHost span img{
+  width: 40px; height: 40px;
+  border-radius: 100%;border: 2px solid var(--themeColor);
+  display: flex;align-items: center;justify-content: center
 }
 .game .multiplayerHostSelect 
 .setHost .selectHost ul{
   position: absolute;
-  top: 115%;width: 100%;
-  height: 450%;
-  border-radius: inherit;
+  top: 44%;
+  width: 70%;height: 60%;
+  border-radius: 10px;
   background: skyblue;
   color: var(--themeFontColor);
   cursor: pointer;
-  opacity: 0;z-index: -1;
   overflow-y:scroll;
 }
 .game .multiplayerHostSelect 
@@ -752,14 +755,14 @@ display: none;
 .game .multiplayerHostSelect 
 .setHost .selectHost ul li{
   width: 94%;
-  margin: 3%;
-  padding: 2%;
+  margin: 3%; padding: 2%;
   border-radius: 10px;
   box-shadow: var(--shadow);
+  text-align: center;
 }
 .game .multiplayerHostSelect 
 .nextToHostButton{
-  width: 50%;height: 15%;
+  width: 50%;height: 50px;
   display: flex;justify-content: center;
   align-items: center;
   border-radius: 10px;
@@ -773,6 +776,7 @@ display: none;
 .nextToHostButton:active{
   transform: scale(0.9);
 }
+
 /* =====MUTIPLAYER CONNECT TO HOST(JOIN) END============= */
 
 /* =====MULTIPLAYER END============= */

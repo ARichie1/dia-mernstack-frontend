@@ -1,46 +1,12 @@
 import React from "react";
-import GLOBAL from "../../global/Global";
+import DifficultySelector from "../reuseable/DifficultySelector";
 
 
 const FindAgentsPage = (props) => {
-    const { Difficulties } = GLOBAL()
-
-    const difficultyList = Difficulties.map( diff => {
-        return (
-            <div className={`${diff.difficulty} difficulty`} style={{background: diff.color}} key={diff.id}>  
-                <div className="difficultyHeader" key={Math.random()}>{diff.difficulty}</div>
-                <div className="agentsAvailable" key={Math.random()}>{diff.agents}</div>
-                <div className="timeAvailable" key={Math.random()}>{diff.time}</div>
-                <div className="movesAvailable" key={Math.random()}>{diff.moves}</div>
-            </div>
-        )
-    })
-    
-    let endlessDifficultyList = Difficulties.filter( diff => 
-        diff.difficulty !== "endless"
-    );
-
-    endlessDifficultyList = endlessDifficultyList.map( diff => {
-        return (
-            <option key={diff.agents}>{diff.agents}</option>
-        )
-    })
 
     return (
         <div className="findAgents wrapper">
-            <div className="difficultyTable">
-                <div className="headInfo" key={0}>
-                    <div className="difficultyHeader">DIFFICULTY</div>
-                    <div className="agentsAvailable">AGENTS</div>
-                    <div className="timeAvailable">TIME(s)</div>
-                    <div className="movesAvailable">MOVES</div>
-                </div>
-                {difficultyList}
-                <select>
-                    <option> Select Agents </option>
-                    {endlessDifficultyList}
-                </select>
-            </div>
+            <DifficultySelector />
             <div className="continueToGame toGame" id="singlePlayerMainGame">CONTINUE</div>
         </div>
     )

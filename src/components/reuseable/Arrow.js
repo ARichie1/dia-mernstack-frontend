@@ -2,11 +2,11 @@ import React from "react";
 
 const Arrow = ({arrowDirection}) => {
     return (
-        <div class="arrow" style={{transform: `rotate(${arrowDirection}deg)`}}>
-            <div class="arrowPack">
-                <div class="arrowHolder">
-                    <div class="arrowHead arrowParts"></div>
-                    <div class="arrowBody arrowParts"></div>
+        <div className="arrow" style={{transform: `rotate(${arrowDirection}deg)`}}>
+            <div className="arrowPack">
+                <div className="arrowHolder">
+                    <div className="arrowHead arrowParts"></div>
+                    <div className="arrowBody arrowParts"></div>
                 </div>
             </div>
         </div>

@@ -1,0 +1,31 @@
+
+.switch{
+    position: absolute;right: 5%;
+    width: 20%;height: 80%;
+    border-radius: 20px;
+    background: var(--themeFontColor);
+}
+.switchInner{
+    height: 100%;
+    display: flex;align-items: center;
+    padding: 3%;
+    border: 2px solid var(--themeColor);
+    border-radius: inherit;
+}
+.switchButton{
+    width: 50%;height: 100%;
+    margin-left: 0%;
+    border-radius: 18px;
+    background: radial-gradient(#000, #000,#fff);
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: 0.5s ease-in;
+}
+.switchOn {
+    margin-left: 50%;
+    background : radial-gradient(#fff, var(--themeColor), #fff)
+}
+.switchOff {
+    margin-left: 0%;
+    background : radial-gradient(#000, #000,#fff)
+}

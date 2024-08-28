@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 
 
@@ -11,13 +11,9 @@ class Home extends Component {
 
     render () {
         return (
-        <div className="container-fluid">
+        <div className="container-fluid home">
             <Navbar />
-            <h1>WELCOME TO WTF</h1>
-            <Link to="/game">
-                <button>Lets Go The Fuvk</button>
-            </Link>
-            
+            <Outlet />
         </div> 
         )
     }

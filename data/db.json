@@ -18,5 +18,138 @@
       "body": "csssssssssssssssssssss",
       "author": "mario"
     }
+  ],
+  
+  "player" : [
+    {
+      "username" : "Richie",
+      "country": "NGA",
+      "email" : "richierichie@gmail.com",
+      "imgSrc": "../../../assets/images/faces/asta3.jpeg",
+      "password" : "",
+      "finance" : {
+        "address" : "0x34562424...32c",
+        "keys" : {
+          "balance" : 9,
+          "depositHistory" : [
+            {
+              "id" : 0, 
+              "token" : "keys", 
+              "chain" : "polygon",
+              "depositType" : "swap",
+              "senderAddress" : "0x34562424...32c", 
+              "unitDeposited" : 5, 
+              "timeStamp" : "August 9 2024, 1:30 am GMT"
+            },
+            {
+              "id" : 1, 
+              "token" : "keys", 
+              "chain" : "polygon",
+              "depositType" : "swap",
+              "senderAddress" : "0x34562424...32c", 
+              "unitDeposited" : 2, 
+              "timeStamp" : "August 10 2024, 3:30 am GMT"
+            },
+            {
+              "id" : 2, 
+              "token" : "keys", 
+              "chain" : "polygon",
+              "depositType" : "swap",
+              "senderAddress" : "0x34562424...32c", 
+              "unitDeposited" : 2, 
+              "timeStamp" : "August 12 2024, 5:20 pm GMT"
+            }
+          ]
+        },
+        "dia" : {
+          "balance" : 100,
+          "depositHistory" : [
+            {
+              "id" : 0, 
+              "token" : "usdt", 
+              "chain" : "polygon",
+              "depositType" : "swap",
+              "senderAddress" : "0x522789456...32c", 
+              "unitDeposited" : 1000, 
+              "timeStamp" : "August 9 2024, 11:00 pm GMT"
+            }
+          ]
+        },
+        "usdt" : {
+          "balance" : 150,
+          "depositHistory" : [
+            {
+              "id" : 0, 
+              "token" : "usdt", 
+              "chain" : "polygon",
+              "depositType" : "deposit",
+              "senderAddress" : "0x34562424...32c", 
+              "unitDeposited" : 200, 
+              "timeStamp" : "August 9 2024, 11:00 pm GMT"
+            }
+          ]
+        },
+        "purchaseHistory" : [
+          {"id" : 0, "item" : "dia", "purchasedWith" : "usdt", "amountPurchased" : 50, "unitPurchased" : 1000, "timeStamp" : "August 9 2024, 11:30 pm GMT"},
+          {"id" : 1, "item" : "keys", "purchasedWith" : "dia", "amountPurchased" : 500, "unitPurchased" : 5, "timeStamp" : "August 10 2024, 1:00 am GMT"},
+          {"id" : 2, "item" : "keys", "purchasedWith" : "dia", "amountPurchased" : 200, "unitPurchased" : 2, "timeStamp" : "August 10 2024, 3:30 am GMT"},
+          {"id" : 3, "item" : "keys", "purchasedWith" : "dia", "amountPurchased" : 200, "unitPurchased" : 2, "timeStamp" : "August 12 2024, 5:25 pm GMT"}
+        ]
+      },
+      "inGame" : {
+        "connected": true,
+        "ready": false,
+        "host": true,
+        "join": false,
+        "opponent": {},
+        "wins" : [],
+        "losses" : [],
+        "won" : false,
+        "lose" : false,
+        "myCode": "",
+        "myGuesses" : [],
+        "opponentsGuesses" : [],
+        "moves" : null,
+        "time" : null,
+        "powerUps" : {
+          "timeFreezer" : {
+            "active": false,
+            "duration": 5
+          },
+          "timeBooster" : {
+            "active": false,
+            "duration": 5
+          },
+          "moveBooster" : {
+            "active": false,
+            "duration": 5
+          },
+          "detectiveMode" : {
+            "active": false,
+            "duration": 5
+          },
+          "wizardMode" : {
+            "active": false,
+            "duration": 5
+          }
+        }
+      },
+      "settings" : {
+        "theme" : "dark",
+        "sound" : false,
+        "audio" : false,
+        "language" : "english"
+
+      }
+    },
+    {
+      "name" : "Riley",
+      "country": "UK",
+      "imgSrc": "../../../assets/images/faces/asta1.jpeg",
+      "connected": false,
+      "ready": false,
+      "host": false,
+      "join": true
+    }
   ]
 }

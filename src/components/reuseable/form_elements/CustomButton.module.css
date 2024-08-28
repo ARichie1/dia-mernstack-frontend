@@ -1,0 +1,16 @@
+.customButton{
+    margin: 10px auto;
+    width: 50%; height: 70px;
+    float: right;font-weight: bold;
+    border-radius: 20px;
+    background: transparent;
+    box-shadow: var(--shadow);
+    border: none;outline: none;
+    text-transform: capitalize;
+    font-size: 17px;
+    cursor: pointer;
+  }
+.customForm:active{
+    transform: scale(0.9);
+    border: none; outline: none;
+}

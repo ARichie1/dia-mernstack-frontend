@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const JoinPage = () => {
+const JoinPage = ({ PLAYERS }) => {
     const [selectedHost, setSelectedHost] = useState({
         active: false,
         selectedHostDetails: {
@@ -28,6 +28,17 @@ const JoinPage = () => {
             }
         })
     }
+
+    const getHostDetails = ""
+    let hostList = []
+
+    // useEffect(() => {
+    //     hostList = PLAYERS.availableHosts.map(host => {
+    //         return (
+    //             <li className="host" id={host.id} key={host.id}>{host.name}</li>   
+    //         )
+    //     })
+    // }, [])
 
     return (
         <div className="multiplayerHostSelect wrapper">

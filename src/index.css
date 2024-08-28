@@ -1,11 +1,16 @@
 :root{
-  --backgroundColor : #333;
-  /* --backgroundColor : ghostwhite; */
-  --headerColor : #000;--headerFontColor : skyblue;
-  --themeColor : skyblue; --themeFontColor : #000 ;
+  --backgroundColor : #333333;
+  /* --backgroundColor : #f8f8ff; */
+  --headerColor : #000000;
+  --headerFontColor :#87ceeb;
+  --themeColor : #87ceeb;
+  --themeFontColor : #000000;
+  /* --themeFontColor : ghostwhite; */
   --shadow : 0 0 0.5em #000a inset;
-  --statusText : flex; --Emoji : flex;
-  --Country : flex; --Rank : flex;
+  --statusText : flex; --emoji : flex;
+  --country : flex; --rank : flex;
+  --winColor : #42e64a;
+  --loseColor : #e92a2a;
 }
 
 * {margin: 0;padding: 0;box-sizing: border-box;
@@ -36,61 +41,92 @@ code {
     monospace;
 }
 
-nav .active{
+
+.home{
+  width: 100%; height: 98%;
+  border: 2px solid var(--themeColor);
+}
+.home nav{
+  width: 100%;height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--themeColor);
+  text-transform: uppercase;
+}
+.home nav .active{
   background: #fff;
-  color: red;
+  color: var(--themeColor);
+}
+.home nav .nav_children{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.home nav .brand_logo{
+  width: 20%; height: 100%;
+}
+.home nav .brand_logo a{
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+.home nav .pageLinks{
+  width: 50%;
+}
+.home nav .authLinks{
+  width: 30%;
+  justify-content: flex-end;
+}
+.home .mainWrapper {
+  width: 100%;height: 90%;
+}
+.home .mainWrapper form{
+  margin-top: 12%; margin-left: 50%;
+  transform: translateX(-50%);
+}
+.home .mainWrapper .ctaButton{
+  margin: 10px auto;
+  width: 200px; height: 70px;
+  float: right;font-weight: bold;
+  border-radius: 20px;
+  background: transparent;
+  box-shadow: var(--shadow);
+  border: none;outline: none;
+  text-transform: capitalize;
+  font-size: 17px;
+  cursor: pointer;
+}
+.home .mainWrapper .ctaButton:active{
+  transform: scale(0.1);
+  border: none; outline: none;
+}
+.home .mainWrapper .hero{
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
 }
 
 /* ===== GAME STYLES START HERE ======================= */
 
 /* ===== Game Home ======================= */
 .game {
-  width: 100%; height: 98%;
-  border: 2px solid red;
+  width: 100%; height: 98%; 
+  border: 2px solid var(--themeColor);;
 }
 .dead{background: radial-gradient(rgb(26, 26, 26),black);}
 .injured{background: radial-gradient(red,black);}
 .alive{background: radial-gradient(green,black);}
 
-/* ===== THE ARROWPACK START===============*/
-.game .arrow{
-  position: relative;
-  width: 100%; height: 100%;
-}
-.game .arrowPack{
-  position: absolute;top: 50%;left: 50%;
-  transform: translate(-50%, -50%);
-  width: 30px;height: 30px;
-  background: transparent;
-  cursor: pointer;
-}
-.game .arrowPack .arrowHolder{
-  position: relative;
-  width: 100%;height: 100%;
-  transform: rotate(180deg);
-}
-.game .arrowPack .arrowParts{
-  position: absolute;
-  width: 50%;height: 50%;
-  top: 50%;transform: translateY(-50%);
-  background: var(--themeColor);
-  box-shadow: var(--shadow);
-}
-.game .arrowPack .arrowHead{
-  left: 15%;transform: translateY(-50%) rotate(-45deg);
-  border-bottom-right-radius: 10px;
-}
-.game .arrowPack .arrowBody{
-  right: 10%;z-index: -1;
-  width: 60%;height: 30%;
-  border-radius: 4px;
-}
-/* =====THE ARROW PACK END==================== */
-
 /* =====Game Header Start ==================== */
 .game .gameHeader{
   width: 100%; height: 10%;
-  border: 2px solid red;
+  border: 2px solid var(--themeColor);
   display: block;
   position: relative;
 }
@@ -108,7 +144,6 @@ nav .active{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 2px solid pink;
 }
 .game .gameHeader .gameHeaderInner h3{
   height: 100%; margin: 0;
@@ -117,6 +152,9 @@ nav .active{
   justify-content: center;
   text-align: center;
   cursor: pointer;
+}
+.game .gameHeader .gameHeaderInner h3 a{
+  color: var(--themeColor);
 }
 .game .gameHeader .gameHeaderInner ul{
   width: 70%; height: 100%;
@@ -130,11 +168,15 @@ nav .active{
   align-items: center; justify-content: center;
   cursor: pointer;
 }
-.game .gameHeader .gameHeaderInner ul li .accountIcon{
+.game .gameHeader .gameHeaderInner ul li a{
   width: 30px; height: 30px;
+  color: var(--themeColor);
   display: flex;
   align-items: center; justify-content: center;
-  border: 2px solid red;
+  cursor: pointer;
+}
+.game .gameHeader .gameHeaderInner ul li a img{
+  width: 100%; height: 100%;
   border-radius: 100%;
 }
 /* =====Game Header End ==================== */
@@ -183,6 +225,7 @@ nav .active{
   align-items: center;
   flex-basis: 100%;
   border-radius: inherit;
+  color: #fff;
 }
 
 /* ===== Tutorial Wrapper Start ==================== */
@@ -826,236 +869,288 @@ nav .active{
 
 
 /* =====SETTINGS START============= */
-/* .game .settings{
-  display: none;
-} */
-.game .settings ul li{
-  width: 130px;height: 30px;
-  margin: 10px auto;position: relative;
-  display: flex;justify-content: center;align-items: center;
-  border-radius: 10px;
-  background: var(--themeColor);
-  color: var(--themeFontColor);
-  box-shadow: var(--shadow);
-  cursor: pointer;
+/* .game .settings{} */
+.game .settings .wrapper{
+  width: 100%;padding: 1%;
 }
-.game .settings ul li:hover{
-  transform: scale(1.2);
-  background: linear-gradient(-45deg, var(--themeColor), transparent);
+.game .settings .settingsHeader{
+  width: 100%;
+  text-align: center;
 }
+.game .settings .wrapper::-webkit-scrollbar{background: inherit;}
+.game .settings .wrapper::-webkit-scrollbar-thumb{background: var(--themeColor);border-radius: 20px;box-shadow: var(--shadow);cursor: pointer;}
+.game .settings .wrapper::-webkit-scrollbar-button{background: var(--themeFontColor);height: 1%;border-radius: 20%;}
+
 /* =====SETTINGS END============= */
 
 /* =====SETTINGS PROFILE START============= */
 .game .settingsProfile{
   position: relative;
   width: 90%;height: 90%;
-  display: flex;flex-direction: column;
   overflow-y: scroll;
   overflow-x: hidden;
-  display: none;
-}
-.game .settingsProfile::-webkit-scrollbar{background: inherit;}
-.game .settingsProfile::-webkit-scrollbar-thumb{background: var(--themeColor);border-radius: 20px;box-shadow: var(--shadow);cursor: pointer;}
-.game .settingsProfile::-webkit-scrollbar-button{background: var(--themeFontColor);height: 1%;border-radius: 20%;}
-
-/* =====PROFILE AVATAR SETTINGS START========== */
-.game .settingsProfile .avatar{
-position:relative;width: 80%;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  flex-direction: column;
+  text-transform: uppercase;
+  /* padding-top: 2%; */
+}
+
+.game .settingsProfile .profileBox{
+  position: relative;
+  width: 95%; border-radius: 5px;
+  margin-bottom: 4%;padding: 5%;
+  box-shadow: var(--shadow);
+}
+
+/* =====PROFILE AVATAR SETTINGS START========== */
+.game .settingsProfile .avatar{
+  position:relative;width: 95%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
   margin: 1% auto;
 }
-.game .settingsProfile  .avatarCell{
-display:flex;justify-content:center;align-items:center;
-  padding: 5%;width: 100%; height: 100%;
-}
 .game .settingsProfile .avatar .avatarImageWrapper{
-width: 80px; height: 80px;
+  width: 80px; height: 80px;
   border-radius: 100%;
   border: 4px solid var(--themeColor);
   display: flex;align-items: center;
   position: relative;
   box-shadow: var(--shadow);
 }
-.game .settingsProfile  .avatarCell img{
+.game .settingsProfile .profileImage{
   position: absolute;
-  width: 96%; height: 96%;margin: 2%;
+  top: 23%;
+  width: 100%; height: 50%;
+  display:flex;justify-content:center;align-items:center;
+  flex-direction: column;
+  padding: 5%;
+}
+.game .settingsProfile .avatar 
+.profileImage .avatarImageWrapper{
+  width: 100px; height: 100px;
+}
+.game .settingsProfile .profileImage img{
+  width: 96%; height: 96%;
+  margin: 2%;
   border-radius: 100%;
   display: flex;align-items: center;justify-content: center;
-
 }
-.avatarImg2{left: 100%;}.avatarImg3{left: 200%;}
-.avatarImg4{left: 300%;}.avatarImg5{left: 400%;}
-
+.game .settingsProfile  .avatarCell{
+  position: relative;
+  width: 100%; height: 100%;
+  display:flex;justify-content:center;align-items:center;
+  padding: 5%;
+  overflow: hidden;
+}
+.game .settingsProfile  .avatarCell img{
+  position: absolute;
+  width: 96%; height: 96%;
+  display: flex;align-items: center;justify-content: center;
+  border-radius: 100%;
+  padding: 4%;
+  opacity: 0.6;
+}
 .game .settingsProfile .avatar .avatarControl{
-  width: 50px;height: 40px;
-background:transparent;
-  cursor: pointer;
-  border-radius: 100%; 
+  position: absolute;top: 0%;
+  width: 40px;height: 100%;
+  display: flex; justify-content: center;
+  align-items: center;
+  cursor: pointer; 
   border: none;
   font-weight: bolder;
+  cursor: pointer;
+  z-index: 3;
+}
+.game .settingsProfile .avatar 
+.controlLeft{left:15%;}
+.game .settingsProfile .avatar 
+.controlRight{right:15%;}
+
+.game .settingsProfile .avatar .avatarControl button{
+  width: 100%;height: 40px;
+  border: none;
+  border-radius: 100%;
+  background: var(--themeColor);
   box-shadow: var(--shadow);
+  cursor: pointer;
 }
 .game .settingsProfile .avatar .avatarControl:active{
   transform: scale(0.9);
 }
-/* .game .settingsProfile .avatar .controlLeft{
-      left:28%;
-} */
-.game .settingsProfile .avatar .controlRight{
-  /* right:28%; */
-  opacity: 0;
-}
 /* =====PROFILE AVATAR SETTINGS END========== */
 
-/* =====PROFILE USER-DETAILS SETTINGS START========== */
-.game .settingsProfile .profileBox{
-  width: 90%;margin: 5% auto;padding: 5%;
-  border-radius: 20px;
-}
-.game .settingsProfile form div{
-  margin: 2% auto;
-}
-.game .settingsProfile form div label{
-  height: 100%;width: 100%;
-}
-.game .settingsProfile form div input{
-  height: 50;width: 100%;
-  height: 30px;margin: 5px auto;
-  padding: 10px;
-  border-radius: 20px;
-  box-shadow: 0 0 0.5em #000a;
-  border: none; outline: none;
-}
-.game .settingsProfile form button{
-  margin: 10px auto;
-  width: 20%;height: 30px;
-  float: right;font-weight: bold;
-  border-radius: 20px;
-  background: transparent;
-  box-shadow: var(--shadow);
-  border: none;outline: none;
-  cursor: pointer;
-}
-.game .settingsProfile form button:active{
-  transform: scale(0.9);
-  border: none; outline: none;
-}
-.game .settingsProfile .profileForm1{
-  box-shadow: var(--shadow);
-}
-.game .settingsProfile .profileForm1 div{
-  margin: 0% auto;
-}
-.game .settingsProfile 
-.profileForm1 .profilePasswordDiv{
-  display: flex;align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin: 10% auto;padding-left: 5%;
-  border-radius: 30px;
-  background: var(--themeColor);
-  box-shadow: var(--shadow);
-}
-.game .settingsProfile 
-.profileForm1 .profilePasswordDiv button{
-  font-size: 70%;
-  margin-right: 5%;
-}
-.game .settingsProfile 
-.profileForm1 .profilePasswordDiv button:active{
-  transform: scale(0.9);
-}
-.game .settingsProfile .profilePasswordReset{
-  position: absolute;
-  left: 50%;top: 50%;
-  transform: translate(-50%, -50%);
-  height: 300px;
-  background: #000;
-  color: #eee;
-  box-shadow: var(--shadow);
-  opacity: 0;z-index: -3;
-}
-.game .settingsProfile 
-.profilePasswordReset .passwordResetSubmit{
-  color: #000;
-  background: #eee;
-}
-/* =====PROFILE USER-DETAILS SETTINGS END========== */
-
-/* =====PROFILE GAME-DETAILS DISPLAY START========== */
-.game .settingsProfile .profileGameStats{
-  box-shadow: var(--shadow);   
-}
-.game .settingsProfile .profileGameStats .subdiv{
+/* =====PROFILE INFO DISPLAY START========== */
+.game .settingsProfile .profileInfoDisplay{
   position: relative;
   width: 100%;padding: 3%;
 }
-.game .settingsProfile 
-.profileGameStats .subdiv .subsubdiv{
+.game .settingsProfile .profileInfoDisplay
+.historyHeader{
   position: relative;
-  width: 100%;height: 30px ;
-  display: flex;align-items: center;
-  font-weight: bolder;font-size: 16.5px;
-}
-.game .settingsProfile 
-.profileGameStats .subdiv span{
-  position: absolute;
-  top: 50%;right: 2%;
-  transform: translateY(-50%);
-  width: 60%;height: 90%;
-  display: flex;align-items: center;
-  background: whitesmoke;
-  box-shadow: var(--shadow);
+  width: 100%;
+  display: flex; justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 10px;
   border-radius: 20px;
-  padding-left: 4%;
-  text-align: left;
 }
-.game .settingsProfile 
-.profileGameStats .subdiv span span{
-  width: 1em !important;height: 1em !important;
-  display: flex;align-items: center;
-  left: 85% !important;
-  padding: 1% 2% !important;
-  border-radius: 100% !important;
+.game .settingsProfile .profileInfoDisplay
+.historyHeader .historyHeaderStats{
+  position: relative;
+  width: 60%;
+  display: flex; justify-content: space-evenly;
+  align-items: center;
+  border: 1px solid var(--themeColor);
+  border-radius: inherit;
+}
+.game .settingsProfile .profileInfoDisplay
+.historyHeader .historyHeaderStats .headerDisplay{
+  width: 33%; text-align: center;
+  box-shadow: var(--shadow);
   cursor: pointer;
 }
-.game .settingsProfile 
-.profileGameStats .subdiv span span:active{
-  transform: translateY(-50%) scale(0.9);
-  border: none; outline: none;
+.game .settingsProfile .profileInfoDisplay
+.historyHeader .historyHeaderStats .totalHeaderDisplay{
+  border-top-left-radius: inherit;
+  border-bottom-left-radius: inherit;
+}
+.game .settingsProfile .profileInfoDisplay
+.historyHeader .historyHeaderStats .hostedHeaderDisplay{
+  border-left: 1px solid var(--themeColor);
+  border-right: 1px solid var(--themeColor);
+  border-radius: 0;
+}
+.game .settingsProfile .profileInfoDisplay
+.historyHeader .historyHeaderStats .joinedHeaderDisplay{
+  border-top-right-radius: inherit;
+  border-bottom-right-radius: inherit;
+}
+.game .settingsProfile .profileInfoDisplay
+.profileInfo{
+  position: relative;
+  width: 100%;
+  display: flex; justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 10px;
 }
 .game .settingsProfile 
-.profileGameStats .subdiv .subsubdiv span{
-  position: absolute;
-  top: 50%;right: 2%;
-  transform: translateY(-50%);
-  width: 30%;height: 90%;
+.profileInfoDisplay .profileInfo
+.profileInfoTitle{
+  position: relative;
+  width: 40%;
   display: flex;align-items: center;
-  background: whitesmoke;
+  justify-content: flex-start;
+  font-weight: bolder;
+  font-size: 16.5px;
+}
+.game .settingsProfile 
+.profileInfoDisplay .profileInfo
+.profileValueWrapper{
+  position: relative;
+  width: 60%;height: 35px ;
+  display: flex;align-items: center;
+  font-weight: bolder;font-size: 16.5px;
+  background: #f8f8ff;
   box-shadow: var(--shadow);
   border-radius: 20px;
-  padding-left: 4%;
-  text-align: left;
+  padding: 2%;
 }
-/* =====PROFILE GAME-DETAILS DISPLAY END========== */
+.game .settingsProfile 
+.profileInfoDisplay .profileInfo
+.profileValueWrapper .profileValue{
+  font-size: 13px; width: 95%;
+}
+.game .settingsProfile 
+.profileInfoDisplay .profileInfo
+.profileValueWrapper .profileValueButton{
+  display: flex; justify-content: center;
+  align-items: center;
+  width: 26px; height: 26px;
+  border-radius: 100%;
+  font-size: 14px;
+  box-shadow: var(--shadow);
+}
+.game .settingsProfile 
+.profileInfoDisplay .profileInfo
+.profileValueWrapper .winsAndLossesStats{
+  position: absolute;
+  width: 100%; height: 100%;
+  left: 0; top: 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: inherit;
+}
+.game .settingsProfile 
+.profileInfoDisplay .profileInfo
+.profileValueWrapper .winsAndLossesStats
+.winsAndLossesDisplay{
+  width: 50%; height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow);
+}
+.game .settingsProfile 
+.profileInfoDisplay .profileInfo
+.profileValueWrapper .winsAndLossesStats .totalDisplay{
+  border-top-left-radius: inherit;
+  border-bottom-left-radius: inherit;
+  background: var(--themeColor);
+}
+.game .settingsProfile 
+.profileInfoDisplay .profileInfo
+.profileValueWrapper .winsAndLossesStats .winsDisplay{
+  background: var(--winColor);
+}
+.game .settingsProfile 
+.profileInfoDisplay .profileInfo
+.profileValueWrapper .winsAndLossesStats .lossesDisplay{
+  background: var(--loseColor);
+  border-top-right-radius: inherit;
+  border-bottom-right-radius: inherit;
+}
+/* MultiPlayer Game  History Display */ 
+.game .settingsProfile 
+.profileInfoDisplay .profileInfo
+.profileValueWrapper .multiplayerHistoryDisplay{
+  border-radius: inherit;
+}
+.game .settingsProfile .profileHistoryReset{
+  background: var(--loseColor); cursor: pointer;}
+.game .settingsProfile .profileHistoryReset
+.profileHistoryResetButton{
+  display: flex; justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+/* =====PROFILE INFO DISPLAY END========== */ 
 /* =====SETTINGS PROFILE END========================== */
 
 /* =====SETTINGS DISPLAY START============= */
 .game .settingsDisplay{
   position: relative;
   width: 90%;height: 90%;
-  display: flex;flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 90%;height: 90%;
+  padding: 2%; padding-top: 4%;
+  text-transform: uppercase;
 }
 
 .game .settingsDisplay .displayBox{
   position: relative;
-  width: 100%;height: 40px;
+  width: 100%; border-radius: 5px;
   display: flex;align-items: center;
-  margin: 1% auto;padding: 10px 20px;
-  border-radius: 20px;
+  margin-bottom: 2%; 
+  padding: 10px 20px;
   box-shadow: var(--shadow);
+}
+.game .settingsDisplay .displayBox .settingHeader{
+  font-weight: bold;
 }
 
 .game .settingsDisplay
@@ -1063,10 +1158,12 @@ background:transparent;
   position: relative;
   display: flex;
   justify-content: space-between;
+  height: 80px;
 }
 .game .settingsDisplay
-.displayLanguage .selectedLanguage{
-  width: 70%;height: 130%;
+.displayLanguage .languagePicker{
+  position: relative;
+  width: 60%; height: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1076,79 +1173,76 @@ background:transparent;
   font-weight: bold;
   outline:none;border: none;
   cursor: pointer;
+  text-transform: uppercase;
 }
 .game .settingsDisplay
-.displayLanguage .languages{
+.displayLanguage .languagePicker .defaultLanguage{
+  width: 100%; height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.game .settingsDisplay
+.displayLanguage ul{
   position: absolute;
-  top: 100%;right: 6.5%;
-  width: 60%;
-  border-radius: 10px;
+  top: 115%; left: 0%;
+  width: 100%;
+  border-radius: 5px;
   background: var(--themeFontColor);
   color: #eee;
-  opacity: 0; z-index: -3;
+  z-index: 4;
 }
 .game .settingsDisplay
-.displayLanguage .languages li{
-  margin: 2% auto;
+.displayLanguage ul li{
+  margin: 2% auto; height: 30px;
   border-bottom: 1px solid var(--themeColor);
   cursor: pointer;
+  text-align: center;
 }
 .game .settingsDisplay 
 .displayTheme{
-  width: 100%;height: 100px;
-  margin: 1% auto;
-  display: block;
+  width: 100%;
+  flex-direction: column;
+}
+.game .settingsDisplay 
+.displayTheme .themeToggler{
+  position: relative;
+  display: flex;align-items: center;
+  width: 100%;height: 50px;
+  font-size: 14px;
+  margin-bottom: 2%;
+  padding-top: 4%; padding-bottom: 4%;
+}
+.game .settingsDisplay 
+.displayTheme .themeCustomizer {
+  height: 100%; width: 100%;
+}
+.game .settingsDisplay 
+.displayTheme .themeCustomizer .themeCustomizerHeader{
+  position: relative;
+  width: 100%; height: 50px;
+  display: flex; justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
 }
 
 .game .settingsDisplay 
-.displayTheme .theme{
-  position: relative;
-  display: flex;align-items: center;
-  width: 100%;height: 40%;
-  font-size: 14px;
+.displayTheme .themeCustomizer ul{
+  width: 100%;
 }
 .game .settingsDisplay 
-.displayTheme .settingsCustomize{
-  position: absolute;right: 5%;
-  width: 20%;height: 80%;
-  display: flex;justify-content: center; align-items: center;
-  background: var(--themeColor);
-  box-shadow: var(--shadow);
-  border-radius: 20px;
-  cursor: pointer;
+.displayTheme .themeCustomizer ul li{
+  width: 100%; height: 50px;
+  display: flex;justify-content: space-between;
+  align-items: center;
 }
 .game .settingsDisplay 
-.displayTheme .settingsCustomize:active{
-  transform: scale(0.9);
-}
-.game .settingsDisplay 
-.displayTheme .themeCustomizer{
-  position: absolute;
-  width: 90%;
-  display: flex;justify-content: center;
-  align-items: center;padding: 2%;
-  background: var(--themeFontColor);
-  color: #eee;
-  box-shadow: var(--shadow);
-  border-radius: 10px;
-  display: none;
-}
-.game .settingsDisplay 
-.displayTheme .themeCustomizer .custom{
-  display: flex;
-  justify-content: space-between;
-  margin: 2% auto;
-}
-.game .settingsDisplay 
-.displayTheme .themeCustomizer .custom .colorsHolder{
-  display: flex;justify-content: space-evenly;width: 50%;
-}
-.game .settingsDisplay 
-.displayTheme .themeCustomizer .custom
-.colorsHolder .colorPicker{
+.displayTheme .themeCustomizer ul li input{
   display: flex;width: 10%;
-  border: 1px solid #eee;
-  border-radius: 5px;cursor: pointer;
+  border: 1px solid var(--themeColor);
+  border-radius: 5px;
+  cursor: pointer;
 }
 .game .settingsDisplay 
 .displayTheme .themeCustomizer .resetCustomColors{
@@ -1165,43 +1259,25 @@ background:transparent;
 .game .settingsAudio{
   position: relative;
   width: 90%;height: 90%;
-  padding-top: 20%;
-  display: flex;flex-direction: column;
+  padding-top: 25%;
+  text-align: center;
 }
-
 .game .settingsAudio .audioBox{
   position: relative;
-  width: 90%;height: 40px;
+  width: 90%;height: 60px;
   display: flex;align-items: center;
   margin: 1% auto;padding: 10px 20px;
   border-radius: 20px;
   box-shadow: var(--shadow);
+  margin-bottom: 2%;
+}
+@media only screen and (max-width:600px) {
+  .game .settingsAudio .audioBox{
+    height: 50px;
+    margin-bottom: 4%;
+  }
 }
 /* =======SETTINGS AUDIO END ==========*/
-
-/* =======SETTINGS SWITCH START ==========*/
-.game .settingsSwitch{
-  position: absolute;right: 5%;
-  width: 20%;height: 80%;
-  border-radius: 20px;
-  background: var(--themeFontColor);
-}
-.game .switchInner{
-  height: 100%;
-  display: flex;align-items: center;
-  padding: 3%;
-  border: 2px solid var(--themeColor);
-  border-radius: inherit;
-}
-.game .switchButton{
-  width: 50%;height: 100%;
-  margin-left: 50%;
-  border-radius: 18px;
-  background: radial-gradient(#fff,var(--themeColor),#fff);
-  cursor: pointer;
-  box-shadow: var(--shadow);
-}
-/* =======SETTINGS SWITCH END ==========*/
 
 /* =====SETTINGS  ABOUT START============= */
 /* .game .settingsAbout{

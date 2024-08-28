@@ -40,8 +40,7 @@ const GLOBAL = () => {
     settings : [
       {title: "AUDIO", to: "audio", id: 0},
       {title: "DISPLAY", to: "display", id: 1},
-      {title: "LANGUAGE", to: "language", id: 2},
-      {title: "PROFILE", to: "profile", id: 3}
+      {title: "PROFILE", to: "profile", id: 2}
     ]
 }
 

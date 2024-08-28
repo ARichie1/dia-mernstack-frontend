@@ -4,10 +4,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import GLOBAL from "./global/Global.js";
 import NavPage from "./components/reuseable/pages/NavPage.js";
 
-import Home from "./components/Home";
-import TutorialPage from "./components/TutorialPage"
-import MoreGamesPage from "./components/MoreGamesPage"
-import NoMatch from "./components/NoMatch"
+import TutorialPage from "./components/game_pages/TutorialPage.js"
+import Home from "./components/pages/Home.js";
+import AboutPage from "./components/pages/AboutPage.js";
+import ContactPage from "./components/pages/ContactPage.js";
+import MoreGamesPage from "./components/game_pages/MoreGamesPage.js"
+import NoMatch from "./components/pages/NoMatch.js"
+
+import LoginPage from "./components/pages/LoginPage.js";
+import SignUpPage from "./components/pages/SignUpPage.js";
+import LandingPage from "./components/pages/LandingPage.js";
 
 import SinglePlayerPage from "./components/single_player_pages/SinglePlayerPage"
 import FindAgentsPage from "./components/single_player_pages/FindAgentsPage"
@@ -43,7 +49,14 @@ class App extends Component{
       <BrowserRouter>
         <div className="App">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route  path="/" element={<Home />} >
+              <Route index element={<LandingPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
+            </Route>
+
             <Route path="/game" element={<GameHome />} >
               <Route index element={<NavPage links={Links.game}/>} />
               <Route path="tutorial" element={<TutorialPage />} />

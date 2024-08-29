@@ -2,12 +2,13 @@
     margin: 10px auto;
     width: 50%; height: 70px;
     float: right;font-weight: bold;
-    border-radius: 20px;
+    border-radius: 10px;
     background: transparent;
     box-shadow: var(--shadow);
     border: none;outline: none;
     text-transform: capitalize;
     font-size: 17px;
+    text-transform: uppercase;
     cursor: pointer;
   }
 .customForm:active{

@@ -11,7 +11,7 @@ const CustomButton = ({ buttonAttr }) => {
         <button 
             type={buttonAttr.type ? buttonAttr.type : ""}
             name={buttonAttr.name ? buttonAttr.name : ""}
-            className={buttonAttr.classes ? `${classes.customButton} ${buttonAttr.classes}`: `${classes.customButton}`} 
+            className={buttonAttr.classes ? `${classes.customButton} ${buttonAttr.classes} clkBtn`: `${classes.customButton} clkBtn`} 
             onClick={ () => action() }
             disabled={buttonAttr.disabled ? true : buttonAttr.disabled}>
             { buttonAttr.title ? buttonAttr.title : "Custom Button" }

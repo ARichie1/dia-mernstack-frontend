@@ -32,7 +32,7 @@ const Navbar = (props) => {
                             <li>
                                 <NavLink to="/game/settings/profile">
                                     <img src={`../../../assets/images/faces/${profileImage.name}`} alt="profileimage" /> 
-                                    &nbsp; <p>Maxx</p>
+                                    &nbsp; <p>Maxx400</p>
                                 </NavLink>
                             </li>
                             <li onClick={() => setUser(false)}>

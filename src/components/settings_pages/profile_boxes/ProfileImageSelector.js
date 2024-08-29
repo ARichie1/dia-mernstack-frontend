@@ -92,10 +92,10 @@ const ProfileImageSelector = () => {
                 
             </div>
             {canClickLeft && <div className="avatarControl controlLeft">
-                <button className="controlLeftButton" onClick={() => switchDefaultImages(1, currentImage)}>&#11013;</button>
+                <button className="controlLeftButton clkBtn" onClick={() => switchDefaultImages(1, currentImage)}>&#11013;</button>
             </div>}
             {canClickRight && <div className="avatarControl controlRight">
-                <button className="controlRightButton" onClick={() => switchDefaultImages(2, currentImage)}>&#10145;</button>
+                <button className="controlRightButton clkBtn" onClick={() => switchDefaultImages(2, currentImage)}>&#10145;</button>
             </div>}
             <CustomButton buttonAttr = {
                 {

@@ -1,16 +1,18 @@
 :root{
   --backgroundColor : #333333;
-  /* --backgroundColor : #f8f8ff; */
+  /* --backgroundColor : #f8f8f8; */
   --headerColor : #000000;
   --headerFontColor :#87ceeb;
   --themeColor : #87ceeb;
   --themeFontColor : #000000;
   /* --themeFontColor : ghostwhite; */
+  --themeMode : #f8f8f8;
+  /* --themeMode : #0e0e0e; */
   --shadow : 0 0 0.5em #000a inset;
+  /* --shadow : 0 0 0.5em #ffffffaa inset; */
   --statusText : flex; --emoji : flex;
   --country : flex; --rank : flex;
-  --winColor : #42e64a;
-  --loseColor : #e92a2a;
+  --winColor : #42e64a; --loseColor : #e92a2a;
 }
 
 * {margin: 0;padding: 0;box-sizing: border-box;
@@ -41,6 +43,17 @@ code {
     monospace;
 }
 a{text-decoration: none;}
+.clkBtn{
+  background: var(--themeColor);
+  color: var(--themeMode);
+}
+.clkBtn:hover,
+.clkBtn:active{
+  transform: scale(1.1);
+  background: linear-gradient(-45deg, var(--themeColor), transparent);
+  background: var(--themeMode);
+  color: var(--themeColor);
+}
 
 .home{
   width: 100%; height: 98%;
@@ -150,7 +163,6 @@ a{text-decoration: none;}
   width: 200px; height: 70px;
   float: right;font-weight: bold;
   border-radius: 20px;
-  background: transparent;
   box-shadow: var(--shadow);
   border: none;outline: none;
   text-transform: capitalize;
@@ -287,11 +299,11 @@ a{text-decoration: none;}
   box-shadow: var(--shadow);
   cursor: pointer;
 }
-.game .navUlWrapper .navUl li:hover{
-  background: linear-gradient(-45deg, var(--themeColor), transparent);
-}
+.game .navUlWrapper .navUl li:hover,
 .game .navUlWrapper .navUl li:active{
+  transform: scale(1.2);
   background: linear-gradient(-45deg, var(--themeColor), transparent);
+  background: #fff;
 }
 .game .navUlWrapper .navUl li a{
   width: 100%; height: 100%;
@@ -301,7 +313,10 @@ a{text-decoration: none;}
   border-radius: inherit;
   color: #fff;
 }
-
+.game .navUlWrapper .navUl li a:active,
+.game .navUlWrapper .navUl li a:hover{
+  color: var(--themeColor);
+}
 /* ===== Tutorial Wrapper Start ==================== */
 .game .tutorial{
   width: 96%;height: 90%;
@@ -425,20 +440,6 @@ a{text-decoration: none;}
 /* =====SINGLE PLAYER START============= */
 .game .singlePlayer{
   width: 100%; height: 100%;
-}
-.game .singlePlayer ul li{
-  width: 130px;height: 30px;
-  margin: 10px auto;position: relative;
-  display: flex;justify-content: center;align-items: center;
-  border-radius: 10px;
-  background: var(--themeColor);
-  color: var(--themeFontColor);
-  box-shadow: var(--shadow);
-  cursor: pointer;
-}
-.game .singlePlayer ul li:hover{
-  transform: scale(1.2);
-  background: linear-gradient(-45deg, var(--themeColor), transparent);
 }
 /* =====SINGLE PLAYER END============= */
 
@@ -936,11 +937,8 @@ a{text-decoration: none;}
 .nextToHostButton:active{
   transform: scale(0.9);
 }
-
 /* =====MUTIPLAYER CONNECT TO HOST(JOIN) END============= */
-
 /* =====MULTIPLAYER END============= */
-
 
 /* =====SETTINGS START============= */
 /* .game .settings{} */
@@ -1032,8 +1030,7 @@ a{text-decoration: none;}
   position: absolute;top: 0%;
   width: 40px;height: 100%;
   display: flex; justify-content: center;
-  align-items: center;
-  cursor: pointer; 
+  align-items: center; cursor: pointer; 
   border: none;
   font-weight: bolder;
   cursor: pointer;
@@ -1046,11 +1043,9 @@ a{text-decoration: none;}
 
 .game .settingsProfile .avatar .avatarControl button{
   width: 100%;height: 40px;
-  border: none;
   border-radius: 100%;
-  background: var(--themeColor);
   box-shadow: var(--shadow);
-  cursor: pointer;
+  border: none; cursor: pointer;
 }
 .game .settingsProfile .avatar .avatarControl:active{
   transform: scale(0.9);
@@ -1136,7 +1131,7 @@ a{text-decoration: none;}
 .profileInfoDisplay .profileInfo
 .profileValueWrapper .profileValue{
   font-size: 13px; width: 95%;
-  padding-left: 4%;
+  padding-left: 4%; overflow: hidden;
 }
 .game .settingsProfile 
 .profileInfoDisplay .profileInfo

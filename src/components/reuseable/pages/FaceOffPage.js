@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DifficultySelector from "./DifficultySelector";
+import { GameContext } from "../../../contexts/GameContext";
 
 const FaceOffPage = ({player, opponent}) => {
     const [host, setHost] = useState(null)
     const [isPlayerHost, setisPlayerHost] = useState(true)
     const [isOpponentHost, setisOpponentHost] = useState(false)
 
-    const [difficulty,  setDifficulty] = useState(true)
+    const {chosenDifficulty, hasSelectedDifficulty, insertDifficulty
+    } = useContext(GameContext)
+
     const [opponentConnected,  setOpponentConnected] = useState(true)
     const [showHostSettings, setShowHostSettings] = useState({
         opened: false,
@@ -36,13 +39,8 @@ const FaceOffPage = ({player, opponent}) => {
         })
     }
 
-    const insertDifficulty = (diff) => {
-        setDifficulty(diff)
-        toggleHostSettings()
-    }
-
     return (
-        <div className="multiplayerFaceOffPage wrapper">
+        <div className="multiplayerFaceOffPage subWrapper">
             <div className="multiplayerFaceOff">
                 <div className="faceOffWrapper">
                     <div className="playerFaceOffSide pic">
@@ -65,10 +63,10 @@ const FaceOffPage = ({player, opponent}) => {
                         </div>
                     }
                 </div>
-                {difficulty &&  (
-                    <div className="selectedDifficultyByHost" style={{background: difficulty.color}}>
+                {hasSelectedDifficulty &&  (
+                    <div className="selectedDifficultyByHost" style={{background: chosenDifficulty.color}}>
                         <p>DIFFICULTY : </p>
-                        <span>{difficulty.difficulty} ( {difficulty.agents} )</span>
+                        <span>{chosenDifficulty.difficulty} ( {chosenDifficulty.agents} )</span>
                     </div>
                 )}
                 <div className="selectYourCode">
@@ -77,7 +75,7 @@ const FaceOffPage = ({player, opponent}) => {
             </div> 
             {showHostSettings.opened && (
                 <div className="hostSettings">
-                    <DifficultySelector insertDifficulty={ insertDifficulty }/>
+                    <DifficultySelector insertDifficulty={ insertDifficulty } otherActions={toggleHostSettings}/>
                 </div>
             )}   
             

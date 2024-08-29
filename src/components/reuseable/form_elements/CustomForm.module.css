@@ -43,6 +43,12 @@
   border-radius: 10px;
   box-shadow: 0 0 0.5em #000a;
   border: none; outline: none;
+  padding-left: 4%;
+  font-weight: bold;
+}
+.customForm .inputsWrapper li input:focus{
+  border: 4px solid var(--themeColor);
+  background: #fff;
 }
 .customForm .inputsWrapper li input::placeholder{
   padding-left: 10%;

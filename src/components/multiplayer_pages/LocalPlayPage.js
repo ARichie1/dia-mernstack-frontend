@@ -5,6 +5,7 @@ const LocalPlayPage = () => {
 
     return (
         <div className="wrapper">
+            <h5 className="wrapperHeader">Play Local</h5>
             <Outlet />
         </div> 
     )

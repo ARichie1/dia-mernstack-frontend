@@ -2,14 +2,24 @@ import React, { useContext } from "react";
 import { GameContext } from "../../../contexts/GameContext";
 
 
-const DifficultySelector = ({ insertDifficulty }) => {
+const DifficultySelector = ({ insertDifficulty, otherActions}) => {
     const { Difficulties } = useContext(GameContext)
 
     const difficultyList = Difficulties.map( diff => {
+
+        const runOtherActions = () => {
+            if (otherActions){otherActions()}
+            else{return}
+        }
+
+
         return (
             <div className={`${diff.difficulty} difficulty`} 
                 style={{background: diff.color}} 
-                onClick={() => insertDifficulty(diff)}
+                onClick={() => {
+                    insertDifficulty(diff);
+                    runOtherActions() 
+                }}
                 key={diff.id}>  
                 <div className="difficultyHeader" key={Math.random()}>{diff.difficulty}</div>
                 <div className="agentsAvailable" key={Math.random()}>{diff.agents}</div>

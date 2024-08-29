@@ -5,6 +5,7 @@ const OnlinePlayPage = () => {
 
     return (
         <div className="wrapper">
+            <h5 className="wrapperHeader">Play Online</h5>
             <Outlet />
         </div> 
     )

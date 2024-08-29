@@ -42,7 +42,7 @@ import ProfileSettings from "./components/settings_pages/ProfileSettings"
 import { GameContext } from "./contexts/GameContext.js";
 
 const App = () => {
-    const { Links } = useContext(GameContext)
+    const { GameUiLinks } = useContext(GameContext)
     
   return (
     <BrowserRouter>
@@ -57,31 +57,31 @@ const App = () => {
           </Route>
 
           <Route path="/game" element={<GameHome />} >
-            <Route index element={<NavPage links={Links.game}/>} />
+            <Route index element={<NavPage GameUiLinks={GameUiLinks.game}/>} />
             <Route path="tutorial" element={<TutorialPage />} />
             <Route path="more-games" element={<MoreGamesPage />} />
             
             <Route path="single-player" element={<SinglePlayerPage />}>
-              <Route index element={<NavPage links={Links.singleplayer}/>} />
+              <Route index element={<NavPage GameUiLinks={GameUiLinks.singleplayer}/>} />
               <Route path="find-agents" element={<FindAgentsPage />} />
               <Route path="story-mode" element={<StoryModePage />} />
               <Route path="survival-mode" element={<SurvivalModePage />} />
             </Route>
 
             <Route path="multiplayer" element={<MultiplayerPage />}>
-              <Route index element={<NavPage links={Links.multiplayer}/>} />
+              <Route index element={<NavPage GameUiLinks={GameUiLinks.multiplayer}/>} />
 
               <Route path="local" element={<LocalPlayPage />} >
-                <Route index element={<NavPage links={Links.multiplayerLocal}/>} />
+                <Route index element={<NavPage GameUiLinks={GameUiLinks.multiplayerLocal}/>} />
                 <Route path="host" element={<LocalPlayHostPage />} />
                 <Route path="join" element={<LocalPlayJoinPage />} />
               </Route>
 
               <Route path="online" element={<OnlinePlayPage />} >
-                <Route index element={<NavPage links={Links.multiplayerOnline}/>} />
+                <Route index element={<NavPage GameUiLinks={GameUiLinks.multiplayerOnline}/>} />
                 <Route path="quick-play" element={<GamePage />} />
                 <Route path="challenge" element={<OnlineChallenge/>} >
-                  <Route index element={<NavPage links={Links.multiplayerOnlineChallenge}/>} />
+                  <Route index element={<NavPage GameUiLinks={GameUiLinks.multiplayerOnlineChallenge}/>} />
                   <Route path="host" element={<OnlinePlayHostPage />} />
                   <Route path="join" element={<OnlinePlayJoinPage />} />
                 </Route>
@@ -94,7 +94,7 @@ const App = () => {
             </Route>
 
             <Route path="settings" element={<SettingsPage />}>
-              <Route index element={<NavPage links={Links.settings}/>} />
+              <Route index element={<NavPage GameUiLinks={GameUiLinks.settings}/>} />
               <Route path="audio" element={<AudioSettings />} />
               <Route path="display" element={<DisplaySettings />} />
               <Route path="language" element={<LanguageSettings />} />

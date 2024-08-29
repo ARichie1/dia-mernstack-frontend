@@ -25,7 +25,7 @@ body{
   overflow: hidden;
 }
 
-#root, .App{ width: 100% !important;height: 100% !important; }
+#root, .App{ width: 100% !important;height: 100% !important; overflow: hidden; }
 
 /* body {
   margin: 0;
@@ -40,19 +40,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+a{text-decoration: none;}
 
 .home{
   width: 100%; height: 98%;
   border: 2px solid var(--themeColor);
 }
 .home nav{
+  position: relative;
   width: 100%;height: 10%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background: var(--themeColor);
   text-transform: uppercase;
+  box-shadow: var(--shadow);
+  padding: 1%;
 }
 .home nav .active{
   background: #fff;
@@ -73,12 +76,67 @@ code {
   justify-content: center;
   font-size: 30px;
 }
-.home nav .pageLinks{
-  width: 50%;
+.home nav .navLinks{
+  width: 80%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
+.home nav .pageLinks{width: 55%;}
 .home nav .authLinks{
-  width: 30%;
+  width: 45%; height: 100%;
+}
+.home nav .authLinks ul{
+  width: 100%;
+  display: flex;
   justify-content: flex-end;
+  align-items: center;
+}
+.home nav .authLinks ul li{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home nav .authLinks ul li a{
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.home nav .authLinks ul li img{
+  width: 30px; height: 30px;
+  border-radius: 100%;
+}
+.home nav .mobileMenuBtn{
+  display: none;font-size: 30px;
+  cursor: pointer;
+}
+@media only screen and (max-width: 450px){
+  .home nav .navLinks{
+    position: absolute;
+    right: -100%; top: 110%;
+    width: 50%; height: auto;
+    flex-direction: column;
+    text-align: center;
+    border-bottom-left-radius: 5px;
+    background: var(--themeColor);
+    box-shadow: var(--shadow);
+    transition: .3s ease-in-out;
+    z-index: 5;
+  }
+  .home nav .navLinks .nav_children{
+    flex-direction: column;
+    width: 100%;
+  }
+  .home nav .navLinks .nav_children ul{
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .home nav .navLinks .nav_children li,
+  .home nav .navLinks .nav_children li a{width: 100%;}
+  .home nav .mobileMenuBtn{display: flex;}
 }
 .home .mainWrapper {
   width: 100%;height: 90%;
@@ -190,8 +248,24 @@ code {
 }
 .gameUiWrapper .mainWrapper .wrapper{
   width: 100%;height: 100%;
+  text-transform: uppercase;
+  position: relative;
 }
-
+.gameUiWrapper .mainWrapper .wrapper
+.wrapperHeader{
+  position: absolute;
+  width: 100%; height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+}
+.gameUiWrapper .mainWrapper .wrapper
+.subWrapper{
+  width: 100%; height: 100%;
+  text-align: center;
+  text-transform: uppercase;
+}
 .game .navUlWrapper{
   width: 100%;height: 100%;
   display: flex;
@@ -741,7 +815,7 @@ code {
 .game .multiplayerHostSelect, 
 .game .multiplayerOnlineSceneTwo {
   position: relative;
-  width: 100%;height: 90%;
+  width: 100%;height: 80%;
 }
 .game .multiplayerHostSelect .setHost{
   width: 100%;height: 100%;
@@ -1062,6 +1136,7 @@ code {
 .profileInfoDisplay .profileInfo
 .profileValueWrapper .profileValue{
   font-size: 13px; width: 95%;
+  padding-left: 4%;
 }
 .game .settingsProfile 
 .profileInfoDisplay .profileInfo
@@ -1088,11 +1163,26 @@ code {
 .profileInfoDisplay .profileInfo
 .profileValueWrapper .winsAndLossesStats
 .winsAndLossesDisplay{
+  position: relative;
   width: 50%; height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   box-shadow: var(--shadow);
+}
+.game .settingsProfile 
+.profileInfoDisplay .profileInfo
+.profileValueWrapper .winsAndLossesStats 
+.winsAndLossesDisplay::before{
+  content: "";
+  position: absolute;
+  width: 100%; height: 100%;
+  display: flex; justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 15px;
+  transform: rotate(-20deg);
+  opacity: 0.2;
 }
 .game .settingsProfile 
 .profileInfoDisplay .profileInfo
@@ -1105,6 +1195,13 @@ code {
 .profileInfoDisplay .profileInfo
 .profileValueWrapper .winsAndLossesStats .winsDisplay{
   background: var(--winColor);
+  
+}
+.game .settingsProfile 
+.profileInfoDisplay .profileInfo
+.profileValueWrapper .winsAndLossesStats 
+.winsDisplay::before{
+  content: "wins";
 }
 .game .settingsProfile 
 .profileInfoDisplay .profileInfo
@@ -1112,6 +1209,12 @@ code {
   background: var(--loseColor);
   border-top-right-radius: inherit;
   border-bottom-right-radius: inherit;
+}
+.game .settingsProfile 
+.profileInfoDisplay .profileInfo
+.profileValueWrapper .winsAndLossesStats 
+.lossesDisplay::before{
+  content: "losses";
 }
 /* MultiPlayer Game  History Display */ 
 .game .settingsProfile 

@@ -1,9 +1,9 @@
-import React, { createContext } from 'react'
+import React, { createContext, useState } from 'react'
 
 export const GameContext = new createContext()
 
 const GameContextProvider = (props) => {
-    const Links = {
+    const GameUiLinks = {
         game : [
           {title: "HOW TO PLAY", to: "tutorial", id: 0},
           {title: "SINGLE PLAYER", to: "single-player", id: 1},
@@ -55,9 +55,20 @@ const GameContextProvider = (props) => {
         {difficulty : "wizard", agents : 6, time: 300, moves: 12, color: "purple", id: 6}
     ]
 
+    const [chosenDifficulty, setChosenDifficulty] = useState("")
+    const [hasSelectedDifficulty,  setHasSelectedDifficulty] = useState(false)
+
+    const insertDifficulty = (diff) => {
+      setChosenDifficulty(diff)
+      setHasSelectedDifficulty(true)
+    }
+
     return (
         <GameContext.Provider value={{
-            Links, Difficulties
+            GameUiLinks, Difficulties,
+            chosenDifficulty, setChosenDifficulty,
+            hasSelectedDifficulty,  setHasSelectedDifficulty,
+            insertDifficulty
         }}>
             {props.children}
         </GameContext.Provider>

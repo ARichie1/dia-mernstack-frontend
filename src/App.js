@@ -1,7 +1,6 @@
-import React, {Component} from "react"
+import React, { useContext} from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
-import GLOBAL from "./global/Global.js";
 import NavPage from "./components/reuseable/pages/NavPage.js";
 
 import TutorialPage from "./components/game_pages/TutorialPage.js"
@@ -40,80 +39,79 @@ import AudioSettings from "./components/settings_pages/AudioSettings"
 import DisplaySettings from "./components/settings_pages/DisplaySettings"
 import LanguageSettings from "./components/settings_pages/LanguageSettings"
 import ProfileSettings from "./components/settings_pages/ProfileSettings"
+import { GameContext } from "./contexts/GameContext.js";
 
-class App extends Component{ 
-  render() {
-    const { Links } = GLOBAL()
+const App = () => {
+    const { Links } = useContext(GameContext)
     
-    return (
-      <BrowserRouter>
-        <div className="App">
-          <Routes>
-            <Route  path="/" element={<Home />} >
-              <Route index element={<LandingPage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<SignUpPage />} />
+  return (
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route  path="/" element={<Home />} >
+            <Route index element={<LandingPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+          </Route>
+
+          <Route path="/game" element={<GameHome />} >
+            <Route index element={<NavPage links={Links.game}/>} />
+            <Route path="tutorial" element={<TutorialPage />} />
+            <Route path="more-games" element={<MoreGamesPage />} />
+            
+            <Route path="single-player" element={<SinglePlayerPage />}>
+              <Route index element={<NavPage links={Links.singleplayer}/>} />
+              <Route path="find-agents" element={<FindAgentsPage />} />
+              <Route path="story-mode" element={<StoryModePage />} />
+              <Route path="survival-mode" element={<SurvivalModePage />} />
             </Route>
 
-            <Route path="/game" element={<GameHome />} >
-              <Route index element={<NavPage links={Links.game}/>} />
-              <Route path="tutorial" element={<TutorialPage />} />
-              <Route path="more-games" element={<MoreGamesPage />} />
-              
-              <Route path="single-player" element={<SinglePlayerPage />}>
-                <Route index element={<NavPage links={Links.singleplayer}/>} />
-                <Route path="find-agents" element={<FindAgentsPage />} />
-                <Route path="story-mode" element={<StoryModePage />} />
-                <Route path="survival-mode" element={<SurvivalModePage />} />
+            <Route path="multiplayer" element={<MultiplayerPage />}>
+              <Route index element={<NavPage links={Links.multiplayer}/>} />
+
+              <Route path="local" element={<LocalPlayPage />} >
+                <Route index element={<NavPage links={Links.multiplayerLocal}/>} />
+                <Route path="host" element={<LocalPlayHostPage />} />
+                <Route path="join" element={<LocalPlayJoinPage />} />
               </Route>
 
-              <Route path="multiplayer" element={<MultiplayerPage />}>
-                <Route index element={<NavPage links={Links.multiplayer}/>} />
-
-                <Route path="local" element={<LocalPlayPage />} >
-                  <Route index element={<NavPage links={Links.multiplayerLocal}/>} />
-                  <Route path="host" element={<LocalPlayHostPage />} />
-                  <Route path="join" element={<LocalPlayJoinPage />} />
+              <Route path="online" element={<OnlinePlayPage />} >
+                <Route index element={<NavPage links={Links.multiplayerOnline}/>} />
+                <Route path="quick-play" element={<GamePage />} />
+                <Route path="challenge" element={<OnlineChallenge/>} >
+                  <Route index element={<NavPage links={Links.multiplayerOnlineChallenge}/>} />
+                  <Route path="host" element={<OnlinePlayHostPage />} />
+                  <Route path="join" element={<OnlinePlayJoinPage />} />
                 </Route>
-
-                <Route path="online" element={<OnlinePlayPage />} >
-                  <Route index element={<NavPage links={Links.multiplayerOnline}/>} />
-                  <Route path="quick-play" element={<GamePage />} />
-                  <Route path="challenge" element={<OnlineChallenge/>} >
-                    <Route index element={<NavPage links={Links.multiplayerOnlineChallenge}/>} />
-                    <Route path="host" element={<OnlinePlayHostPage />} />
-                    <Route path="join" element={<OnlinePlayJoinPage />} />
-                  </Route>
-                </Route>
-              </Route>
-
-              <Route path="in-game" element={<GamePage />}>
-                <Route path="single-player/:userid" element={<SinglePlayerGamePage />} />
-                <Route path="multiplayer/:userid" element={<MultiplayerGamePage />} />
-              </Route>
-
-              <Route path="settings" element={<SettingsPage />}>
-                <Route index element={<NavPage links={Links.settings}/>} />
-                <Route path="audio" element={<AudioSettings />} />
-                <Route path="display" element={<DisplaySettings />} />
-                <Route path="language" element={<LanguageSettings />} />
-                <Route path="profile" element={<ProfileSettings />} />
               </Route>
             </Route>
 
-            {/* <Route path="/users" element={<Users/>}>
-              <Route path=":userid" element={<UserDetails />} />
-              <Route path="admin" element={<Admin />} />
-            </Route> */}
-          
-            <Route path="*" element={<NoMatch />} />
-          </Routes>
-        </div>   
-      </BrowserRouter>
-    );
-  }
+            <Route path="in-game" element={<GamePage />}>
+              <Route path="single-player/:userid" element={<SinglePlayerGamePage />} />
+              <Route path="multiplayer/:userid" element={<MultiplayerGamePage />} />
+            </Route>
+
+            <Route path="settings" element={<SettingsPage />}>
+              <Route index element={<NavPage links={Links.settings}/>} />
+              <Route path="audio" element={<AudioSettings />} />
+              <Route path="display" element={<DisplaySettings />} />
+              <Route path="language" element={<LanguageSettings />} />
+              <Route path="profile" element={<ProfileSettings />} />
+            </Route>
+          </Route>
+
+          {/* <Route path="/users" element={<Users/>}>
+            <Route path=":userid" element={<UserDetails />} />
+            <Route path="admin" element={<Admin />} />
+          </Route> */}
+        
+          <Route path="*" element={<NoMatch />} />
+        </Routes>
+      </div>   
+    </BrowserRouter>
+  );
 }
 
 export default App;

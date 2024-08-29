@@ -1,8 +1,8 @@
-import React from "react";
-import GLOBAL from "../../global/Global";
+import React, { useContext } from "react";
+import { GameContext } from "../../contexts/GameContext";
 
 const StoryModePage = () => {
-    const { Difficulties } = GLOBAL()
+    const { Difficulties } = useContext(GameContext)
 
     let difficulties = Difficulties
 

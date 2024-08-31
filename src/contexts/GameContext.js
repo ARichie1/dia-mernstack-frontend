@@ -61,6 +61,8 @@ const GameContextProvider = (props) => {
     const insertDifficulty = (diff) => {
       setChosenDifficulty(diff)
       setHasSelectedDifficulty(true)
+      console.log(diff);
+      
     }
 
     return (

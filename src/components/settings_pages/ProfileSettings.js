@@ -29,7 +29,10 @@ const ProfileSettings = () => {
         <div className="settingsProfile wrapper">
             <h4 className="settingsHeader">Profile</h4>
             <ProfileImageSelector/>
-
+            <ProfileBiosAndSocials />
+            <ProfileAssets />
+            <ProfileSinglePlayerHistory />
+            <ProfileMultiplayerHistory />
             <CustomForm
                 formAttr={{title : 'User Update Form', 
                     class: "profileBox", width: "95%"}}  
@@ -43,12 +46,7 @@ const ProfileSettings = () => {
                 formInputs={passwordResetFormInputs} 
                 buttonAtrributes={{title: "Reset"}} 
             />
-
-            <ProfileBiosAndSocials />
-            <ProfileAssets />
-            <ProfileSinglePlayerHistory />
-            <ProfileMultiplayerHistory />
-
+            
             <div className="profileInfoDisplay profileHistoryReset profileBox">
                 <div className="profileHistoryResetButton deleteDisplay">🗑 Reset History</div>
             </div>

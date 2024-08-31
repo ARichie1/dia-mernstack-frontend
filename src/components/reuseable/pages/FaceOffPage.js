@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import DifficultySelector from "./DifficultySelector";
 import { GameContext } from "../../../contexts/GameContext";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 const FaceOffPage = ({player, opponent}) => {
     const [host, setHost] = useState(null)
@@ -16,6 +17,8 @@ const FaceOffPage = ({player, opponent}) => {
         buttonColor: "var(--themeColor)",
         buttonBackground: "transparent"
     })
+
+    const { profileImage, opponentProfileImage } = useContext(AuthContext)
 
     useEffect( () => {
         if (player.host) {
@@ -43,8 +46,8 @@ const FaceOffPage = ({player, opponent}) => {
         <div className="multiplayerFaceOffPage subWrapper">
             <div className="multiplayerFaceOff">
                 <div className="faceOffWrapper">
-                    <div className="playerFaceOffSide pic">
-                        <img src={`${player.imgSrc}`} className="hostImg" alt="" />
+                    <div className="playerFaceOffSide playersFaceOffSide pic">
+                        <img src={`../../../../assets/images/faces/${profileImage.name}`} className="hostImg" alt="" />
                         <p className="opponentImg">
                             You &nbsp;
                             {isPlayerHost && (<em> ( Host )</em>)}
@@ -54,8 +57,8 @@ const FaceOffPage = ({player, opponent}) => {
                     {!opponentConnected &&
                         <div className="waitingForOpponent pic">waiting...</div>}
                     {opponentConnected && 
-                        <div className="playerOpponentFaceOffSide pic">
-                            <img src={`${opponent.imgSrc}`}  className="opponentImg" alt="" />
+                        <div className="playerOpponentFaceOffSide playersFaceOffSide pic">
+                            <img src={`../../../../assets/images/faces/${opponentProfileImage.name}`}  className="opponentImg" alt="" />
                             <p className="opponentImg">
                                 {opponent.name} &nbsp;
                                 {isOpponentHost && (<em> ( Host )</em>)}
@@ -70,7 +73,7 @@ const FaceOffPage = ({player, opponent}) => {
                     </div>
                 )}
                 <div className="selectYourCode">
-                    <button>BUILD YOUR CODE</button>
+                    <button className="clkBtn">BUILD YOUR CODE</button>
                 </div>
             </div> 
             {showHostSettings.opened && (

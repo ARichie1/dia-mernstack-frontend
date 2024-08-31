@@ -1,10 +1,11 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 
 const GamePage = () => {
 
     return (
-        <div className="container">
-            <h2>GamePage</h2>
+        <div className="gamePage mainWrapper">
+            <Outlet />
         </div> 
     )
 }

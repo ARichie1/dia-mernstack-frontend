@@ -1,10 +1,11 @@
 import React from "react";
+import GameScene from "../reuseable/pages/GameScene";
 
 const SinglePlayerGamePage = () => {
 
     return (
-        <div className="container">
-            <h2>SinglePlayerGamePage</h2>
+        <div className="singlePlayerGamePage wrapper">
+            <GameScene />
         </div> 
     )
 }

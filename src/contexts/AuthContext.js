@@ -11,6 +11,8 @@ const AuthContextProvider = (props) => {
     const [keys, setKeys] = useState(9)
     const [tokens, setTokens] = useState(100)
     const [usdt, setUsdt] = useState(100)
+    const [opponentProfileImage, setOpponentProfileImage] = useState({name: "asta2.jpeg", pos: 300, id:3})
+    
 
     const toggleAuth = () => {
         setIsAuthenticated(!isAuthenticated)
@@ -24,6 +26,7 @@ const AuthContextProvider = (props) => {
             keys, setKeys,
             tokens, setTokens, 
             usdt, setUsdt,
+            opponentProfileImage, setOpponentProfileImage,
             isAuthenticated, toggleAuth 
         }}>
             {props.children}

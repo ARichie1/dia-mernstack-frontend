@@ -7,6 +7,7 @@ const SelectCodePage = () => {
         <div className="codeSelection inGame">
             <div className="instruction">
                 <h3>Select Your {4} Secret AGENTS</h3>
+                <p>Click &#128065; To View Code</p>
             </div>
             <Screen />
             <InGameCodeButtons />

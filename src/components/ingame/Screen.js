@@ -36,6 +36,7 @@ const Screen = ({showOpponentPredictions, showPlayerPredictions}) => {
 
     return (
         <div className="screen bottomContents">
+            {isOutGame && <div className="codeShieldToggler">&#128065;</div>}
             {isInGame && 
                 <div className='inGameScreen screenWrapper'>
                     <div className="screenHeader screenChild">

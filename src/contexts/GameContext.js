@@ -65,12 +65,52 @@ const GameContextProvider = (props) => {
       
     }
 
+    const [isInGame,  setIsInGame] = useState(false)
+    const [isOutGame,  setIsOutGame] = useState(true)
+
+    const switchGameLocation = (location) => {
+      if (location === "ingame"){
+        setIsInGame(true)
+        setIsOutGame(false)
+      }else if (location === "outgame"){
+        setIsInGame(false)
+        setIsOutGame(true)
+      }
+    }
+
+    const [showSendBtn, setShowSendBtn] = useState(true)
+    const [showSaveBtn, setShowSaveBtn] = useState(true)
+    const [showPlayBtn, setShowPlayBtn] = useState(false)
+
+    const handleSaveBtn = () => {
+      setShowSaveBtn(false)
+      setShowPlayBtn(true)
+    }
+    
+    const handlePlayBtn = () => {
+      switchGameLocation("ingame")
+
+      setShowPlayBtn(false)
+      setShowSaveBtn(true)
+      setShowSendBtn(true)
+    }
+
+    // const handleSendBtn = () => {}
+
+    const [codeSelection, setCodeSelection] = useState([]) 
+
     return (
         <GameContext.Provider value={{
             GameUiLinks, Difficulties,
             chosenDifficulty, setChosenDifficulty,
             hasSelectedDifficulty,  setHasSelectedDifficulty,
-            insertDifficulty
+            insertDifficulty,
+            isInGame, setIsInGame,
+            isOutGame,  setIsOutGame,
+            switchGameLocation,
+            showSaveBtn, showPlayBtn, showSendBtn,
+            handleSaveBtn, handlePlayBtn,
+            codeSelection, setCodeSelection
         }}>
             {props.children}
         </GameContext.Provider>

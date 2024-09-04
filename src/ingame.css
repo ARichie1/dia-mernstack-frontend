@@ -42,31 +42,6 @@
     width: 100%;height: 85%;
     border-radius: inherit;
 }
-
-.inGame{
-    position: relative;
-    border: 1px solid red;
-    width: 100%; height: 100%;
-}
-
-.btnLeft, .btnRight{
-    content: '>>';
-    position: absolute;top:37%;
-    width: 40px;height: 40px;
-    border-radius: 30%;
-    background: transparent;
-    color: var(--themeFontColor);
-    box-shadow: 0 0 0.5em #000 inset;
-    cursor: pointer;z-index: 7;
-    display: flex;justify-content: space-evenly;align-items: center;
-}
-.btnLeft:active, .btnRight:active{
-    transform: scale(0.9);
-}
-
-.btnLeft{content: '>>';position: absolute;left: 1%;}
-.btnRight{content: '<<';position: absolute;right: 1%;}
-
 .gameAlert{
     position: absolute;top:27%;
     left: 50%;transform: translateX(-50%);
@@ -180,28 +155,46 @@
     color: red;
     cursor: pointer;
 }
+
+.inGame{
+    position: relative;
+    border: 1px solid red;
+    width: 100%; height: 100%;
+}
+.inGame .inGameBtn{
+    border-radius: 3px;
+    font-size: 13px;
+    box-shadow: var(--shadow);
+    text-transform: uppercase;
+}
+/* ===== OPTIONS BUTTON START ===== */
+.guessesBtn{
+    content: '>>';
+    position: absolute;top: 45%;
+    width: 40px;height: 40px;
+    border-radius: 30%;
+    background: transparent;
+    color: var(--themeFontColor);
+    box-shadow: 0 0 0.5em #000 inset;
+    cursor: pointer;z-index: 7;
+    display: flex;justify-content: space-evenly;align-items: center;
+}
+.guessesBtn:active{transform: scale(0.9);}
+.opponentGuessesBtn{content: '>>';position: absolute;left: 1%;}
+.playerGuessesBtn{content: '<<';position: absolute;right: 1%;}
+
 /* =====POWERUPS START =============*/
+.inGameMenu,
 .powerUpsWrapper{
     position: absolute;
-    top:47%; right: 1%;
+    top:55%; right: 1%;
     width: 40px;
     display: flex;justify-content: center;
     align-items: center;flex-direction: column;
-    font-size: 14px;
-}
-/* .powerUpsLoader{
-    width: 40px; height: 40px;
-    display: flex;justify-content: center;
-    align-items: center;
-    border-radius: 30%;
     background: transparent;
-    color: var(--themeColor);
-    box-shadow: 0 0 0.5em #000 inset;
-    cursor: pointer;
+    color: var(--themeFontColor);
 }
-.powerUpsLoader img{
-    width: 100%; height: 100%;
-} */
+.inGameMenu{left: 1%;font-size: 70%;}
 .powerUps{
     width: 100%; height: auto;
     background: transparent;
@@ -210,17 +203,19 @@
     align-items: center;flex-direction: column;
     font-size: 14px;
 }
-
+.menuItem,
 .powerUp{
     position: relative;
     width: 100%;height: 40px;
     margin-bottom: 30%;
-    border-radius: 30%;
+    border-radius: 3px;
     background: transparent;
     color: var(--themeColor);
     box-shadow: 0 0 0.5em #000 inset;
-    font-size: 14px;
-    display: flex;justify-content: space-evenly;align-items: center;
+    font-size: 17px;
+    display: flex;justify-content: center;
+    align-items: center;
+    text-align: center;
     cursor: pointer;
     overflow: hidden;
 }
@@ -236,14 +231,6 @@
     color: #fff;
     box-shadow: var(--shadow);
     transition: 2s ease-in-out;
-}
-.powerUp .imgWrapper{
-    width: 100%; height: 100%;
-    box-shadow: var(--shadow);
-    border-radius: inherit;
-}
-.powerUp .imgWrapper img{
-    width: 100%; height: 100%;
 }
 @keyframes powerDrainer {
     0%{top: 0%;}
@@ -267,51 +254,105 @@
     font-weight: bold;z-index: -1;
 }
 /* =====POWERUPS END=============*/
-
-/* =====EXIT START========================== */
-.mainnGameAudio, .exit,
-.agentToSelect{
-    position: absolute;top:47%;
-    left: 1%;
-    width: 40px;height: 40px;
-    border-radius: 30%;
-    background: transparent;
-    color: var(--themeFontColor);
-    box-shadow: 0 0 0.5em #000 inset;
-    display: flex;justify-content: space-evenly;align-items: center;
-    cursor: pointer;z-index: 7;
-}
-.mainnGameAudio{top:57%;}
-.agentToSelect{top: 67%;}
 @media only screen and (max-width:420px) {
-    .btnLeft, .btnRight,
-    .powerUpsLoader, .powerUp,
-    .mainnGameAudio,
-    .exit, .agentToSelect{
+    .powerUp, .inGameMenu .menuItem{
         width: 30px;height: 30px;
         font-size: 80%;
     }  
 }
-/* =====EXIT END========================== */
+/* ===== OPTIONS BUTTON END ===== */
 
 /* ===== SCREEN START ===== */
 .screen{
     position: relative;
-    height: 40%;width: 100%;
+    height: 44%;width: 100%;
+    color: #000;
+    border: 1px solid rebeccapurple;
+    overflow: hidden;
+}
+.screenWrapper{
+    position: relative;
+    height: 100%;width: 100%;
     color: #000;
     border: 1px solid rebeccapurple;
     overflow: hidden;
 }
 /* The Screen Header Start */
 .screenHeader{
-    width: 100%;height: 15%;
+    width: 100%;height: 12%;
     display: flex;justify-content: space-around;align-items: center;
     font-weight: bold;
 }
 /* The Screen Header End */
+
+/* Code and Result Start */
+.codeAndResult{
+    position: relative;
+    width: 100%; height: 100%;
+    display: flex;align-items: center;
+    justify-content: space-evenly;
+    
+    border: 1px solid red;
+}
+.arrowWrapper{
+    position: relative;
+    width: 10%;
+    border: 1px solid goldenrod;
+}
+.outputsWrapper{
+    width: 100%; height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid red;
+}
+.outputs{
+    width: 45%; height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid red;
+}
+.innerWrapper{
+    position: relative;
+    width: 35px;height: 35px;
+    margin: 1%;
+    border-radius: 4px;
+}
+.codeImgWrapper{
+    margin: 0.5%;
+    box-shadow: var(--shadow);
+}
+.codeImgWrapper img{
+    position: absolute;
+    width: 100%;height: 100%;
+    border-radius: inherit;
+}
+.statusWrapper{
+    display: flex;justify-content: center;align-items: center;
+    background-size:100%, 1em 1em;
+}
+.statusText{
+    position: absolute;
+    width: 100%; height: 100%;
+    display:flex;justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #fff;
+    z-index: 1;
+}
+.statusEmoji{
+    font-size: 25px;
+    opacity: 0.2;
+}
+
+.dead{background: radial-gradient(rgb(26, 26, 26),black);}
+.injured{background: radial-gradient(red,black);}
+.alive{background: radial-gradient(green,black);}
+
 /* The Prediction Start */
 .predictions{
-    height: 85%;width: 100%;
+    height: 88%;width: 100%;
     display: flex;justify-content: space-around;
     align-items: center;
     color: rgb(175, 175, 175);
@@ -332,15 +373,27 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    /* transition: 2s; */
+    transition: 2s;
+}
+.screen_display{
+    background-image: linear-gradient(
+        to right bottom,
+        rgba(255, 255, 255, 0.4),
+        rgba(255, 255, 255, 0.1)
+    );
+    backdrop-filter: blur(30px);
+    box-shadow: var(--shadow);
 }
 .opponentPredictions{left: -100%;overflow-y: scroll;}
 .currentPrediction{left: 0%; border: 1px solid blue;}
-.yourPredictions{right: -100%;overflow-y: scroll;}
+.playerPredictions{right: -100%;overflow-y: scroll;}
+.display::-webkit-scrollbar{background: inherit}
+.display::-webkit-scrollbar-thumb{background: var(--themeColor);border-radius: 20px;box-shadow: var(--shadow);cursor: pointer;border-radius: 20px;}
+.display::-webkit-scrollbar-button{background: var(--themeFontColor);height: 2%;border-radius: 20%;}
 
 .predictions .predictionResults ol{width: 100%;height: 100%;} 
 .predictions .predictionResults ol li{
-    width: 100%;height: calc(100%/4);
+    width: 100%;height: calc(100%/3);
     position: relative;
     color: var(--themeFontColor);
 }
@@ -364,7 +417,7 @@
     width: 100%;height: 100%;
     border: none;outline: none; 
     background: var(--themeColor);
-    display: none;
+    /* display: none; */
 }
 .activePrediction .activeGuess .codeout{
     width: 100%;height: 100%;
@@ -372,14 +425,6 @@
     align-items: center;
     border: 1px solid greenyellow;
 }
-.activePrediction .activeGuess .codeout .codediv{
-    position: relative;
-    width: 35px;height: 35px;
-    margin: 0.5%;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-}
-.activePrediction .codeout img{width: 100%;height: 100%;}
 /* Active Prediction End */
 
 /* Hint Prediction Start */
@@ -391,52 +436,47 @@
     align-items: center;
 }
 /* Hint Prediction End  */
+
+@media only screen and (min-width:450px) {
+    .currentPrediction .innerWrapper{
+        width: 50px;height: 50px;
+    }
+    
+}
+
 /* The Prediction End  */
 /* ==========THE SCREEN END================== */
 
 /* ==========THE CODED IMAGES START========== */
 .codedImages{
-    top: 38%;left: 0%;
-    height: 60%;width: 100%;
+    margin-left: 10%;
+    height: 56%;width: 80%;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-    border: 1px solid green;
 }
-/* ==========THE SOLDIERS START========== */
 .agents{
-    height: 100%;width: 100%;
+    width: 100%;height: 100%;
     position: relative;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 1%;
 }
-/* ==========THE BATCHES START========== */
-.agents .batch{
-    height: 25%;width: 100%;
-    display: flex;align-items: center;
-    justify-content: space-evenly;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: bold;
-    cursor: pointer;
+.agents li{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; height: 100%;
 }
-.agents .batch1{top:2.5%}
-.agents .batch2{top:27.5%;}
-.agents .batch3{top:52.5%;}
-.agents .batch4{top:77.5%;}
-
 .agents button{
-    position: relative;width: 3.5em;height: 3.5em;
+    position: relative;width: 5.5em;height: 5.5em;
     border-radius: 25%;border: none;
-    box-shadow: var(--shadow);
     background: transparent;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-weight: bolder;font-size: larger;
     cursor: pointer;
     opacity: 0.6;
-}
-@media only screen and (max-width:420px) {
-    .agents button{
-        width: 2.5em;height: 2.5em;
-    }
 }
 .agents button:active{
     transform: scale(0.9);
@@ -445,14 +485,13 @@
     position: absolute;
     top: 0%;left: 2% !important;
     width: 98%;height: 99%;z-index: -1;
-    border-radius: 25%;
+    border-radius: inherit;
     box-shadow: var(--shadow);
 }
 .agents .numbtn .clickNumber{
     position: absolute;
     top: -10%;right: -10%;
     width: 30%;height: 30%;
-    border-radius: 100%;
     background: var(--themeColor);
     box-shadow: var(--shadow);
     font-size: 15px;
@@ -463,10 +502,8 @@
 
 /* =====RESET BUTTON START========= */
 .agents .numbtnReset{
-    padding: 2% auto;
-    color: #111;
+    padding: 2% auto;color: #111;
     background:linear-gradient(75deg, #333, var(--themeColor));
-    box-shadow: var(--shadow);
     border: none;outline: none;
     opacity: 1;
 }
@@ -484,54 +521,50 @@
     z-index: -100;
 }
 /* =====SEND BUTTON END======== */
-/* ==========THE BATCHES END========== */
-/* ==========THE SOLDIERS END============ */
+@media only screen and (max-width:450px) {
+    .codedImages{margin-left: 12%;width: 76%;} 
+    .agents button{
+        width: 5em;height: 5em;
+    }
+}
 /* ==========THE CODED IMAGES END=========== */
 /* ==========CONTAINER END=======================*/
 
 
 
 /* =====PLAYER CODE SELECTION START===== */
-.playerCodeSelection{
-    width: 100%;height: 100%;
-    margin-top: 10%;
-    display: none;
-}
-.playerCodeSelection .selection{
-    position: absolute;
-    height: 25%;width: 100%;
-    left: 50%;transform: translateX(-50%);
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-direction: column;
-}
-.playerCodeSelection .instruction{
-    margin-top: 60% auto;
-    text-align: center;
-}
-.playerCodeSelection .playerSelection{
+.codeSelection{
     position: relative;
-    width: 80%;height: 20%;
-    border: none;outline: none;
-}
-
-.playerCodeSelection .playerSelection .codeout{
-    position: absolute;
-    border: 2px solid gray;
     width: 100%;height: 100%;
+    text-transform: uppercase;
+}
+.codeSelection .instruction{
+    width: 100%;height: 10%;
     display: flex;justify-content: center;
     align-items: center;
+}
+.codeSelection .screen{
+    width: 100%;height: 20%;
+}
+.codeSelection .screen .codeout{
+    width: 100%;
+}
+.codeSelection .screen .codeout .codeImgWrapper {
+    width: 50px; height: 50px;
+}
+.codeSelection .codedImages{
+    height: 70%;
+}
+.codeSelection .playerSelection{
+    position: relative;
+    width: 100%;height: 80%;
     border: none;outline: none;
 }
-.playerCodeSelection .playerSelection .codeout .codediv{
+.codeSelection .playerSelection .codeAndResult{
     position: relative;
-    width: 35px;height: 35px;
-    margin: 0.5%;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
+    width: 100%;height: 100%;
+    border: none;outline: none;
 }
-.playerCodeSelection .playerSelection .codeout img{width: 100%;height: 100%;border-radius: 10px;}
 /* =====SELECTION END================= */
 
 /* =====RESET BUTTON START========= */
@@ -541,6 +574,7 @@
     background:linear-gradient(75deg, #333, var(--themeColor));
     box-shadow: var(--shadow);
     border: none;outline: none;
+    font-size: 70%;
     opacity: 1;
 }
 /* =====RESET BUTTON END========= */
@@ -567,3 +601,4 @@
     display: none;
 }
 /* =====PLAYER CODE SELECTION END===== */
+

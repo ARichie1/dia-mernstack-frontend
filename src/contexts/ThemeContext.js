@@ -14,9 +14,6 @@ const ThemeContextProvider = (props) => {
     const [appColors, setAppColors] = useState(defaultColors)
     const [isLightMode, setIsLightMode] = useState(false)
 
-    useEffect( () => {
-        console.log(isLightMode);
-    }, [isLightMode])
 
     const toggleThemeMode = (mode) => {
         const modeUpdate = appColors.map(cc => { return cc })
@@ -32,7 +29,6 @@ const ThemeContextProvider = (props) => {
             }
         })
         setAppColors(modeUpdate)
-        console.log(appColors);    
     }
 
     const changeCustomizableColors = (name, color) => {

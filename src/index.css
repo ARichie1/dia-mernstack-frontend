@@ -127,7 +127,7 @@ li{text-decoration: none; list-style: none;}
   display: none;font-size: 30px;
   cursor: pointer;
 }
-@media only screen and (max-width: 450px){
+@media only screen and (max-width: 480px){
   .home nav .navLinks{
     position: absolute;
     right: -100%; top: 110%;

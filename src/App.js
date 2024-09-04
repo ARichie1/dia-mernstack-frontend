@@ -40,6 +40,7 @@ import DisplaySettings from "./components/settings_pages/DisplaySettings"
 import LanguageSettings from "./components/settings_pages/LanguageSettings"
 import ProfileSettings from "./components/settings_pages/ProfileSettings"
 import { GameContext } from "./contexts/GameContext.js";
+import SelectCodePage from "./components/ingame/SelectCodePage.js";
 
 const App = () => {
     const { GameUiLinks } = useContext(GameContext)
@@ -71,6 +72,8 @@ const App = () => {
             <Route path="multiplayer" element={<MultiplayerPage />}>
               <Route index element={<NavPage GameUiLinks={GameUiLinks.multiplayer}/>} />
 
+              <Route path="select-code" element={<SelectCodePage />} />
+             
               <Route path="local" element={<LocalPlayPage />} >
                 <Route index element={<NavPage GameUiLinks={GameUiLinks.multiplayerLocal}/>} />
                 <Route path="host" element={<LocalPlayHostPage />} />
@@ -92,7 +95,7 @@ const App = () => {
               <Route path="single-player/:userid" element={<SinglePlayerGamePage />} />
               <Route path="multiplayer/:userid" element={<MultiplayerGamePage />} />
             </Route>
-
+ 
             <Route path="settings" element={<SettingsPage />}>
               <Route index element={<NavPage GameUiLinks={GameUiLinks.settings}/>} />
               <Route path="audio" element={<AudioSettings />} />

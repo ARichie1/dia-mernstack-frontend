@@ -11,7 +11,8 @@ const InGameCodeButtons = () => {
     const {
         isInGame, isOutGame,
         showPlayBtn, showSaveBtn, showSendBtn,
-        handlePlayBtn, handleSaveBtn, handleSendBtn, codeSelection
+        handlePlayBtn, handleSaveBtn, handleSendBtn, 
+        codeSelection
     }  = useContext(GameContext)
 
     const {activePrediction} = useContext(InGameContext)
@@ -21,18 +22,28 @@ const InGameCodeButtons = () => {
     let codeButtonList = codeButtons.sort((a, b) => a - b).map(cb => {
         return (
             <li key={cb.id}>
-            <button 
-                className={`${cb.type} inGameBtn`} 
-                data-sound={`../sounds/${cb.id}.wav"`} 
-                type="button" key={cb.id}
-                onClick={() => {
-                    if (cb.type === "numBtn") {
-                        handleCodeButton(cb.value, cb.id) 
-                    }else {handleCodeReset()}
-                }}
-                style={{opacity : `${cb.active ? "0.2" : "1"}`}}>
-                {cb.type === "numBtn" ? <img id={`_${cb.id}_`} src={`../../../assets/images/faces/pa_${cb.value}.png`} alt={`pa_${cb.value}.png`}/> : <p>{cb.value}</p>}
-            </button></li>
+                {cb.type === "numBtn" ?  
+                    <div className={
+                        cb.disabled ? "disabledButton" : "enabledButton"}
+                        >✖</div> : null}
+                {cb.type === "numBtn" ? 
+                    (<button 
+                        className={`${cb.type} inGameBtn`} 
+                        data-sound={`../sounds/${cb.id}.wav"`} 
+                        type="button" key={cb.id}
+                        onClick={() => handleCodeButton(cb.value, cb.id)}
+                        style={{opacity : `${cb.active ? "1" : "0.2"}`}}>
+                        <img id={`_${cb.id}_`} src={`../../../assets/images/faces/pa_${cb.value}.png`} alt={`pa_${cb.value}.png`}/>
+                    </button>) : (
+                    <button 
+                        className={`${cb.type} inGameBtn`} 
+                        data-sound={`../sounds/${cb.id}.wav"`} 
+                        type="button" key={cb.id}
+                        onClick={() => handleCodeReset()}>
+                        <p>{cb.value}</p>
+                    </button>)
+                }
+            </li>
         )
     })
 

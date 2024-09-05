@@ -55,7 +55,8 @@ const GameContextProvider = (props) => {
         {difficulty : "wizard", agents : 6, time: 300, moves: 12, color: "purple", id: 6}
     ]
 
-    const [chosenDifficulty, setChosenDifficulty] = useState("")
+    const defaultDifficulty = Difficulties[3]
+    const [chosenDifficulty, setChosenDifficulty] = useState(defaultDifficulty)
     const [hasSelectedDifficulty,  setHasSelectedDifficulty] = useState(false)
 
     const insertDifficulty = (diff) => {
@@ -64,6 +65,8 @@ const GameContextProvider = (props) => {
       console.log(diff);
       
     }
+
+    const [maxSelection, setMaxSelection] = useState(false)
 
     const [isInGame,  setIsInGame] = useState(false)
     const [isOutGame,  setIsOutGame] = useState(true)
@@ -93,8 +96,8 @@ const GameContextProvider = (props) => {
       console.log(selectedCodes);
     }
 
-    const [showSendBtn, setShowSendBtn] = useState(true)
-    const [showSaveBtn, setShowSaveBtn] = useState(true)
+    const [showSendBtn, setShowSendBtn] = useState(false)
+    const [showSaveBtn, setShowSaveBtn] = useState(false)
     const [showPlayBtn, setShowPlayBtn] = useState(false)
 
     const handleSaveBtn = (selection) => {
@@ -107,11 +110,21 @@ const GameContextProvider = (props) => {
       switchGameLocation("ingame")
       setShowPlayBtn(false)
       setShowSaveBtn(true)
-      setShowSendBtn(true)
+      setMaxSelection(false)
     }
 
     const handleSendBtn = (selection) => {
       sendSelectedCode(selection)
+    }
+
+    const handleInsertButtons = (selectionLength) => {
+      if (chosenDifficulty.agents === (selectionLength)) {
+        isOutGame ? setShowSaveBtn(true) : setShowSendBtn(true)
+        setMaxSelection(true)
+      }else{
+        isOutGame ? setShowSaveBtn(false) : setShowSendBtn(false)
+        setMaxSelection(false)
+      }
     }
 
     return (
@@ -120,11 +133,14 @@ const GameContextProvider = (props) => {
             chosenDifficulty, setChosenDifficulty,
             hasSelectedDifficulty,  setHasSelectedDifficulty,
             insertDifficulty,
+            maxSelection, setMaxSelection,
             isInGame, setIsInGame,
             isOutGame,  setIsOutGame,
             switchGameLocation,
-            showSaveBtn, showPlayBtn, showSendBtn,
+            showSaveBtn, showPlayBtn, 
+            setShowSendBtn, showSendBtn,
             handleSaveBtn, handlePlayBtn, handleSendBtn,
+            handleInsertButtons,
             codeSelection, setCodeSelection,
             getSelectedCode
         }}>

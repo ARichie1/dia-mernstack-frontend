@@ -233,3 +233,12 @@ export default GameScene
             // console.log(codeButtons);
             // codeButtons = sortArrayById(codeButtons)
             // console.log(codeButtons);
+
+
+
+            setTimeout(() => {
+                isOutGame ? 
+                    console.log(codeSelection.length)
+                    : console.log(activePrediction.length)
+            }, 1000);
+            

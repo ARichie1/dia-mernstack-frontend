@@ -78,26 +78,41 @@ const GameContextProvider = (props) => {
       }
     }
 
+    const [codeSelection, setCodeSelection] = useState([]) 
+
+    const getSelectedCode = (selection) => {
+      let selectedCodes = []
+      selection.forEach(agent => {
+        selectedCodes = [...selectedCodes, agent.btn_id]
+      })
+      return selectedCodes
+    }
+
+    const sendSelectedCode = (selection) => {
+      let selectedCodes = getSelectedCode(selection)
+      console.log(selectedCodes);
+    }
+
     const [showSendBtn, setShowSendBtn] = useState(true)
     const [showSaveBtn, setShowSaveBtn] = useState(true)
     const [showPlayBtn, setShowPlayBtn] = useState(false)
 
-    const handleSaveBtn = () => {
+    const handleSaveBtn = (selection) => {
       setShowSaveBtn(false)
       setShowPlayBtn(true)
+      sendSelectedCode(selection)
     }
     
-    const handlePlayBtn = () => {
+    const handlePlayBtn = (action) => {
       switchGameLocation("ingame")
-
       setShowPlayBtn(false)
       setShowSaveBtn(true)
       setShowSendBtn(true)
     }
 
-    // const handleSendBtn = () => {}
-
-    const [codeSelection, setCodeSelection] = useState([]) 
+    const handleSendBtn = (selection) => {
+      sendSelectedCode(selection)
+    }
 
     return (
         <GameContext.Provider value={{
@@ -109,8 +124,9 @@ const GameContextProvider = (props) => {
             isOutGame,  setIsOutGame,
             switchGameLocation,
             showSaveBtn, showPlayBtn, showSendBtn,
-            handleSaveBtn, handlePlayBtn,
-            codeSelection, setCodeSelection
+            handleSaveBtn, handlePlayBtn, handleSendBtn,
+            codeSelection, setCodeSelection,
+            getSelectedCode
         }}>
             {props.children}
         </GameContext.Provider>

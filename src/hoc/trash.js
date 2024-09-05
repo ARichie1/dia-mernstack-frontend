@@ -207,3 +207,29 @@ export default GameScene
                 {value: "paid_wakanda", btn_id: 2, id: 2},
                 {value: "paid_wakanda", btn_id: 6, id: 3}
             ]) 
+
+
+            let codeButtons = [
+                {value: "cyber_bully", type: "numBtn", active: false, clickState: 0, id: 0},
+                {value: "naval_fireman", type: "numBtn", active: false, clickState: 0, id: 1},
+                {value: "naval_chef", type: "numBtn", active: false, clickState: 0, id: 2},
+                {value: "xmas_gangster", type: "numBtn", active: false, clickState: 0, id: 3},
+                {value: "birthday_zombie", type: "numBtn", active: false, clickState: 0, id: 4},
+                {value: "devil_wakanda", type: "numBtn", active: false, clickState: 0, id: 5},
+                {value: "paid_tiger", type: "numBtn", active: false, clickState: 0, id: 6},
+                {value: "paid_wakanda", type: "numBtn", active: false, clickState: 0, id: 7},
+                {value: "savage_vikings", type: "numBtn", active: false, clickState: 0, id: 8},
+                {value: "reset", type: "numBtnReset", active: false, clickState: 0, id: 10},
+                {value: "red_indian", type: "numBtn", active: false, clickState: 0, id: 9}
+            ]
+
+            const sortArrayById = (array) => {
+                let sortedArray = array
+                sortedArray.forEach(element => {
+                    sortedArray[element.id] = element
+                })
+                return sortedArray
+            }
+            // console.log(codeButtons);
+            // codeButtons = sortArrayById(codeButtons)
+            // console.log(codeButtons);

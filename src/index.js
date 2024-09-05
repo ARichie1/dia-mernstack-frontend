@@ -9,6 +9,7 @@ import AppGlobalVariableContextProvider from './contexts/AppGlobalVariableContex
 import ThemeContextProvider from './contexts/ThemeContext';
 import GameContextProvider from './contexts/GameContext';
 import InGameContextProvider from './contexts/InGameContext';
+import CodeCreationContextProvider from './contexts/CodeCreationContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,7 +19,9 @@ root.render(
         <ThemeContextProvider>
           <GameContextProvider>
             <InGameContextProvider>
-              <App />
+              <CodeCreationContextProvider>
+                <App />
+              </CodeCreationContextProvider>
             </InGameContextProvider>
           </GameContextProvider>
         </ThemeContextProvider>

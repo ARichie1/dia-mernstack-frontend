@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 
 export const InGameContext = new createContext()
 
@@ -77,12 +77,34 @@ const InGameContextProvider = (props) => {
         id: 1}
     ]) 
 
+    const updatePlayerPredictionsList = () => {
+        setPlayerPredictions([...playerPredictions, currentPrediction])
+    }
+
+    const sendActivePrediction = () => {
+        setCurrentPrediction({
+            codes : activePrediction,
+            results : []
+        })
+        console.log(currentPrediction);
+                
+        // setPlayerPredictions([...playerPredictions, currentPrediction])
+        // updatePlayerPredictionsList()
+    }
+
+    useEffect(() => {
+        updatePlayerPredictionsList()
+    }, [currentPrediction])
+
+
+
     return (
         <InGameContext.Provider value={{
             activePrediction, setActivePrediction,
             currentPrediction, setCurrentPrediction,
             playerPredictions, setPlayerPredictions,
-            opponentPredictions, setOpponentPredictions
+            opponentPredictions, setOpponentPredictions,
+            sendActivePrediction,
         }}>
             {props.children}
         </InGameContext.Provider>

@@ -15,7 +15,7 @@ const InGameCodeButtons = () => {
         codeSelection
     }  = useContext(GameContext)
 
-    const {activePrediction} = useContext(InGameContext)
+    const {activePrediction, sendActivePrediction} = useContext(InGameContext)
 
     const {codeButtons,handleCodeButton, handleCodeReset} = useContext(CodeCreationContext)
 
@@ -61,7 +61,11 @@ const InGameCodeButtons = () => {
                                     className={`numBtnSend inGameBtn`} 
                                     data-sound={`../sounds/0.wav`} 
                                     type="button"
-                                    onClick={() => handleSendBtn(activePrediction)}>
+                                    onClick={() => {
+                                        handleSendBtn(activePrediction)
+                                        sendActivePrediction()
+                                        handleCodeReset()
+                                    }}>
                                     <p>Send</p>
                             </button></div>
                         }

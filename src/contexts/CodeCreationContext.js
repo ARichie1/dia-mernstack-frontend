@@ -6,7 +6,9 @@ export const CodeCreationContext = new createContext()
 
 const CodeCreationContextProvider = (props) => {
     const {maxSelection, setMaxSelection,
-        isOutGame, codeSelection, setCodeSelection,
+        isOutGame, 
+        setShowSaveBtn, setShowPlayBtn,setShowSendBtn, 
+        codeSelection, setCodeSelection,
         handleInsertButtons
     }  = useContext(GameContext)
     const {activePrediction, 
@@ -105,6 +107,13 @@ const CodeCreationContextProvider = (props) => {
             : setActivePrediction([])
 
         resetCodeButtons()
+
+        if( isOutGame ){
+            setShowPlayBtn(false)
+            setShowSaveBtn(true)
+        }else{
+            setShowSendBtn(false)
+        }
     }
 
     let codeButtons = getCodeButtons()

@@ -10,10 +10,16 @@
   /* --themeMode : #0e0e0e; */
   --shadow : 0 0 0.5em #000a inset;
   /* --shadow : 0 0 0.5em #ffffffaa inset; */
+  --glass : linear-gradient(
+        to right bottom,
+        rgba(255, 255, 255, 0.4),
+        rgba(255, 255, 255, 0.1)
+    );
   --statusText : flex; --emoji : flex;
   --country : flex; --rank : flex;
   --playerColor: gold; --opponentColor: silver;
   --winColor : #42e64a; --loseColor : #e92a2a;
+  --disabled: #f35a5a;
 }
 
 * {margin: 0;padding: 0;box-sizing: border-box;
@@ -189,7 +195,7 @@ li{text-decoration: none; list-style: none;}
 /* ===== Game Home ======================= */
 .game {
   width: 100%; height: 98%; 
-  border: 2px solid var(--themeColor);;
+  /* border: 2px solid var(--themeColor);; */
 }
 .dead{background: radial-gradient(rgb(26, 26, 26),black);}
 .injured{background: radial-gradient(red,black);}
@@ -197,10 +203,11 @@ li{text-decoration: none; list-style: none;}
 
 /* =====Game Header Start ==================== */
 .game .gameHeader{
-  width: 100%; height: 10%;
-  border: 2px solid var(--themeColor);
-  display: block;
   position: relative;
+  width: 100%; height: 10%;
+  display: block;padding: 1%;
+  padding-left: 2%;
+  box-shadow: var(--shadow);
 }
 .game .gameHeader .navBlock{
   position: absolute;
@@ -227,6 +234,7 @@ li{text-decoration: none; list-style: none;}
 }
 .game .gameHeader .gameHeaderInner h3 a{
   color: var(--themeColor);
+  color: #000;
 }
 .game .gameHeader .gameHeaderInner ul{
   width: 70%; height: 100%;
@@ -246,6 +254,7 @@ li{text-decoration: none; list-style: none;}
   display: flex;
   align-items: center; justify-content: center;
   cursor: pointer;
+  color: #000;
 }
 .game .gameHeader .gameHeaderInner ul li a img{
   width: 100%; height: 100%;

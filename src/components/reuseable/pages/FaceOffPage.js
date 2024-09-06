@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import DifficultySelector from "./DifficultySelector";
 import { GameContext } from "../../../contexts/GameContext";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 const FaceOffPage = ({player, opponent}) => {
     const [host, setHost] = useState(null)
@@ -73,7 +74,9 @@ const FaceOffPage = ({player, opponent}) => {
                     </div>
                 )}
                 <div className="selectYourCode">
-                    <button className="clkBtn">BUILD YOUR CODE</button>
+                    <div className="clkBtn">
+                        <Link to="/game/multiplayer/select-code">BUILD YOUR CODE</Link>
+                    </div>
                 </div>
             </div> 
             {showHostSettings.opened && (

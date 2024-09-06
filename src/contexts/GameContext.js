@@ -55,7 +55,7 @@ const GameContextProvider = (props) => {
         {difficulty : "wizard", agents : 6, time: 300, moves: 12, color: "purple", id: 6}
     ]
 
-    const defaultDifficulty = Difficulties[3]
+    const defaultDifficulty = Difficulties[1]
     const [chosenDifficulty, setChosenDifficulty] = useState(defaultDifficulty)
     const [hasSelectedDifficulty,  setHasSelectedDifficulty] = useState(false)
 
@@ -113,8 +113,12 @@ const GameContextProvider = (props) => {
       setMaxSelection(false)
     }
 
-    const handleSendBtn = (selection) => {
+    const handleSendBtn = (selection, func) => {
       sendSelectedCode(selection)
+
+      if (func) {
+        func()
+      }
     }
 
     const handleInsertButtons = (selectionLength) => {
@@ -137,8 +141,9 @@ const GameContextProvider = (props) => {
             isInGame, setIsInGame,
             isOutGame,  setIsOutGame,
             switchGameLocation,
-            showSaveBtn, showPlayBtn, 
-            setShowSendBtn, showSendBtn,
+            showSaveBtn, setShowSaveBtn, 
+            showPlayBtn, setShowPlayBtn,
+            showSendBtn, setShowSendBtn,
             handleSaveBtn, handlePlayBtn, handleSendBtn,
             handleInsertButtons,
             codeSelection, setCodeSelection,

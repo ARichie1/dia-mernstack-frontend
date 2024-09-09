@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const ProfileBiosAndSocials = () => {
+const ProfileBiosAndSocials = ({currentUser}) => {
     const bios = [
         {title: "email", value: "max...azer@gmail.com", id:1},
         {title: "username", value: "maxwell", id:2},

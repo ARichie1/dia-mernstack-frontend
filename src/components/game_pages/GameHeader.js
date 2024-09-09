@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Arrow from "../reuseable/controls/Arrow";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -8,9 +8,17 @@ const GameHeader = ({showNavBlock}) => {
     const navigate = useNavigate()
     const handleNavigate = () => {navigate(-1)}
 
-    const {keys, tokens, profileImage} = useContext(AuthContext)
     const {imgFolder} = useContext(AppGlobalVariableContext)
 
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [profileImage, setProfileImage] = useState({name: "gow.jpg", pos: 300, id:3})
+    const [rank, setRank] = useState(600)
+    const [team, setTeam] = useState("Mozart Squard")
+    const [keys, setKeys] = useState(9)
+    const [tokens, setTokens] = useState(100)
+    const [usdt, setUsdt] = useState(100)
+    const [opponentProfileImage, setOpponentProfileImage] = useState({name: "asta2.jpeg", pos: 300, id:3})
+    
     return (
         <div className="gameHeader">
             <div className="gameHeaderInner">

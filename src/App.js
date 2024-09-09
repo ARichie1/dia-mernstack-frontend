@@ -1,5 +1,5 @@
 import React, { useContext} from "react"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
 import NavPage from "./components/reuseable/pages/NavPage.js";
 
@@ -41,9 +41,11 @@ import LanguageSettings from "./components/settings_pages/LanguageSettings"
 import ProfileSettings from "./components/settings_pages/ProfileSettings"
 import { GameContext } from "./contexts/GameContext.js";
 import SelectCodePage from "./components/ingame/SelectCodePage.js";
+import { useAuthContext } from "./hooks/useAuthContext.js";
 
 const App = () => {
     const { GameUiLinks } = useContext(GameContext)
+    const { user } = useAuthContext()
     
   return (
     <BrowserRouter>
@@ -53,11 +55,11 @@ const App = () => {
             <Route index element={<LandingPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/login" element={user ? <Navigate to="/"/> : <LoginPage />} />
+            <Route path="/signup" element={user ? <Navigate to="/"/> : <SignUpPage />} />
           </Route>
 
-          <Route path="/game" element={<GameHome />} >
+          {user && <Route path="/game" element={<GameHome />} >
             <Route index element={<NavPage GameUiLinks={GameUiLinks.game}/>} />
             <Route path="tutorial" element={<TutorialPage />} />
             <Route path="more-games" element={<MoreGamesPage />} />
@@ -103,7 +105,7 @@ const App = () => {
               <Route path="language" element={<LanguageSettings />} />
               <Route path="profile" element={<ProfileSettings />} />
             </Route>
-          </Route>
+          </Route>}
 
           {/* <Route path="/users" element={<Users/>}>
             <Route path=":userid" element={<UserDetails />} />

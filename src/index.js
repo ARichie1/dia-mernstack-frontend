@@ -10,21 +10,24 @@ import ThemeContextProvider from './contexts/ThemeContext';
 import GameContextProvider from './contexts/GameContext';
 import InGameContextProvider from './contexts/InGameContext';
 import CodeCreationContextProvider from './contexts/CodeCreationContext';
+import UserContextProvider from './contexts/UserContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AuthContextProvider>
       <AppGlobalVariableContextProvider>
-        <ThemeContextProvider>
-          <GameContextProvider>
-            <InGameContextProvider>
-              <CodeCreationContextProvider>
-                <App />
-              </CodeCreationContextProvider>
-            </InGameContextProvider>
-          </GameContextProvider>
-        </ThemeContextProvider>
+        <UserContextProvider>
+          <ThemeContextProvider>
+            <GameContextProvider>
+              <InGameContextProvider>
+                <CodeCreationContextProvider>
+                  <App />
+                </CodeCreationContextProvider>
+              </InGameContextProvider>
+            </GameContextProvider>
+          </ThemeContextProvider>
+        </UserContextProvider>
       </AppGlobalVariableContextProvider>
     </AuthContextProvider>
   </React.StrictMode>

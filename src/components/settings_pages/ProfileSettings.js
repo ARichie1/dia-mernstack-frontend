@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomForm from "../reuseable/form_elements/CustomForm";
 import ProfileImageSelector from "../settings_pages/profile_boxes/ProfileImageSelector";
 import ProfileBiosAndSocials from "./profile_boxes/ProfileBiosAndSocials";
 import ProfileAssets from "./profile_boxes/ProfileAssets";
 import ProfileSinglePlayerHistory from "./profile_boxes/ProfileSinglePlayerHistory";
 import ProfileMultiplayerHistory from "./profile_boxes/ProfileMultiplayerHistory";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { useUserContext } from "../../hooks/useUserContext";
 
 const ProfileSettings = () => {
     const [email, setEmail] = useState("")
@@ -25,11 +27,13 @@ const ProfileSettings = () => {
         {type: 'password', name:'comfirmNewPassword', title: 'Comfirm New Passord', value: confirmNewPassword, setValue: setConfirmNewPassword, id: 2}
     ]
 
+    const {currentUser} = useUserContext()
+    
     return (
         <div className="settingsProfile wrapper">
             <h4 className="settingsHeader">Profile</h4>
-            <ProfileImageSelector/>
-            <ProfileBiosAndSocials />
+            {/*<ProfileImageSelector/>*/}
+            <ProfileBiosAndSocials currentUser={currentUser}/>
             <ProfileAssets />
             <ProfileSinglePlayerHistory />
             <ProfileMultiplayerHistory />

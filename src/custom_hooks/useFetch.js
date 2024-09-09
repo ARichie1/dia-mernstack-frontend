@@ -1,37 +1,40 @@
 import React, { useState, useEffect } from "react";
+import { useAuthContext } from "../hooks/useAuthContext";
 
-const useFetch = (url) => {
+const useFetch = (url, method) => {
     const [data, setData] = useState(null)
     const [isPending, setIsPending] = useState(true)
     const [error, setError] = useState(null)
 
-    useEffect( () => {
-        const abortCont = new AbortController()
-        setTimeout(() => {
-            fetch(url, { signal: abortCont.signal })
-            .then(res => {
-                if (!res.ok) {
-                throw Error('Could not fetch data from that resourse') 
+    const {user} = useAuthContext()
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const response = await fetch(url, {
+                method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
                 }
-                return res.json()
             })
-            .then(data => {
-                setData(data)
+            if (!response.ok) {
+                const json = await response.json()
+                setIsPending(false)
+                setError(json) 
+                throw Error('Could not fetch data from that resourse')
+            }
+
+            if (response.ok) {
+                const json = await response.json()
+                setData(json)
                 setIsPending(false)
                 setError(null)
-            })
-            .catch(err => {
-                if (err.name === "AbortError") {
-                    console.log("fetch aborted");
-                } else {
-                    setIsPending(false)
-                    setError(err.message)   
-                }
-            })
-        }, 1000);
+            }
+        }   
 
-        return () => abortCont.abort();
-    }, [url])
+        if (user) fetchUser()
+        
+    }, [url, method, user])
 
     return { data, isPending, error}
 }

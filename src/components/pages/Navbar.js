@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { NavLink} from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { useLogout } from "../../hooks/useLogout";
 
 const Navbar = (props) => {
     const [mobileMenuPos, setMobileMenuPos] = useState("-100%")
@@ -8,8 +9,12 @@ const Navbar = (props) => {
         setMobileMenuPos(mobileMenuPos === "-100%" ? "0%" : "-100%")
     }
 
-    const [user, setUser] = useState(true)
-    const { profileImage } = useContext(AuthContext)
+    const { user } = useAuthContext()
+    const [profileImage, setProfileImage] = useState({name: "gow.jpg", pos: 300, id:3})
+
+    const { logout } = useLogout()
+    const handleLogOut = () => { logout() }
+
     return (
         <nav className="landing_nav">
             <div className="brand_logo nav_children">
@@ -32,12 +37,10 @@ const Navbar = (props) => {
                             <li>
                                 <NavLink to="/game/settings/profile">
                                     <img src={`../../../assets/images/faces/${profileImage.name}`} alt="profileimage" /> 
-                                    &nbsp; <p>Maxx400</p>
+                                    &nbsp; <p>{user.email}</p>
                                 </NavLink>
                             </li>
-                            <li onClick={() => setUser(false)}>
-                                <NavLink to="">Log Out</NavLink>
-                            </li>
+                            <li onClick={handleLogOut}>Log Out</li>
                         </ul>)}
                 </div>
             </div>

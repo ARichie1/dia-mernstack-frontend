@@ -1,20 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useUserContext } from "../../../hooks/useUserContext";
 
 const ProfileSinglePlayerHistory = () => {
-    const gamePlaySocials = [
-        {title: "rank", value: 700, badge: "silver", id:1},
-        {title: "team", value: "mozart squad", badge: "vice-captain", id:2}
-    ]
-    const singlePlayerGamePlayHistories = [
-        {title: "vs computer", gameplayed: 50, wins: 36, losses:14, id:1},
-        {title: "survival mode", gameplayed: 10, wins: 2, losses:7, id:2},
-        {title: "story mode", gameplayed: 22, wins:22, losses:50, id:3},
-    ]
+    const {gamePlaySocials, singlePlayerGamePlayHistories} = useUserContext()
 
-    const gamePlaySocialsList = gamePlaySocials.map(social => {
+    const gamePlaySocialsList = gamePlaySocials ? gamePlaySocials.map(social => {
         return (
-            <div className="profileGamePlaySocial profileInfo" key={social.id}>
+            <div className="profileGamePlaySocial profileInfo" key={Math.random()}>
                 <p className="profileInfoTitle">{social.title}</p>
                 <div className="profileValueWrapper">
                     <p className="profileValue">{social.value}</p>
@@ -24,11 +17,11 @@ const ProfileSinglePlayerHistory = () => {
                 </div>
             </div>
         )
-    })
+    }) : null
 
-    const singlePlayerGamePlayHistoriesList = singlePlayerGamePlayHistories.map(sgph => {
+    const singlePlayerGamePlayHistoriesList = singlePlayerGamePlayHistories ? singlePlayerGamePlayHistories.map(sgph => {
         return ( 
-            <div className="profileSinglePlayerGamePlayHistory profileInfo" key={sgph.id}>
+            <div className="profileSinglePlayerGamePlayHistory profileInfo" key={Math.random()}>
                 <p className="profileInfoTitle">{sgph.title}</p>
                 <div className="profileValueWrapper">
                     <div className="winsAndLossesStats">
@@ -39,7 +32,7 @@ const ProfileSinglePlayerHistory = () => {
                 </div>
             </div>
         )
-    })
+    }) : null
 
     return (          
         <div className="profileInfoDisplay profileSingleGamePlayHistory profileBox">

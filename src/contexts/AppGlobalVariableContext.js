@@ -7,15 +7,15 @@ const AppGlobalVariableContextProvider = (props) => {
     const imgFolder = "../../../assets/images/faces/"
 
     const [defaultImages, setDefaultImages] = useState([
-        {name: "hulk.jpg", pos: 200, id:0}, 
-        {name: "gow.jpg", pos: 300, id:1},
-        {name: "asta3.jpeg", pos: 0, id:2}, 
-        {name: "asta2.jpeg", pos: 100, id:3},
-        {name: "hulk.jpg", pos: 400, id:4}, 
-        {name: "hater.jpg", pos: 500, id:5}, 
-        {name: "hulk.jpg", pos: 600, id:6},
-        {name: "gow.jpg", pos: 700, id:7},
-        {name: "hater.jpg", pos: 800, id:8}
+        {value: "hulk.jpg", pos: 200, posId: 0, id:0}, 
+        {value: "gow.jpg", pos: 300, posId: 1, id:1},
+        {value: "asta3.jpeg", pos: 0, posId: 2, id:2}, 
+        {value: "asta2.jpeg", pos: 100, posId: 3, id:3},
+        {value: "hulk.jpg", pos: 400, posId: 4, id:4}, 
+        {value: "hater.jpg", pos: 500, posId: 5, id:5}, 
+        {value: "hulk.jpg", pos: 600, posId: 6, id:6},
+        {value: "gow.jpg", pos: 700, posId: 7, id:7},
+        {value: "hater.jpg", pos: 800, posId: 8, id:8}
     ])
 
     return (

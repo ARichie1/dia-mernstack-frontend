@@ -1,22 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useUserContext } from "../../../hooks/useUserContext";
+import { useUser } from "../../../hooks/useUser";
 
-const ProfileBiosAndSocials = ({currentUser}) => {
-    const bios = [
-        {title: "email", value: "max...azer@gmail.com", id:1},
-        {title: "username", value: "maxwell", id:2},
-        {title: "country", value: "usa", id:3}
-    ]
-    
-    const socials = [
-        {title: "twitter", value: "maxwell", id:1},
-        {title: "discord", value: "0xmaxwell400", id:2},
-        {title: "telegram", value: "maxwell0004", id:3},
-        {title: "steam", value: "maxwell400", id:4},
-        {title: "twitch", value: "maxwell400", id:5},
-        {title: "epic games", value: "maxwell400_epic", id:6}
-    ]
-    const biosList = bios.map(bio => {
+const ProfileBiosAndSocials = () => {
+    const {setUserStates} = useUser()
+    const {bios, socials} = useUserContext()
+
+    const biosList = bios ? bios.map(bio => {
         return (
             <div className="profileBio profileInfo" key={bio.id}>
                 <p className="profileInfoTitle">{bio.title}</p>
@@ -29,10 +20,11 @@ const ProfileBiosAndSocials = ({currentUser}) => {
             </div>
         )
     })
-
-    const socialsList = socials.map(social => {
+    : null
+    
+    const socialsList = socials ? socials.map(social => {
         return (
-            <div className="profileSocial profileInfo" key={social.id}>
+            <div className="profileSocial profileInfo" key={Math.random()}>
                 <p className="profileInfoTitle">{social.title}</p>
                 <div className="profileValueWrapper">
                     <p className="profileValue">{social.value}</p>
@@ -43,9 +35,11 @@ const ProfileBiosAndSocials = ({currentUser}) => {
             </div>
         )
     })
+    : null
 
     return (
         <div className="profileInfoDisplay profileBiosAndSocials profileBox">
+            <div onClick={() => setUserStates()}>cccc</div>
             <h5>Bio</h5>
             {biosList}
             <br />

@@ -333,3 +333,188 @@ export default GameScene
             }
             
             export default InGameContextProvider
+
+
+const socials = [
+        {title: "twitter", value: "maxwell", id:1},
+        {title: "discord", value: "0xmaxwell400", id:2},
+        {title: "telegram", value: "maxwell0004", id:3},
+        {title: "steam", value: "maxwell400", id:4},
+        {title: "twitch", value: "maxwell400", id:5},
+        {title: "epic games", value: "maxwell400_epic", id:6}
+    ]
+const gamePlaySocials = [
+    {title: "rank", value: 700, badge: "silver", id:1},
+    {title: "team", value: "mozart squad", badge: "vice-captain", id:2}
+]
+const singlePlayerGamePlayHistories = [
+    {title: "vs computer", gameplayed: 50, wins: 36, losses:14, id:1},
+    {title: "survival mode", gameplayed: 10, wins: 2, losses:7, id:2},
+    {title: "story mode", gameplayed: 22, wins:22, losses:50, id:3},
+]
+const multiplayerGamePlayHistories = [
+    {
+        title: "offline multiplayer", 
+        total: {gameplayed: 39, wins: 30, losses:9},
+        whenHost: {gameplayed: 20, wins: 16, losses:4}, 
+        whenJoin: {gameplayed: 19, wins: 12, losses:7}, 
+        id:1
+    },
+    {
+        title: "online multiplayer",
+        total: {gameplayed: 30, wins: 25, losses:5},
+        whenHost: {gameplayed: 18, wins: 10, losses:8}, 
+        whenJoin: {gameplayed: 12, wins: 8, losses:4}, 
+        id:2
+    }
+]
+
+
+
+
+ 
+const playerDefaultValue = {
+    email: "",
+    password: "",
+    username: "user",
+    country: "usa",
+    profilePic: {value: "gow.jpg", pos: 300},
+    socials: {
+        twitter: {title: "twitter", value: ""},
+        discord: {title: "discord", value: ""},
+        telegram: {title: "telegram", value: ""},
+        twitch: {title: "twitch", value: ""},
+        steam: {title: "steam", value: ""},
+        epicGames: {title: "epic games", value: ""}
+    },
+    finance : {
+        address : "",
+        keys : {
+            balance : 9,
+            depositHistory : [
+                {
+                    token : "keys", 
+                    chain : "polygon",
+                    depositType : "swap",
+                    senderAddress : "", 
+                    unitDeposited : 5
+                },
+                {
+                    token : "keys", 
+                    chain : "polygon",
+                    depositType : "swap",
+                    senderAddress : "", 
+                    unitDeposited : 5
+                },
+                {
+                    token : "keys", 
+                    chain : "polygon",
+                    depositType : "swap",
+                    senderAddress : "", 
+                    unitDeposited : 5
+                }
+            ]
+        },
+        dia : {
+            balance : 100,
+            depositHistory : [
+                {
+                token : "usdt", 
+                chain : "polygon",
+                depositType : "swap",
+                senderAddress : "0x522789456...32c", 
+                unitDeposited : 1000, 
+                "timeStamp" : "August 9 2024, 11:00 pm GMT"
+                }
+            ]
+        },
+        usdt : {
+            balance : 150,
+            depositHistory : [
+                {
+                token : "usdt", 
+                chain : "polygon",
+                depositType : "deposit",
+                senderAddress : "0x34562424...32c", 
+                unitDeposited : 200
+                }
+            ]
+        },
+        purchaseHistory : [
+            {item: "dia", purchasedWith: "usdt", amountPurchased: 50, unitPurchased: 1000},
+            {item: "keys", purchasedWith: "dia", amountPurchased: 500, unitPurchased: 5},
+            {item: "keys", purchasedWith: "dia", amountPurchased: 200, unitPurchased: 2},
+            {item: "keys", purchasedWith: "dia", amountPurchased: 200, unitPurchased: 2}
+        ]
+    },
+    inGame: {
+        connected: true,
+        ready: false,
+        host: true,
+        join: false,
+        opponent: {},
+        wins : 10,
+        losses : 2,
+        won : false,
+        lose : false,
+        myCode: "",
+        guesses : [],
+        moves : null,
+        time : null,
+        powerUps : {
+            timeFreezer : {
+                active: false,
+                duration: 5
+            },
+            timeBooster : {
+                active: false,
+                duration: 5
+            },
+            moveBooster : {
+                active: false,
+                duration: 5
+            },
+            detectiveMode : {
+                active: false,
+                duration: 5
+            },
+            wizardMode : {
+                active: false,
+                duration: 5
+            }
+        }
+    },
+    gameHistory: {
+        gamePlaySocials: {
+            rank : {title: "rank", value: 0, badge: ""}, 
+            team : {title: "team", value: "", badge: ""}
+        },
+        singlePlayerGamePlayHistories: {
+            vsComputer: {title: "Vs Computer", gameplayed: 0, wins: 0, losses: 0},
+            survivalMode: {title: "Survival Mode", gameplayed: 0, wins: 0, losses: 0},
+            storyMode: {title: "Story Mode", gameplayed: 0, wins: 0, losses: 0}
+        },
+        multiplayerGamePlayHistories: {
+            offlineMultiplayer: {
+                title: "Offline Multiplayer", 
+                total: {title: "total", gameplayed: 0, wins: 0, losses: 0},
+                whenHost: {title: "whenHost", gameplayed: 0, wins: 0, losses: 0}, 
+                whenJoin: {title: "whenJoin", gameplayed: 0, wins: 0, losses: 0}
+            },
+            onlineMultiplayer: {
+                title: "Online Multiplayer",
+                total: {title: "total", gameplayed: 0, wins: 0, losses: 0},
+                whenHost: {title: "whenHost", gameplayed: 0, wins: 0, losses: 0}, 
+                whenJoin: {title: "whenJoin", gameplayed: 0, wins: 0, losses: 0}
+            }
+        }
+    },
+    settings : {
+        theme : "dark",
+        sound : false,
+        audio : false,
+        language : "english"
+    }
+}
+
+module.exports = playerDefaultValue

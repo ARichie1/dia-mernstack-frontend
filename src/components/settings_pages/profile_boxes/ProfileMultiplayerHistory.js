@@ -1,22 +1,8 @@
 import React, { useState } from "react";
+import { useUserContext } from "../../../hooks/useUserContext";
 
 const ProfileMultiplayerHistory = () => {
-    const multiplayerGamePlayHistories = [
-        {
-            title: "offline multiplayer", gameplayed: 39, 
-            wins: 30, losses:9,
-            whenHost: {gameplayed: 20, wins: 16, losses:4}, 
-            whenJoin: {gameplayed: 19, wins: 12, losses:7}, 
-            id:1
-        },
-        {
-            title: "online multiplayer", gameplayed: 30, 
-            wins: 25, losses:5,
-            whenHost: {gameplayed: 18, wins: 10, losses:8}, 
-            whenJoin: {gameplayed: 12, wins: 8, losses:4}, 
-            id:2
-        }
-    ]
+    const {multiplayerGamePlayHistories} = useUserContext()
 
     const [multiplayerHistory, setMultiplayerHistory] = useState({showTotal: true, showHosted: false, showJoined: false,})
     const displayMultiplayerHistory = (history) => {
@@ -24,17 +10,17 @@ const ProfileMultiplayerHistory = () => {
         else if (history === "hosted") setMultiplayerHistory({showTotal: false, showHosted: true, showJoined: false})
         else if (history === "joined") setMultiplayerHistory({showTotal: false, showHosted: false, showJoined: true})
     }
-    const multiplayerGamePlayHistoriesList = multiplayerGamePlayHistories.map(mgph => {
+    const multiplayerGamePlayHistoriesList = multiplayerGamePlayHistories ? multiplayerGamePlayHistories.map(mgph => {
         return ( 
-            <div className="profileMultiplayerGamePlayHistory profileInfo" key={mgph.id}>
+            <div className="profileMultiplayerGamePlayHistory profileInfo" key={Math.random()}>
                 <p className="profileInfoTitle">{mgph.title}</p>
                 <div className="profileValueWrapper">
                     {   multiplayerHistory.showTotal && 
                         <div className="historyTotal multiplayerHistoryDisplay">
                             <div className="winsAndLossesStats">
-                                <div className="totalDisplay winsAndLossesDisplay">{mgph.gameplayed}</div>
-                                <div className="winsDisplay winsAndLossesDisplay">{mgph.wins}</div>
-                                <div className="lossesDisplay winsAndLossesDisplay">{mgph.losses}</div>
+                                <div className="totalDisplay winsAndLossesDisplay">{mgph.total.gameplayed}</div>
+                                <div className="winsDisplay winsAndLossesDisplay">{mgph.total.wins}</div>
+                                <div className="lossesDisplay winsAndLossesDisplay">{mgph.total.losses}</div>
                             </div>
                         </div>
                     }
@@ -61,7 +47,7 @@ const ProfileMultiplayerHistory = () => {
                 </div>
             </div>
         )
-    })
+    }) : null
 
     return (
         <div className="profileInfoDisplay profileMultiplayerGamePlayHistory profileBox">

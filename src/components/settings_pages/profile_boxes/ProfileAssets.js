@@ -1,19 +1,14 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../../contexts/AuthContext";
+import { useUserContext } from "../../../hooks/useUserContext";
 
 const ProfileAssets = () => {
-    const {keys, tokens, usdt} = useContext(AuthContext)
-    const assets = [
-        {name: "keys", balance: keys, id:1},
-        {name: "token", balance: tokens, id:2},
-        {name: "usdt", balance: usdt, id:3}
-    ]
+    const {assets} = useUserContext()
 
-    const assetsList = assets.map(asset => {
+    const assetsList = assets ? assets.map(asset => {
         return (
-            <div className="profileAsset profileInfo" key={asset.id}>
-                <p className="profileInfoTitle">{asset.name}</p>
+            <div className="profileAsset profileInfo" key={Math.random()}>
+                <p className="profileInfoTitle">{asset.title}</p>
                 <div className="profileValueWrapper">
                     <p className="profileValue">{asset.balance}</p>
                     <div className="profileValueButton">
@@ -22,7 +17,7 @@ const ProfileAssets = () => {
                 </div>
             </div>
         )
-    })
+    }) : null
     
     return (
         <div className="profileInfoDisplay profileAssets profileBox">

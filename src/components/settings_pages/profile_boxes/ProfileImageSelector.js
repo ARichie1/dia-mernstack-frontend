@@ -1,52 +1,55 @@
 import React, { useContext, useState } from 'react'
 import CustomButton from '../../reuseable/form_elements/CustomButton'
-import { AuthContext } from '../../../contexts/AuthContext'
 import { AppGlobalVariableContext } from '../../../contexts/AppGlobalVariableContext'
+import { useUserContext } from '../../../hooks/useUserContext'
+import Arrow from '../../reuseable/controls/Arrow'
 
 const ProfileImageSelector = () => {
 
-    const { profileImage, setProfileImage } = useContext(AuthContext)
+    const { profileImage, setProfileImage } = useUserContext()
     const { imgFolder, defaultImages} = useContext(AppGlobalVariableContext)
-    const [currentImage, setCurrentImage] = useState(profileImage)
+    
+    const [currentImage, setCurrentImage] = useState({
+        value: "gow.jpg", pos: 300, posId: 3, id:3})
+    const [hasProfileImage, setHasProfileImage] = useState(true)
 
     const [canClickLeft, setCanClickLeft] = useState(true)
     const [canClickRight, setCanClickRight] = useState(true)
 
     const setDefaultImagesPostions = () => {
         defaultImages.forEach(defaultImage => {
-            if (currentImage.id > defaultImage.id) {
-                const diff = currentImage.id - defaultImage.id
+            if (currentImage.posId > defaultImage.posId) {
+                const diff = currentImage.posId - defaultImage.posId
                 defaultImage.pos = diff * -100
             }
-            else if (currentImage.id < defaultImage.id) {
-                const diff = defaultImage.id - currentImage.id
+            else if (currentImage.posId < defaultImage.posId) {
+                const diff = defaultImage.posId - currentImage.posId
                 defaultImage.pos = diff * 100
             }
-            else if (currentImage.id === defaultImage.id) {
+            else if (currentImage.posId === defaultImage.posId) {
                 defaultImage.pos = 0
             }
         })
     }
     setDefaultImagesPostions()
-
     
     const defaultImagesList = defaultImages.map(defaultImage => {
         return (
             <img className="avatarImg1" 
-                src={`${imgFolder}${defaultImage.name}`} 
+                src={`${imgFolder}${defaultImage.value}`} 
                 style={{left: `${defaultImage.pos}%`}}
-                key={defaultImage.id} alt="" />
+                key={Math.random()} alt="" />
         )
     })
 
     const handleButtonClickState = (buttonId) => {
-        if (currentImage.id === 1) {
+        if (currentImage.posId === 1) {
             if (buttonId === 2) {
                 setCanClickLeft(true)
                 setCanClickRight(false)   
             }
         }
-        else if(currentImage.id === (defaultImages.length - 2)){
+        else if(currentImage.posId === (defaultImages.length - 2)){
             if (buttonId === 1) {
                 setCanClickLeft(false)
                 setCanClickRight(true)
@@ -62,19 +65,21 @@ const ProfileImageSelector = () => {
             defaultImages.forEach(defaultImage => {
                 defaultImage.pos -= 100 
             })
-            setCurrentImage(defaultImages[currentImage.id + 1])
+            setCurrentImage(defaultImages[currentImage.posId + 1])
         }
         if (buttonId === 2) {
             defaultImages.forEach(defaultImage => {
                 defaultImage.pos += 100 
             })
-            setCurrentImage(defaultImages[currentImage.id - 1])
+            setCurrentImage(defaultImages[currentImage.posId - 1])
         }
         handleButtonClickState(buttonId)
+        setHasProfileImage(false)
     }
 
     const saveProfileImage = () => {
         setProfileImage(currentImage)
+        setHasProfileImage(true)
     }
 
     return(
@@ -87,16 +92,23 @@ const ProfileImageSelector = () => {
             </div>
             <div className="profileImage">
                 <div className="avatarImageWrapper">
-                    <img src={`${imgFolder}${currentImage.name}`} className="profileImg" alt="" />
+                    {!hasProfileImage && <img src={`${imgFolder}${currentImage ? currentImage.value : null}`} 
+                    className="profileImg" alt="" />}
+                    {hasProfileImage && <img src={`${imgFolder}${profileImage ? profileImage.value : null}`} 
+                    className="profileImg" alt="" />}
                 </div>
                 
             </div>
-            {canClickLeft && <div className="avatarControl controlLeft">
-                <button className="controlLeftButton clkBtn" onClick={() => switchDefaultImages(1, currentImage)}>&#11013;</button>
+            {canClickLeft && <div className="avatarControl controlLeft"
+                onClick={() => switchDefaultImages(1, currentImage)}>
+                <Arrow arrowDirection={180} className="controlLeftButton clkBtn"/>
             </div>}
-            {canClickRight && <div className="avatarControl controlRight">
-                <button className="controlRightButton clkBtn" onClick={() => switchDefaultImages(2, currentImage)}>&#10145;</button>
+            {canClickRight && <div className="avatarControl controlRight"
+                onClick={() => switchDefaultImages(2, currentImage)}>
+                <Arrow arrowDirection={0} className="controlRightButton clkBtn" 
+                />
             </div>}
+        
             <CustomButton buttonAttr = {
                 {
                     title: "save",

@@ -27,13 +27,12 @@ const ProfileSettings = () => {
         {type: 'password', name:'comfirmNewPassword', title: 'Comfirm New Passord', value: confirmNewPassword, setValue: setConfirmNewPassword, id: 2}
     ]
 
-    const {currentUser} = useUserContext()
-    
     return (
         <div className="settingsProfile wrapper">
             <h4 className="settingsHeader">Profile</h4>
-            {/*<ProfileImageSelector/>*/}
-            <ProfileBiosAndSocials currentUser={currentUser}/>
+            
+            <ProfileImageSelector/>
+            <ProfileBiosAndSocials />
             <ProfileAssets />
             <ProfileSinglePlayerHistory />
             <ProfileMultiplayerHistory />

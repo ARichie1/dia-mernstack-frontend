@@ -6,6 +6,7 @@ const AppGlobalVariableContextProvider = (props) => {
     const appName = "WTF"
     const imgFolder = "../../../assets/images/faces/"
 
+    const defaultImage = "hulk.jpg"
     const [defaultImages, setDefaultImages] = useState([
         {value: "hulk.jpg", pos: 200, posId: 0, id:0}, 
         {value: "gow.jpg", pos: 300, posId: 1, id:1},
@@ -18,10 +19,13 @@ const AppGlobalVariableContextProvider = (props) => {
         {value: "hater.jpg", pos: 800, posId: 8, id:8}
     ])
 
+    const [showNavBlock, setShowNavBlock] = useState(true)
+    
     return (
         <AppGlobalVariableContext.Provider value={{
-            appName, imgFolder,
-            defaultImages, setDefaultImages
+            appName, imgFolder, defaultImage,
+            defaultImages, setDefaultImages,
+            showNavBlock, setShowNavBlock
         }}>
             {props.children}
         </AppGlobalVariableContext.Provider>

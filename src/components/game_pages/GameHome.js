@@ -1,18 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { Outlet } from "react-router-dom";
 import GameHeader from "./GameHeader";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { useAppGlobalVariableContext } from "../../hooks/useAppGlobalVariableContext";
 
 const GameHome = () => {
-    const [showNavBlock, setShowNavBlock] = useState(true)
-    let yes = false
-
     const {user} = useAuthContext()
+    const {showNavBlock} = useAppGlobalVariableContext()
 
     return (
         <div className="container-fluid game">
             <GameHeader showNavBlock={showNavBlock}/>
-            {yes && setShowNavBlock(false)}
             {user && <div className="gameUiWrapper">
                 <Outlet />
             </div>}

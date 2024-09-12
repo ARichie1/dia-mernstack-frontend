@@ -1,21 +1,23 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Arrow from "../reuseable/controls/Arrow";
-import { AuthContext } from "../../contexts/AuthContext";
 import { AppGlobalVariableContext } from "../../contexts/AppGlobalVariableContext";
 import { useUserContext } from "../../hooks/useUserContext";
+import { useUser } from "../../hooks/useUser";
+import { useAppGlobalVariableContext } from "../../hooks/useAppGlobalVariableContext";
 
 const GameHeader = ({showNavBlock}) => {
+    const {setUserStates} = useUser()
     const navigate = useNavigate()
     const handleNavigate = () => {navigate(-1)}
 
     const {imgFolder} = useContext(AppGlobalVariableContext)
-    const [profileImage, setProfileImage] = useState({name: "gow.jpg", pos: 300, id:3})
-    const {assets} = useUserContext()
+    const {profileImage, assets} = useUserContext()
+    const {defaultImage} = useAppGlobalVariableContext()
 
     const assetsList = assets ? assets.map(asset => {
         return (
-            <li className="usdt topStatValues">
+            <li className="usdt topStatValues"key={Math.random()}>
                 <Link to="/game/settings/profile">
                     &#128178;
                     <span className="tokensAmount">{asset.balance}</span>
@@ -32,9 +34,10 @@ const GameHeader = ({showNavBlock}) => {
                 </h3>
                 <ul>
                     {assetsList}
-                    <li className="accountSettingsIcon topStatValues">
+                    <li className="accountSettingsIcon topStatValues"
+                        onClick={() => setUserStates()}>
                         <Link to="/game/settings/profile">
-                            <img src={`${imgFolder}${profileImage.name}`} className="profileImg" alt="" />
+                            <img src={`${imgFolder}${profileImage ? profileImage.value : defaultImage}`} className="profileImg" alt="" />
                         </Link> 
                     </li>
                 </ul>

@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import { NavLink} from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useLogout } from "../../hooks/useLogout";
+import { useUserContext } from "../../hooks/useUserContext";
+import { useAppGlobalVariableContext } from "../../hooks/useAppGlobalVariableContext";
 
 const Navbar = (props) => {
     const [mobileMenuPos, setMobileMenuPos] = useState("-100%")
@@ -10,7 +12,8 @@ const Navbar = (props) => {
     }
 
     const { user } = useAuthContext()
-    const [profileImage, setProfileImage] = useState({name: "gow.jpg", pos: 300, id:3})
+    const {profileImage} = useUserContext()
+    const {defaultImage} = useAppGlobalVariableContext()
 
     const { logout } = useLogout()
     const handleLogOut = () => { logout() }
@@ -36,7 +39,7 @@ const Navbar = (props) => {
                         (<ul>
                             <li>
                                 <NavLink to="/game/settings/profile">
-                                    <img src={`../../../assets/images/faces/${profileImage.name}`} alt="profileimage" /> 
+                                    <img src={`../../../assets/images/faces/${profileImage ? profileImage.value : defaultImage}`} alt="profileimage" /> 
                                     &nbsp; <p>{user.email}</p>
                                 </NavLink>
                             </li>

@@ -1,4 +1,4 @@
-import React, { useContext} from "react"
+import React, { useContext, useEffect} from "react"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
 import NavPage from "./components/reuseable/pages/NavPage.js";
@@ -42,10 +42,18 @@ import ProfileSettings from "./components/settings_pages/ProfileSettings"
 import { GameContext } from "./contexts/GameContext.js";
 import SelectCodePage from "./components/ingame/SelectCodePage.js";
 import { useAuthContext } from "./hooks/useAuthContext.js";
+import { useUser } from "./hooks/useUser.js";
 
 const App = () => {
     const { GameUiLinks } = useContext(GameContext)
     const { user } = useAuthContext()
+    const {setUserStates} = useUser()
+
+    useEffect(() => {
+      if (user) {
+        setUserStates()
+      }
+    }, [user])
     
   return (
     <BrowserRouter>
@@ -59,7 +67,8 @@ const App = () => {
             <Route path="/signup" element={user ? <Navigate to="/"/> : <SignUpPage />} />
           </Route>
 
-          {user && <Route path="/game" element={<GameHome />} >
+          {user && 
+            <Route path="/game" element={<GameHome />} >
             <Route index element={<NavPage GameUiLinks={GameUiLinks.game}/>} />
             <Route path="tutorial" element={<TutorialPage />} />
             <Route path="more-games" element={<MoreGamesPage />} />

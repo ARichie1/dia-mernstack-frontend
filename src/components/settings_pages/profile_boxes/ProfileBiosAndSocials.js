@@ -4,7 +4,6 @@ import { useUserContext } from "../../../hooks/useUserContext";
 import { useUser } from "../../../hooks/useUser";
 
 const ProfileBiosAndSocials = () => {
-    const {setUserStates} = useUser()
     const {bios, socials} = useUserContext()
 
     const biosList = bios ? bios.map(bio => {
@@ -39,7 +38,6 @@ const ProfileBiosAndSocials = () => {
 
     return (
         <div className="profileInfoDisplay profileBiosAndSocials profileBox">
-            <div onClick={() => setUserStates()}>cccc</div>
             <h5>Bio</h5>
             {biosList}
             <br />

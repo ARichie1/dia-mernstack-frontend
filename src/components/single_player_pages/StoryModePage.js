@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { GameContext } from "../../contexts/GameContext";
+import { Link } from "react-router-dom";
 
 const StoryModePage = () => {
-    const { Difficulties } = useContext(GameContext)
+    const { Difficulties, insertDifficulty } = useContext(GameContext)
 
     let difficulties = Difficulties
 
@@ -55,7 +56,13 @@ const StoryModePage = () => {
             stagesLvl[`stage${i+1}Lvl`]= []
             stagesLvl[`stage${i+1}Lvl`] = stages[`stage${i+1}`].map( lvl => {
                 return (
-                    <div className="level toGame" id="singlePlayerMainGame" style={{background: lvl.color}} key={lvl.id}>{lvl.id}</div>                     
+                    <div className="level toGame" 
+                        id="singlePlayerMainGame" 
+                        style={{background: lvl.color}} key={lvl.id}
+                        onClick={() => insertDifficulty(lvl)}>
+                        
+                        <Link to="/game/in-game/single-player/:userid">{lvl.id}</Link>
+                    </div>                     
                 )
             })
         }

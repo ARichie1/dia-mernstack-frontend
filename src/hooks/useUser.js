@@ -7,9 +7,10 @@ export const useUser = () => {
     const [isLoading, setIsLoading] = useState(null)
 
     const {user} = useAuthContext()
-    const {setCurrentUser, updateUserStates} = useUserContext()
+    const {currentPlayer, setCurrentPlayer, setCurrentPlayerOpponent,
+        updateUserStates} = useUserContext()
 
-    const setSessionUser = async (email, password) => {
+    const getSessionUser = async (email, password) => {
         setIsLoading(true)
         setErrors({email: "", password: ""})
 
@@ -35,13 +36,50 @@ export const useUser = () => {
         return json.user
     }
 
+    const getUserOpponent = async (email, password) => {
+        setIsLoading(true)
+        setErrors({email: "", password: ""})
+
+        const response = await fetch(`/api/user/opponent/${currentPlayer ? currentPlayer.inGame.opponent : null}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${user.token}`
+            },
+        })
+
+        const json = await response.json()
+
+        if (!response.ok) {
+            setIsLoading(false)
+            setErrors(json.errors)
+        }
+        if (response.ok) {
+            console.log("settin current user");
+            // setting current user
+            setIsLoading(false)
+        }
+
+        return json.user
+    }
+
     const setUserStates = async () => {
-        const currentUserData = await setSessionUser()
+        const currentUserData = await getSessionUser()
         
         // update the user context
         updateUserStates(currentUserData)
-        setCurrentUser(currentUserData)
+        setCurrentPlayer(currentUserData)
+    }
+    
+    const setOpponentStates = async () => {
+        const currentUserOpponentData = await getUserOpponent()
+        
+        console.log(currentUserOpponentData);
+        
+        
+        // update the user opponent context
+        setCurrentPlayerOpponent(currentUserOpponentData)
     }
 
-    return { setSessionUser, setUserStates, errors}
+    return { getSessionUser, setUserStates, 
+        getUserOpponent, setOpponentStates, errors}
 }

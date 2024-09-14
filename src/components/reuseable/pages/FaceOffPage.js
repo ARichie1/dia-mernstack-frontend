@@ -3,8 +3,23 @@ import DifficultySelector from "./DifficultySelector";
 import { GameContext } from "../../../contexts/GameContext";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { Link } from "react-router-dom";
+import { useUserContext } from "../../../hooks/useUserContext";
+import { useAppGlobalVariableContext } from "../../../hooks/useAppGlobalVariableContext";
+import { useUser } from "../../../hooks/useUser";
+import { useAuthContext } from "../../../hooks/useAuthContext";
 
-const FaceOffPage = ({player, opponent}) => {
+const FaceOffPage = () => {
+
+    const { user } = useAuthContext()
+    const { currentPlayer, currentPlayerOpponent} = useUserContext()
+    const {defaultImage} = useAppGlobalVariableContext()
+
+    const {setOpponentStates} = useUser()
+
+    // useEffect(() => {
+    //     setOpponentStates()
+    // }, [user])
+
     const [host, setHost] = useState(null)
     const [isPlayerHost, setisPlayerHost] = useState(true)
     const [isOpponentHost, setisOpponentHost] = useState(false)
@@ -18,22 +33,26 @@ const FaceOffPage = ({player, opponent}) => {
         buttonColor: "var(--themeColor)",
         buttonBackground: "transparent"
     })
-
-    const { profileImage, opponentProfileImage } = useContext(AuthContext)
-
+    
     useEffect( () => {
-        if (player.host) {
-            setHost(player)
-            setisPlayerHost(true)
-            setisOpponentHost(false)
-        }else{
-            setHost(opponent)
-            setisOpponentHost(true)
-            setisPlayerHost(false)
-        }
+        if(currentPlayer) {
+            if (currentPlayer.host) {
+                setHost(currentPlayer)
+                setisPlayerHost(true)
+                setisOpponentHost(false)
+            }else{
+                setHost(currentPlayerOpponent)
+                setisOpponentHost(true)
+                setisPlayerHost(false)
+            }
 
-        opponent.connected ? setOpponentConnected(true) : setOpponentConnected(false)
-    }, [host, player, opponent])
+            if (currentPlayerOpponent) {
+                console.log(currentPlayerOpponent.username);
+                
+                currentPlayerOpponent.connected ? setOpponentConnected(true) : setOpponentConnected(false)
+            }
+        }
+    }, [host, currentPlayer, currentPlayerOpponent])
 
     const toggleHostSettings = () => {
         setShowHostSettings({
@@ -48,7 +67,7 @@ const FaceOffPage = ({player, opponent}) => {
             <div className="multiplayerFaceOff">
                 <div className="faceOffWrapper">
                     <div className="playerFaceOffSide playersFaceOffSide pic">
-                        <img src={`../../../../assets/images/faces/${profileImage.name}`} className="hostImg" alt="" />
+                        <img src={`../../../../assets/images/faces/${currentPlayer ? currentPlayer.profileImage.value : defaultImage}`} className="hostImg" alt="" />
                         <p className="opponentImg">
                             You &nbsp;
                             {isPlayerHost && (<em> ( Host )</em>)}
@@ -59,9 +78,9 @@ const FaceOffPage = ({player, opponent}) => {
                         <div className="waitingForOpponent pic">waiting...</div>}
                     {opponentConnected && 
                         <div className="playerOpponentFaceOffSide playersFaceOffSide pic">
-                            <img src={`../../../../assets/images/faces/${opponentProfileImage.name}`}  className="opponentImg" alt="" />
+                            <img src={`../../../../assets/images/faces/${currentPlayerOpponent ? currentPlayerOpponent.profileImage.value : defaultImage}`}  className="opponentImg" alt="" />
                             <p className="opponentImg">
-                                {opponent.name} &nbsp;
+                                {currentPlayerOpponent ? currentPlayerOpponent.username : "opponent"} &nbsp;
                                 {isOpponentHost && (<em> ( Host )</em>)}
                             </p>
                         </div>

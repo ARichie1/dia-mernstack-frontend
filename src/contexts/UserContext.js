@@ -4,7 +4,8 @@ import useFetch from '../custom_hooks/useFetch'
 export const UserContext = new createContext()
 
 const UserContextProvider = ({children}) => {
-    const [currentUser, setCurrentUser] = useState(null)
+    const [currentPlayer, setCurrentPlayer] = useState(null)
+    const [currentPlayerOpponent, setCurrentPlayerOpponent] = useState(null)
     const [bios, setBios] = useState(null)
     const [assets, setAssets] = useState(null)
     const [socials, setSocials] = useState(null)
@@ -58,7 +59,8 @@ const UserContextProvider = ({children}) => {
 
     return (
         <UserContext.Provider value={{
-            currentUser, setCurrentUser,
+            currentPlayer, setCurrentPlayer,
+            currentPlayerOpponent, setCurrentPlayerOpponent,
             bios, setBios,
             socials, setSocials,
             assets, setAssets,

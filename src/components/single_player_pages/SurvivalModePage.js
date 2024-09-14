@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const SurvivalModePage = () => {
 
@@ -11,8 +12,8 @@ const SurvivalModePage = () => {
                 <span>&#128342;</span>
             </div>
             <h3>Crack As Many Codes As Possible On Time</h3>
-            <div class="buttonWrapper">
-                <button>START</button>
+            <div class="toGame clkBtn">
+                <Link to="/game/in-game/single-player/:userid">Continue</Link>
             </div>
         </div>
     )

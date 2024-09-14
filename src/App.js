@@ -44,17 +44,37 @@ import SelectCodePage from "./components/ingame/SelectCodePage.js";
 import { useAuthContext } from "./hooks/useAuthContext.js";
 import { useUser } from "./hooks/useUser.js";
 
-const App = () => {
-    const { GameUiLinks } = useContext(GameContext)
-    const { user } = useAuthContext()
-    const {setUserStates} = useUser()
+// import {socket, mySocketId} from "./connections/sockets"
+import {io} from "socket.io-client"
 
-    useEffect(() => {
-      if (user) {
-        setUserStates()
-      }
-    }, [user])
-    
+const App = () => {
+  const { GameUiLinks } = useContext(GameContext)
+  const { user } = useAuthContext()
+  const {setUserStates} = useUser()
+
+  const connect = () => {
+    const socket = io("")
+
+    socket.on('connect', () => {
+      // socket.emit('playerJoinGame')
+
+      // socket.on('createNewGame', statusUpdate => {
+      //   console.log('createNewGame');
+      //   console.log(statusUpdate);
+        
+      // })
+      // socket.emit('createNewGame')
+    })
+  }
+
+  useEffect(() => {
+    connect()
+  }, [])
+
+  // useEffect(() => {
+  //   if (user) {setUserStates()}
+  // }, [user])
+  
   return (
     <BrowserRouter>
       <div className="App">

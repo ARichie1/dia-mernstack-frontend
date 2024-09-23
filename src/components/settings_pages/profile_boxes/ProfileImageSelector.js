@@ -5,10 +5,9 @@ import { useUserContext } from '../../../hooks/useUserContext'
 import Arrow from '../../reuseable/controls/Arrow'
 
 const ProfileImageSelector = () => {
-
-    const { profileImage, setProfileImage } = useUserContext()
     const { imgFolder, defaultImages} = useContext(AppGlobalVariableContext)
-    
+    const { profileImage, setProfileImage } = useUserContext()
+
     const [currentImage, setCurrentImage] = useState({
         value: "gow.jpg", pos: 300, posId: 3, id:3})
     const [hasProfileImage, setHasProfileImage] = useState(true)

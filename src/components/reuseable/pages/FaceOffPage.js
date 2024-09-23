@@ -7,52 +7,51 @@ import { useUserContext } from "../../../hooks/useUserContext";
 import { useAppGlobalVariableContext } from "../../../hooks/useAppGlobalVariableContext";
 import { useUser } from "../../../hooks/useUser";
 import { useAuthContext } from "../../../hooks/useAuthContext";
+import { useGameContext } from "../../../hooks/useGameContext";
+import socketInService from "../../../hooks/connections/socketService";
+import socketGameService from "../../../hooks/connections/gameService";
 
 const FaceOffPage = () => {
-
-    const { user } = useAuthContext()
-    const { currentPlayer, currentPlayerOpponent} = useUserContext()
+    const { user, userInfo: currentPlayer } = useAuthContext()
+    const { currentOpponent, setCurrentOpponent} = useUserContext()
     const {defaultImage} = useAppGlobalVariableContext()
 
-    const {setOpponentStates} = useUser()
-
-    // useEffect(() => {
-    //     setOpponentStates()
-    // }, [user])
-
-    const [host, setHost] = useState(null)
-    const [isPlayerHost, setisPlayerHost] = useState(true)
-    const [isOpponentHost, setisOpponentHost] = useState(false)
+    const {isHost, isJoin, isInRoom, setIsInRoom,
+        isRoomFull,  setIsRoomFull} = useGameContext()
 
     const {chosenDifficulty, hasSelectedDifficulty, insertDifficulty
     } = useContext(GameContext)
 
-    const [opponentConnected,  setOpponentConnected] = useState(true)
+    const setOpponent = async () => {
+        const socket = socketInService.socket
+        setIsInRoom(true)
+
+        const opponent = await socketGameService.getOpponent(socket)
+        .then((data) => {
+            if (data) {
+                console.log(data); 
+                setIsRoomFull(true)
+                console.log("Fetched Opponent");
+                setCurrentOpponent(data)
+            }
+        })
+        .catch((err) => {
+            alert(err)
+            setIsRoomFull(false)
+        })
+    }
+
+    useEffect(() => {
+        if(!isRoomFull){
+            setOpponent()
+        }
+    }, [isRoomFull])
+
     const [showHostSettings, setShowHostSettings] = useState({
         opened: false,
         buttonColor: "var(--themeColor)",
         buttonBackground: "transparent"
     })
-    
-    useEffect( () => {
-        if(currentPlayer) {
-            if (currentPlayer.host) {
-                setHost(currentPlayer)
-                setisPlayerHost(true)
-                setisOpponentHost(false)
-            }else{
-                setHost(currentPlayerOpponent)
-                setisOpponentHost(true)
-                setisPlayerHost(false)
-            }
-
-            if (currentPlayerOpponent) {
-                console.log(currentPlayerOpponent.username);
-                
-                currentPlayerOpponent.connected ? setOpponentConnected(true) : setOpponentConnected(false)
-            }
-        }
-    }, [host, currentPlayer, currentPlayerOpponent])
 
     const toggleHostSettings = () => {
         setShowHostSettings({
@@ -70,18 +69,18 @@ const FaceOffPage = () => {
                         <img src={`../../../../assets/images/faces/${currentPlayer ? currentPlayer.profileImage.value : defaultImage}`} className="hostImg" alt="" />
                         <p className="opponentImg">
                             You &nbsp;
-                            {isPlayerHost && (<em> ( Host )</em>)}
+                            {isHost && (<em> ( Host )</em>)}
                         </p>   
                     </div>
                     <div className="versus pic">VS</div>
-                    {!opponentConnected &&
+                    {!currentOpponent &&
                         <div className="waitingForOpponent pic">waiting...</div>}
-                    {opponentConnected && 
+                    {currentOpponent && 
                         <div className="playerOpponentFaceOffSide playersFaceOffSide pic">
-                            <img src={`../../../../assets/images/faces/${currentPlayerOpponent ? currentPlayerOpponent.profileImage.value : defaultImage}`}  className="opponentImg" alt="" />
+                            <img src={`../../../../assets/images/faces/${currentOpponent ? currentOpponent.image : defaultImage}`}  className="opponentImg" alt="" />
                             <p className="opponentImg">
-                                {currentPlayerOpponent ? currentPlayerOpponent.username : "opponent"} &nbsp;
-                                {isOpponentHost && (<em> ( Host )</em>)}
+                                {currentOpponent ? currentOpponent.username : "opponent"} &nbsp;
+                                {isJoin && (<em> ( Host )</em>)}
                             </p>
                         </div>
                     }
@@ -92,11 +91,11 @@ const FaceOffPage = () => {
                         <span>{chosenDifficulty.difficulty} ( {chosenDifficulty.agents} )</span>
                     </div>
                 )}
-                <div className="selectYourCode">
+                {isRoomFull && <div className="selectYourCode">
                     <div className="clkBtn">
                         <Link to="/game/multiplayer/select-code">BUILD YOUR CODE</Link>
                     </div>
-                </div>
+                </div>}
             </div> 
             {showHostSettings.opened && (
                 <div className="hostSettings">
@@ -104,7 +103,7 @@ const FaceOffPage = () => {
                 </div>
             )}   
             
-            {isPlayerHost && (
+            {isHost && (
                 <div className="hostSettingsButton" 
                     onClick={() => {toggleHostSettings()}} 
                     style={{color: `${showHostSettings.buttonColor}`, 

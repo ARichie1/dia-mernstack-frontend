@@ -1,5 +1,8 @@
-import React, { useContext, useEffect} from "react"
+import React, { useContext, useEffect, useState} from "react"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { useAuthContext } from "./hooks/useAuthContext.js";
+import { GameContext } from "./contexts/GameContext.js";
+import socketInService from "./hooks/connections/socketService/index.js";
 
 import NavPage from "./components/reuseable/pages/NavPage.js";
 
@@ -34,47 +37,33 @@ import GamePage from "./components/game_pages/GamePage"
 import SinglePlayerGamePage from "./components/game_pages/SinglePlayerGamePage"
 import MultiplayerGamePage from "./components/game_pages/MultiplayerGamePage"
 
+import SelectCodePage from "./components/ingame/SelectCodePage.js";
+import FaceOffPage from "./components/reuseable/pages/FaceOffPage.js";
+
 import SettingsPage from "./components/settings_pages/SettingsPage"
 import AudioSettings from "./components/settings_pages/AudioSettings"
 import DisplaySettings from "./components/settings_pages/DisplaySettings"
 import LanguageSettings from "./components/settings_pages/LanguageSettings"
 import ProfileSettings from "./components/settings_pages/ProfileSettings"
-import { GameContext } from "./contexts/GameContext.js";
-import SelectCodePage from "./components/ingame/SelectCodePage.js";
-import { useAuthContext } from "./hooks/useAuthContext.js";
-import { useUser } from "./hooks/useUser.js";
-
-// import {socket, mySocketId} from "./connections/sockets"
-import {io} from "socket.io-client"
+import socketGameService from "./hooks/connections/gameService/index.js";
 
 const App = () => {
-  const { GameUiLinks } = useContext(GameContext)
-  const { user } = useAuthContext()
-  const {setUserStates} = useUser()
-
-  const connect = () => {
-    const socket = io("")
-
-    socket.on('connect', () => {
-      // socket.emit('playerJoinGame')
-
-      // socket.on('createNewGame', statusUpdate => {
-      //   console.log('createNewGame');
-      //   console.log(statusUpdate);
-        
-      // })
-      // socket.emit('createNewGame')
+  const { user , userInfo: currentPlayer} = useAuthContext()
+  const { GameUiLinks, isInRoom, isRoomFull } = useContext(GameContext)
+  
+  const connectToSocket = async () =>{
+    await socketInService.connect("")
+    .catch((err) => {
+      console.log("Error: ", err);
     })
   }
-
   useEffect(() => {
-    connect()
-  }, [])
+    connectToSocket()
+    if (currentPlayer) {
+      socketGameService.getAndCreatePlayer(currentPlayer)
+    }
+  }, [currentPlayer])
 
-  // useEffect(() => {
-  //   if (user) {setUserStates()}
-  // }, [user])
-  
   return (
     <BrowserRouter>
       <div className="App">
@@ -88,7 +77,7 @@ const App = () => {
           </Route>
 
           {user && 
-            <Route path="/game" element={<GameHome />} >
+            <Route path="/game" element={<GameHome/>} >
             <Route index element={<NavPage GameUiLinks={GameUiLinks.game}/>} />
             <Route path="tutorial" element={<TutorialPage />} />
             <Route path="more-games" element={<MoreGamesPage />} />
@@ -103,7 +92,8 @@ const App = () => {
             <Route path="multiplayer" element={<MultiplayerPage />}>
               <Route index element={<NavPage GameUiLinks={GameUiLinks.multiplayer}/>} />
 
-              <Route path="select-code" element={<SelectCodePage />} />
+              <Route path="select-code" element={isRoomFull ? <SelectCodePage /> : <Navigate to="/game"/>} />
+              <Route path="face-off" element={isInRoom ? <FaceOffPage /> : <Navigate to="/game"/>} />
              
               <Route path="local" element={<LocalPlayPage />} >
                 <Route index element={<NavPage GameUiLinks={GameUiLinks.multiplayerLocal}/>} />

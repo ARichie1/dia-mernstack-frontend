@@ -30,6 +30,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-top: 20px;
   margin-bottom: 3%;
 }
 .customForm .inputsWrapper label{
@@ -51,7 +52,7 @@
   background: #fff;
 }
 .customForm .inputsWrapper li input::placeholder{
-  padding-left: 10%;
+  padding-left: 2%;
 }
 /* =====PROFILE USER-DETAILS SETTINGS END========== */
   

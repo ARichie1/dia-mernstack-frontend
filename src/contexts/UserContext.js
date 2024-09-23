@@ -1,12 +1,13 @@
 import React, { createContext, useEffect, useState } from 'react'
-import useFetch from '../custom_hooks/useFetch'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 export const UserContext = new createContext()
-
 const UserContextProvider = ({children}) => {
-    const [currentPlayer, setCurrentPlayer] = useState(null)
-    const [currentPlayerOpponent, setCurrentPlayerOpponent] = useState(null)
-    const [bios, setBios] = useState(null)
+    const {userInfo} = useAuthContext()
+
+    const [currentPlayer, setCurrentPlayer] = useState(userInfo)
+    const [currentOpponent, setCurrentOpponent] = useState(null)
+    const [bios, setBios] = useState()
     const [assets, setAssets] = useState(null)
     const [socials, setSocials] = useState(null)
     const [profileImage, setProfileImage] = useState(null) 
@@ -14,53 +15,57 @@ const UserContextProvider = ({children}) => {
     const [singlePlayerGamePlayHistories, setSinglePlayerGamePlayHistories] = useState(null)
     const [multiplayerGamePlayHistories, setMultiplayerGamePlayHistories] = useState(null)
     
-    const updateUserStates = (userUpdate) => {
+    const updateUserStates = (userInfo) => {
         setBios([
-            {title: "email", value: userUpdate.email, id:1},
-            {title: "username", value: userUpdate.username, id:2},
-            {title: "country", value: userUpdate.country, id:3}
+            {title: "email", value: userInfo.email, id:1},
+            {title: "username", value: userInfo.username, id:2},
+            {title: "country", value: userInfo.country, id:3}
         ])
         setProfileImage({
-            value: userUpdate.profileImage.value, 
-            pos: userUpdate.profileImage.pos,
-            posId: userUpdate.profileImage.posId
+            value: userInfo.profileImage.value, 
+            pos: userInfo.profileImage.pos,
+            posId: userInfo.profileImage.posId
         })
-        console.log(profileImage);
         
         setAssets([
-            userUpdate.finance.keys,
-            userUpdate.finance.dia,
-            userUpdate.finance.usdt
+            userInfo.finance.keys,
+            userInfo.finance.dia,
+            userInfo.finance.usdt
         ])
-        console.log(assets);
         
         setSocials([
-            userUpdate.socials.twitter,
-            userUpdate.socials.discord,
-            userUpdate.socials.telegram,
-            userUpdate.socials.twitch,
-            userUpdate.socials.steam,
-            userUpdate.socials.epicGames
+            userInfo.socials.twitter,
+            userInfo.socials.discord,
+            userInfo.socials.telegram,
+            userInfo.socials.twitch,
+            userInfo.socials.steam,
+            userInfo.socials.epicGames
         ])
         setGamePlaySocials([
-            userUpdate.gameHistory.gamePlaySocials.rank,
-            userUpdate.gameHistory.gamePlaySocials.team
+            userInfo.gameHistory.gamePlaySocials.rank,
+            userInfo.gameHistory.gamePlaySocials.team
         ])
         setSinglePlayerGamePlayHistories([
-            userUpdate.gameHistory.singlePlayerGamePlayHistories.vsComputer,
-            userUpdate.gameHistory.singlePlayerGamePlayHistories.survivalMode,
-            userUpdate.gameHistory.singlePlayerGamePlayHistories.storyMode
+            userInfo.gameHistory.singlePlayerGamePlayHistories.vsComputer,
+            userInfo.gameHistory.singlePlayerGamePlayHistories.survivalMode,
+            userInfo.gameHistory.singlePlayerGamePlayHistories.storyMode
         ])
         setMultiplayerGamePlayHistories([
-            userUpdate.gameHistory.multiplayerGamePlayHistories.offlineMultiplayer,
-            userUpdate.gameHistory.multiplayerGamePlayHistories.onlineMultiplayer
+            userInfo.gameHistory.multiplayerGamePlayHistories.offlineMultiplayer,
+            userInfo.gameHistory.multiplayerGamePlayHistories.onlineMultiplayer
         ])
     }
+
+    // If userInfo has been fetched or changes 
+    useEffect(() => {
+        // If userInfo is not null
+        if (userInfo) {updateUserStates(userInfo)}
+    }, [userInfo])
 
     return (
         <UserContext.Provider value={{
             currentPlayer, setCurrentPlayer,
-            currentPlayerOpponent, setCurrentPlayerOpponent,
+            currentOpponent, setCurrentOpponent,
             bios, setBios,
             socials, setSocials,
             assets, setAssets,

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useUserContext } from "../../../hooks/useUserContext";
-import { useUser } from "../../../hooks/useUser";
 
 const ProfileBiosAndSocials = () => {
     const {bios, socials} = useUserContext()

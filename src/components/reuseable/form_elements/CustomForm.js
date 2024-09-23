@@ -14,11 +14,12 @@ const CustomForm = ({formAttr, formInputs, buttonAtrributes}) => {
     const formInputList = formInputs.map( attr => {
         return (
             <li key={attr.id}>
-                <label>{attr.title}</label>
+                {/*<label>{attr.title}</label>*/}
                 <input 
                     type={attr.type} 
                     name={attr.name} 
                     value={attr.value !== "" ? attr.value : ""}
+                    placeholder={attr.placeHolder ? attr.placeHolder : "Enter Here"}
                     onChange={attr.setValue ? (e) => attr.setValue(e.target.value) : null}
                 />
                 {attr.error && <div>{attr.error}</div>}

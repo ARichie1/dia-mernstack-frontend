@@ -68,8 +68,15 @@ const GameContextProvider = (props) => {
 
     const [maxSelection, setMaxSelection] = useState(false)
 
-    const [isInGame,  setIsInGame] = useState(false)
+    const [gameMode, setGameMode] = useState(null)
+
+    const [isHost,  setIsHost] = useState(false)
+    const [isJoin,  setIsJoin] = useState(false)
+    const [isInRoom, setIsInRoom] = useState(false)
+    const [isRoomFull,  setIsRoomFull] = useState(false)
+
     const [isOutGame,  setIsOutGame] = useState(true)
+    const [isInGame,  setIsInGame] = useState(false)
 
     const switchGameLocation = (location) => {
       if (location === "ingame"){
@@ -138,6 +145,11 @@ const GameContextProvider = (props) => {
             hasSelectedDifficulty,  setHasSelectedDifficulty,
             insertDifficulty,
             maxSelection, setMaxSelection,
+            gameMode, setGameMode,
+            isHost,  setIsHost,
+            isJoin,  setIsJoin,
+            isInRoom, setIsInRoom,
+            isRoomFull,  setIsRoomFull,
             isInGame, setIsInGame,
             isOutGame,  setIsOutGame,
             switchGameLocation,

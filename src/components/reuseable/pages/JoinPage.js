@@ -1,11 +1,23 @@
 import React, { useEffect, useState } from "react";
+import socketInService from "../../../hooks/connections/socketService";
+import { useGameContext } from "../../../hooks/useGameContext";
+import socketGameService from "../../../hooks/connections/gameService";
+import { useAppGlobalVariableContext } from "../../../hooks/useAppGlobalVariableContext";
+import { useNavigate } from "react-router-dom";
 
 const JoinPage = ({ PLAYERS }) => {
+    const navigate = useNavigate()
+
+    const {assetsFolder, defaultImage} = useAppGlobalVariableContext()
+    const imageSource = "images/faces/"
+    const {setIsHost, setIsJoin,
+        isInRoom, setIsInRoom} = useGameContext()
+    
     const [selectedHost, setSelectedHost] = useState({
         active: false,
         selectedHostDetails: {
-            name : "Timmy",
-            imgSrc : "../../../assets/images/faces/asta2.jpeg"
+            name : "None Selected",
+            image : `${assetsFolder + imageSource + defaultImage}`
         }
     })
     const [showHostList, setShowHostList] = useState({
@@ -20,36 +32,97 @@ const JoinPage = ({ PLAYERS }) => {
             buttonColor: showHostList.buttonColor === "var(--themeColor)" ? "#000" : "var(--themeColor)",
             buttonBackground: showHostList.buttonBackground === "transparent" ? "var(--themeColor)" : "transparent"
         })
-        setSelectedHost({
-            active: false,
-            selectedHostDetails: {
-                name : "Richie Hotspot",
-                imgSrc : "../../../assets/images/faces/asta3.jpeg"
+    }
+
+    const [hosts, setHosts] = useState(null)
+
+    const [roomId, setRoomId] = useState("")
+    const [hasRoomId, setHasRoomId]= useState(false)
+    const [isJoiningRoom, setIsJoiningRoom] = useState(false)
+    const [isFetchingHost, setIsFetchingHost] = useState(false)
+
+    const getAvailableHosts = async () => {
+        const socket = socketInService.socket
+
+        setIsFetchingHost(true)
+
+        const availableHosts = await socketGameService.getHosts(socket)
+        .then((data) => {
+            if (data) {
+                console.log(data); 
+                setIsFetchingHost(false)
+                console.log("Fetched Hosts");
+                setHosts(data)
             }
+        })
+        .catch((err) => {
+            alert(err)
         })
     }
 
-    const getHostDetails = ""
-    let hostList = []
+    const selectHost = (host) => {
+        setRoomId(host.roomId)
+        setHasRoomId(true)
+        console.log(host.roomId);
+        
+        setSelectedHost({
+            active: true,
+            selectedHostDetails: {
+                name : roomId,
+                image : `${assetsFolder + imageSource + host.image}`
+            }
+        })
+        toggleHostList()
+    }
 
-    // useEffect(() => {
-    //     hostList = PLAYERS.availableHosts.map(host => {
-    //         return (
-    //             <li className="host" id={host.id} key={host.id}>{host.name}</li>   
-    //         )
-    //     })
-    // }, [])
+    const joinRoom = async () => {
+        const socket = socketInService.socket
+        if (!roomId || roomId.trim === "" || !socket) return;
+
+        setIsJoiningRoom(true)
+
+        const joined = await socketGameService.joinGameRoom(socket, roomId)
+        .catch((err) => {
+            alert(err)
+        })
+
+        if (joined) {
+            setIsInRoom(true)
+            setIsJoiningRoom(false)
+            setIsHost(false)
+            setIsJoin(true)
+            navigate("/game/multiplayer/face-off")
+        }
+    }
+
+    const hostsList = hosts ? hosts.map(host => {
+        return (
+            <li className="host" 
+                id={host.hostId} 
+                key={host.hostId}
+                onClick={() => selectHost(host)}>
+                <div className="hostImg">
+                    <img src={`${assetsFolder + imageSource + host.image}`} alt="host_img"/>
+                </div>
+                <p className="hostRoomId">{host.roomId}</p>
+            </li>   
+        )
+    }) : null
 
     return (
         <div className="multiplayerHostSelect wrapper">
             <div className="setHost">
                 <div className="selectHost" id="selectHost">
-                    <div className="chooseHostButton" onClick={toggleHostList}>
-                        <span>&#11015;</span><span>CHOOSE HOST</span><span>&#11015;</span>
+                    <div className="chooseHostButton" 
+                        onClick={() => {
+                            toggleHostList()
+                            getAvailableHosts()
+                        }}>
+                        <span>&#11015;</span><span>CLICK TO CHOOSE HOST</span><span>&#11015;</span>
                     </div>
                     <div className="selectedHost">
                         <p>HOST : </p>
-                        <span><img src={`${selectedHost.selectedHostDetails.imgSrc}`}
+                        <span><img src={`${selectedHost.selectedHostDetails.image}`}
                          className="hostImg" alt="" />
                          <em>{selectedHost.selectedHostDetails.name}</em></span>
                     </div>
@@ -60,22 +133,22 @@ const JoinPage = ({ PLAYERS }) => {
                         </div>
                     )}
                     {showHostList.opened &&  (
-                        <ul className="hosts">
+                        <ul className="hosts"
+                            style={hosts && {overflowY: `${hosts.length > 3 ? "scroll" : "none"}`}}>
+                            
                             <li className="hostUsernameSearchWrapper">
                                 <input type="search" placeholder="Search Username"/>
                                 <button>🔍</button>
                             </li>
-                            <li className="host" id="host_1">Timmy</li>
-                            <li className="host" id="host_2">wifi-mi</li>
-                            <li className="host" id="host_3">hackerWifi</li>
-                            <li className="host" id="host_3">Richie Hotspot</li>
-                            <li className="host" id="host_3">hackerWifi3</li>
-                            <li className="host" id="host_3">hackerWifi3</li>
-                            <li className="host" id="host_3">hackerWifi3</li>
+                            
+                            {hostsList}
                         </ul>
                     )}
                 </div>
-                <div className="nextToHostButton">NEXT</div>
+                {hasRoomId && <div className="nextToHostButton"
+                    onClick={() => joinRoom()}>
+                    {isJoiningRoom ? "Joining..." : "Join"}
+                </div>}
             </div>
         </div>
     )

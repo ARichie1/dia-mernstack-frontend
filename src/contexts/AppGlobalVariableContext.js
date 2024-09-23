@@ -4,6 +4,7 @@ export const AppGlobalVariableContext = new createContext()
 
 const AppGlobalVariableContextProvider = (props) => {
     const appName = "WTF"
+    const assetsFolder = "http://localhost:3000/assets/"
     const imgFolder = "../../../assets/images/faces/"
 
     const defaultImage = "hulk.jpg"
@@ -23,7 +24,8 @@ const AppGlobalVariableContextProvider = (props) => {
     
     return (
         <AppGlobalVariableContext.Provider value={{
-            appName, imgFolder, defaultImage,
+            appName, assetsFolder,
+            imgFolder, defaultImage,
             defaultImages, setDefaultImages,
             showNavBlock, setShowNavBlock
         }}>

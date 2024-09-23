@@ -6,6 +6,9 @@ import { useUserContext } from "../../hooks/useUserContext";
 import { useUser } from "../../hooks/useUser";
 import { useAppGlobalVariableContext } from "../../hooks/useAppGlobalVariableContext";
 
+import socketInService from "../../hooks/connections/socketService";
+import socketGameService from "../../hooks/connections/gameService";
+
 const GameHeader = ({showNavBlock}) => {
     const {setUserStates} = useUser()
     const navigate = useNavigate()

@@ -67,14 +67,11 @@ export const useUser = () => {
         
         // update the user context
         updateUserStates(currentUserData)
-        setCurrentPlayer(currentUserData)
     }
     
     const setOpponentStates = async () => {
         const currentUserOpponentData = await getUserOpponent()
-        
         console.log(currentUserOpponentData);
-        
         
         // update the user opponent context
         setCurrentPlayerOpponent(currentUserOpponentData)

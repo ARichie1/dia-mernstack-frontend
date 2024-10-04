@@ -15,9 +15,9 @@ class SocketService {
             }
 
             this.socket.on("connect", () => {
+                this.socket.sendBuffer = [];
                 rs(this.socket)
                 console.log("connected");
-                
             })
 
             this.socket.on("connect_error", (err) => {

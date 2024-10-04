@@ -10,7 +10,7 @@ const HostPage = () => {
 
     const [roomId, setRoomId] = useState("")
     const [hasRoomId, setHasRoomId]= useState(false)
-    const {setIsHost, setIsJoin, setIsInRoom} = useGameContext()
+    const {setIsHost, setIsJoin, isInRoom, setIsInRoom} = useGameContext()
     const [isCreatingRoom, setIsCreatingRoom] = useState(false)
 
     const formInputs = [
@@ -27,18 +27,27 @@ const HostPage = () => {
         setIsCreatingRoom(true)
 
         const hosted = await socketGameService.hostGameRoom(socket, roomId)
-        .catch((err) => {
-            alert(err)
-            setIsInRoom(false)
-        })
-
-        if (hosted) {
+        .then(() => {
             setIsCreatingRoom(false)
             setHasRoomId(true)
             setIsInRoom(true)
             setIsHost(true)
             setIsJoin(false)
             navigate("/game/multiplayer/face-off")
+        })
+        .catch((err) => {
+            alert(err)
+            setIsCreatingRoom(true)
+            setHasRoomId(false)
+            setIsInRoom(false)
+            setIsHost(false)
+            setIsJoin(false)
+        })
+
+        if (hosted) {
+            console.log("hosted : ", hosted);   
+        }else{
+            console.log("hosted : ", hosted);   
         }
     }
 
@@ -48,10 +57,16 @@ const HostPage = () => {
                 formAttr={{
                     title : 'Set Room ID To Host Game',
                     placeHolder: "Enter Room Id",
-                    action: createRoom
+                    action: createRoom,
+                    isLoading: isCreatingRoom
                 }}  
                 formInputs={formInputs} 
-                buttonAtrributes={{title: isCreatingRoom ? "Creating..." : "Create", disabled: isCreatingRoom}} 
+                buttonAtrributes={isInRoom ? 
+                    {   title: "Created.", 
+                        disabled: isCreatingRoom} : 
+                    {   title: isCreatingRoom ? "Creating..." : "Create", 
+                        disabled: isCreatingRoom}
+                    } 
             />
         </div>
     )

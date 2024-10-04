@@ -40,31 +40,32 @@ const JoinPage = ({ PLAYERS }) => {
     const [hasRoomId, setHasRoomId]= useState(false)
     const [isJoiningRoom, setIsJoiningRoom] = useState(false)
     const [isFetchingHost, setIsFetchingHost] = useState(false)
-
     const getAvailableHosts = async () => {
         const socket = socketInService.socket
+        if (!socket) return;
 
         setIsFetchingHost(true)
 
-        const availableHosts = await socketGameService.getHosts(socket)
+        const datas =  await socketGameService.getHosts()
         .then((data) => {
-            if (data) {
-                console.log(data); 
-                setIsFetchingHost(false)
-                console.log("Fetched Hosts");
-                setHosts(data)
-            }
+            console.log("data : ", data);
+            setIsFetchingHost(false)
+            console.log("Fetched Hosts");
+            setHosts(data)
         })
         .catch((err) => {
-            alert(err)
+            console.log(err)
         })
     }
 
+    useEffect(() => {
+        // if (showHostList.opened) {
+            getAvailableHosts()
+        //     console.log("fetched");
+        // }        
+    }, [])
+
     const selectHost = (host) => {
-        setRoomId(host.roomId)
-        setHasRoomId(true)
-        console.log(host.roomId);
-        
         setSelectedHost({
             active: true,
             selectedHostDetails: {
@@ -72,6 +73,10 @@ const JoinPage = ({ PLAYERS }) => {
                 image : `${assetsFolder + imageSource + host.image}`
             }
         })
+        setRoomId(host.roomId)
+        setHasRoomId(true)
+        console.log(host.roomId);
+
         toggleHostList()
     }
 
@@ -80,10 +85,20 @@ const JoinPage = ({ PLAYERS }) => {
         if (!roomId || roomId.trim === "" || !socket) return;
 
         setIsJoiningRoom(true)
+        console.log("I am Joining this room : ", roomId);
+        
 
+        socket.sendBuffer = [];
         const joined = await socketGameService.joinGameRoom(socket, roomId)
+        // .then(() => {
+        //     setIsInRoom(true)
+        //     setIsJoiningRoom(false)
+        //     setIsHost(false)
+        //     setIsJoin(true)
+        //     navigate("/game/multiplayer/face-off")
+        // })
         .catch((err) => {
-            alert(err)
+            console.log(err)
         })
 
         if (joined) {
@@ -92,6 +107,8 @@ const JoinPage = ({ PLAYERS }) => {
             setIsHost(false)
             setIsJoin(true)
             navigate("/game/multiplayer/face-off")
+        }else{
+            console.log("Cant join for some reason :(");
         }
     }
 
@@ -114,9 +131,8 @@ const JoinPage = ({ PLAYERS }) => {
             <div className="setHost">
                 <div className="selectHost" id="selectHost">
                     <div className="chooseHostButton" 
-                        onClick={() => {
+                        onClick={ () => {
                             toggleHostList()
-                            getAvailableHosts()
                         }}>
                         <span>&#11015;</span><span>CLICK TO CHOOSE HOST</span><span>&#11015;</span>
                     </div>
@@ -140,6 +156,7 @@ const JoinPage = ({ PLAYERS }) => {
                                 <input type="search" placeholder="Search Username"/>
                                 <button>🔍</button>
                             </li>
+                            <li onClick={() => getAvailableHosts()}>Refresh</li>
                             
                             {hostsList}
                         </ul>

@@ -24,28 +24,67 @@ const FaceOffPage = () => {
 
     const setOpponent = async () => {
         const socket = socketInService.socket
-        setIsInRoom(true)
+        
 
-        const opponent = await socketGameService.getOpponent(socket)
-        .then((data) => {
-            if (data) {
-                console.log(data); 
-                setIsRoomFull(true)
-                console.log("Fetched Opponent");
-                setCurrentOpponent(data)
-            }
-        })
-        .catch((err) => {
-            alert(err)
-            setIsRoomFull(false)
-        })
+        const roomFull = await socketGameService.checkIfRoomFull(socket)
+        console.log("roomFull : ", roomFull);
+        
+        if (roomFull) {
+            const opponent = await socketGameService.getOpponent(socket)
+            .then((data) => {
+                if (data) {
+                    console.log(data); 
+                    setIsInRoom(true)
+                    setIsRoomFull(true)
+                    console.log("Fetched Opponent");
+                    setCurrentOpponent(data)
+                    // socketGameService.sendJoinerInfo(socket)
+                }
+            })
+            .catch((err) => {
+                alert(err)
+                setIsRoomFull(false)
+            })
+        }
+        // else{setOpponent()}
     }
 
+    // const setHostOpponent = () => {
+    //     const socket = socketInService.socket
+    //     setInterval( async () => {
+    //         const roomFull = await socketGameService.checkIfRoomFull(socket)
+    //         console.log("roomFull : ", roomFull);
+
+    //         if (roomFull) {
+    //             socketGameService.recieveJoinerInfo(socket)
+    //         }else{
+    //             console.log("No opponent yet!!");
+    //         }
+    //     }, 10000);
+    // }
+
     useEffect(() => {
-        if(!isRoomFull){
+        if (isJoin) {
             setOpponent()
         }
-    }, [isRoomFull])
+        if (isHost) {
+            const socket = socketInService.socket
+            let checkingForOpponent = setInterval(async () => {
+                const roomFull = await socketGameService.checkIfRoomFull(socket)
+                console.log("roomFull : ", roomFull);
+
+                if (roomFull) {
+                    console.log("The room is Full");
+                    // await socketGameService.recieveJoinerInfo(socket)
+                    setOpponent()
+                    clearInterval(checkingForOpponent)
+                }else{
+                    console.log("No opponent yet!!");
+                    console.log("waiting ...");
+                }
+            }, 5000);
+        }
+    }, [])
 
     const [showHostSettings, setShowHostSettings] = useState({
         opened: false,
@@ -64,7 +103,8 @@ const FaceOffPage = () => {
     return (
         <div className="multiplayerFaceOffPage subWrapper">
             <div className="multiplayerFaceOff">
-                <div className="faceOffWrapper">
+                <div className="faceOffWrapper"
+                onClick={() => setOpponent()}>
                     <div className="playerFaceOffSide playersFaceOffSide pic">
                         <img src={`../../../../assets/images/faces/${currentPlayer ? currentPlayer.profileImage.value : defaultImage}`} className="hostImg" alt="" />
                         <p className="opponentImg">

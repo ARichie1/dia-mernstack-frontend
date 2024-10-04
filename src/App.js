@@ -49,19 +49,40 @@ import socketGameService from "./hooks/connections/gameService/index.js";
 
 const App = () => {
   const { user , userInfo: currentPlayer} = useAuthContext()
-  const { GameUiLinks, isInRoom, isRoomFull } = useContext(GameContext)
+  const { GameUiLinks, setIsHost, setIsJoin,
+          isInRoom, setIsInRoom, isRoomFull } = useContext(GameContext)
   
-  const connectToSocket = async () =>{
+  const connectToSocket = async () => {
     await socketInService.connect("")
     .catch((err) => {
       console.log("Error: ", err);
     })
   }
+
+  const checkInRoom = async () => {
+    const socket = socketInService.socket
+    if (!socket) return;
+
+    let check = await socketGameService.isPlayerInRoom(socket)
+    .then((data) => {
+      if (data) {
+        setIsInRoom(data.inRoom)
+        setIsHost(data.host)
+        setIsJoin(data.join)
+      }
+    }).catch((err) => {
+
+    })
+  }
+
   useEffect(() => {
-    connectToSocket()
-    if (currentPlayer) {
-      socketGameService.getAndCreatePlayer(currentPlayer)
+    if (user) {
+      connectToSocket()
+      if (currentPlayer) {
+        socketGameService.getAndCreatePlayer(currentPlayer)
+      }
     }
+    
   }, [currentPlayer])
 
   return (

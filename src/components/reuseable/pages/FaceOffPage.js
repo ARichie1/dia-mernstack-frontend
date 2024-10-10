@@ -17,10 +17,11 @@ const FaceOffPage = () => {
     const {defaultImage} = useAppGlobalVariableContext()
 
     const {isHost, isJoin, isInRoom, setIsInRoom,
-        isRoomFull,  setIsRoomFull} = useGameContext()
+        isRoomFull,  setIsRoomFull, gameProperties,
+        insertDifficulty, setGameProperties} = useGameContext()
 
-    const {chosenDifficulty, hasSelectedDifficulty, insertDifficulty
-    } = useContext(GameContext)
+    const {chosenDifficulty, hasSelectedDifficulty} = useContext(GameContext)
+    const [hasModifiedGameProps, setHasModifiedGameProps] = useState(false)
 
     const setOpponent = async () => {
         const socket = socketInService.socket
@@ -49,24 +50,58 @@ const FaceOffPage = () => {
         // else{setOpponent()}
     }
 
-    // const setHostOpponent = () => {
-    //     const socket = socketInService.socket
-    //     setInterval( async () => {
-    //         const roomFull = await socketGameService.checkIfRoomFull(socket)
-    //         console.log("roomFull : ", roomFull);
+    const recieveGameProps = async () => {
+        const socket = socketInService.socket
+        await socketGameService.recieveGameProperties(socket)
+        .then((gameProperties) => {
+            console.log(gameProperties);
+            setHasModifiedGameProps(true)
+            // Set the chosen difficulty for the game context
+            insertDifficulty(gameProperties);
+            setGameProperties({
+                difficulty : gameProperties
+            })
+        })
+        .catch((err) => {
+            console.log(err);
+            setHasModifiedGameProps(false)
+        })
+    }
 
-    //         if (roomFull) {
-    //             socketGameService.recieveJoinerInfo(socket)
-    //         }else{
-    //             console.log("No opponent yet!!");
-    //         }
-    //     }, 10000);
-    // }
+    // useEffect(() => {
+    //     if (isJoin) {
+    //         recieveGameProps()
+    //     }
+
+        // const checkingForNewGameProps = setInterval(() => {
+            
+        //     if (hasGameProps) {
+        //         console.log("Has GProps.");
+        //         clearInterval(checkingForNewGameProps)
+        //     }else{
+        //         console.log("No GProps Yet ...");
+        //         recieveGameProps()
+        //     }
+        // }, 5000);
+
+    // }, [])
 
     useEffect(() => {
         if (isJoin) {
             setOpponent()
+            // recieveGameProps()
+
+            const checkingForNewGameProps = setInterval(() => {
+                if (hasModifiedGameProps) {
+                    console.log("Has GProps.");
+                    clearInterval(checkingForNewGameProps)
+                }else{
+                    console.log("No GProps Yet ...");
+                    recieveGameProps()
+                }
+            }, 5000);
         }
+
         if (isHost) {
             const socket = socketInService.socket
             let checkingForOpponent = setInterval(async () => {
@@ -74,8 +109,7 @@ const FaceOffPage = () => {
                 console.log("roomFull : ", roomFull);
 
                 if (roomFull) {
-                    console.log("The room is Full");
-                    // await socketGameService.recieveJoinerInfo(socket)
+                    console.log("The room is Full")
                     setOpponent()
                     clearInterval(checkingForOpponent)
                 }else{
@@ -139,7 +173,7 @@ const FaceOffPage = () => {
             </div> 
             {showHostSettings.opened && (
                 <div className="hostSettings">
-                    <DifficultySelector insertDifficulty={ insertDifficulty } otherActions={toggleHostSettings}/>
+                    <DifficultySelector otherActions={toggleHostSettings}/>
                 </div>
             )}   
             

@@ -62,14 +62,16 @@ const GameContextProvider = (props) => {
     const insertDifficulty = (diff) => {
       setChosenDifficulty(diff)
       setHasSelectedDifficulty(true)
-      console.log(diff);
-      
+      console.log(diff);  
     }
 
     const [maxSelection, setMaxSelection] = useState(false)
 
     const [gameMode, setGameMode] = useState(null)
-
+    const [gameProperties, setGameProperties] = useState({
+      difficulty: chosenDifficulty
+    })
+    
     const [isHost,  setIsHost] = useState(false)
     const [isJoin,  setIsJoin] = useState(false)
     const [isInRoom, setIsInRoom] = useState(false)
@@ -77,6 +79,12 @@ const GameContextProvider = (props) => {
 
     const [isOutGame,  setIsOutGame] = useState(true)
     const [isInGame,  setIsInGame] = useState(false)
+    
+    const [isReady,  setIsReady] = useState(false)
+    const [isOpponentReady,  setIsOpponentReady] = useState(false)
+    
+    const [isConnected,  setIsConnected] = useState(false)
+    const [isOpponentConnected,  setIsOpponentConnected] = useState(false)
 
     const switchGameLocation = (location) => {
       if (location === "ingame"){
@@ -146,12 +154,19 @@ const GameContextProvider = (props) => {
             insertDifficulty,
             maxSelection, setMaxSelection,
             gameMode, setGameMode,
+            gameProperties, setGameProperties,
+
             isHost,  setIsHost,
             isJoin,  setIsJoin,
             isInRoom, setIsInRoom,
             isRoomFull,  setIsRoomFull,
             isInGame, setIsInGame,
             isOutGame,  setIsOutGame,
+            isReady,  setIsReady,
+            isOpponentReady,  setIsOpponentReady,
+            isConnected,  setIsConnected,
+            isOpponentConnected,  setIsOpponentConnected,
+        
             switchGameLocation,
             showSaveBtn, setShowSaveBtn, 
             showPlayBtn, setShowPlayBtn,

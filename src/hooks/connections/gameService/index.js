@@ -38,11 +38,11 @@ class GameService {
         }
     }
 
-    async hostGameRoom (socket, roomId) {
+    async hostGameRoom (socket, roomId, gameProperties) {
         if (socket.connected) {
             return new Promise(async (rs, rj) => {
                 console.log("sending room to be created ...");
-                const sentRoomId = await socket.emit("hostGame", {roomId})
+                const sentRoomId = await socket.emit("hostGame", {roomId, gameProperties})
                 
                 if (sentRoomId) {
                     console.log("room id sent");
@@ -63,10 +63,10 @@ class GameService {
         }
     }
 
-    async joinGameRoom (socket, roomId) {
+    async joinGameRoom (socket, roomId, gameProperties) {
         if (socket.connected) {
             return new Promise((rs, rj) => {
-                socket.emit("joinGame", {roomId})
+                socket.emit("joinGame", {roomId, gameProperties})
                 socket.on("roomJoined", (data) => {
                     rs(true)
                     console.log("Joined " + data.roomId)
@@ -169,12 +169,40 @@ class GameService {
             })
         }
     }
+    
+    // Host Sends Game Property To Room
+    async saveGameProperties (socket, properties) {
+        if (socket.connected) {
+            socket.emit("saveGameProperties", {properties})
+        }
+    }
 
-    // async sendJoinerInfo (socket) {
-    //     if (socket.connected) {
-    //         socket.emit("sendPlayerInfoToHost")
-    //     }
-    // }
+    // Joiner Gets The Game Property The Host Saved
+    async recieveGameProperties (socket) {
+        if (socket.connected) {
+            return new Promise((rs, rj) => {
+                socket.emit("requestGamePropertiesFromHost")
+                console.log("sent the request ...");
+                
+                socket.on("sendingGameProperties", ({gameProperties}) => {
+                    console.log("checking the send ...");
+                    rs(gameProperties)
+                    console.log(gameProperties)
+                })
+
+                // socket.on("hostSendingGameProperties", ({gameProperties}) => {
+                //     console.log("checking the send ...");
+                //     console.log("seen props :)");
+                //     rs(gameProperties)
+                //     console.log("gprops : ", gameProperties);
+                //     // socket.off("hostSendingGameProperties")
+                
+                
+                //     socket.sendBuffer = []
+                // })
+            })
+        }
+    }
 
     async recieveJoinerInfo (socket) {
         if (socket.connected) {
@@ -182,7 +210,7 @@ class GameService {
                 
                 socket.emit("sendJoinerInfoToHost")
                 console.log("Prompting Joiner ... ");
-                
+
                 await socket.on("sendingHostOpponent", ({info}) => {
                     // rs(info)
                     console.log("Joiner : ", info);

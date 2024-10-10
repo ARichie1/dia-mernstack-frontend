@@ -10,7 +10,9 @@ const HostPage = () => {
 
     const [roomId, setRoomId] = useState("")
     const [hasRoomId, setHasRoomId]= useState(false)
-    const {setIsHost, setIsJoin, isInRoom, setIsInRoom} = useGameContext()
+    const {setIsHost, setIsJoin, isInRoom, setIsInRoom,
+            gameProperties, setGameProperties, setHasSelectedDifficulty
+                } = useGameContext()
     const [isCreatingRoom, setIsCreatingRoom] = useState(false)
 
     const formInputs = [
@@ -26,13 +28,14 @@ const HostPage = () => {
 
         setIsCreatingRoom(true)
 
-        const hosted = await socketGameService.hostGameRoom(socket, roomId)
+        const hosted = await socketGameService.hostGameRoom(socket, roomId, gameProperties)
         .then(() => {
             setIsCreatingRoom(false)
             setHasRoomId(true)
             setIsInRoom(true)
             setIsHost(true)
             setIsJoin(false)
+            setHasSelectedDifficulty(true)
             navigate("/game/multiplayer/face-off")
         })
         .catch((err) => {
@@ -42,13 +45,8 @@ const HostPage = () => {
             setIsInRoom(false)
             setIsHost(false)
             setIsJoin(false)
+            setHasSelectedDifficulty(false)
         })
-
-        if (hosted) {
-            console.log("hosted : ", hosted);   
-        }else{
-            console.log("hosted : ", hosted);   
-        }
     }
 
     return (

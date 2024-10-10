@@ -1,9 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { GameContext } from "../../../contexts/GameContext";
+import socketInService from "../../../hooks/connections/socketService";
+import socketGameService from "../../../hooks/connections/gameService";
 
 
-const DifficultySelector = ({ insertDifficulty, otherActions}) => {
-    const { Difficulties } = useContext(GameContext)
+const DifficultySelector = ({otherActions}) => {
+    const { Difficulties, insertDifficulty, 
+            chosenDifficulty, isHost,
+            gameProperties, setGameProperties} = useContext(GameContext)
+
+    const sendGameProperties = async () => {
+        const socket = socketInService.socket
+        let saved = socketGameService.saveGameProperties(socket, gameProperties)
+    }
+
+    const saveGameProperties = () => {
+        if (isHost) {
+            sendGameProperties()
+        }
+        otherActions()
+    }
 
     const difficultyList = Difficulties.map( diff => {
 
@@ -12,13 +28,20 @@ const DifficultySelector = ({ insertDifficulty, otherActions}) => {
             else{return}
         }
 
-
         return (
             <div className={`${diff.difficulty} difficulty`} 
                 style={{background: diff.color}} 
                 onClick={() => {
+                    
+                    // Set the chosen difficulty for the game context
                     insertDifficulty(diff);
-                    runOtherActions() 
+                    setGameProperties({
+                        difficulty : diff
+                    })
+
+                    // If in single player mode, 
+                    // toggle the difficulty selector
+                    if(!isHost){runOtherActions()} 
                 }}
                 key={diff.id}>  
                 <div className="difficultyHeader" key={Math.random()}>{diff.difficulty}</div>
@@ -52,6 +75,10 @@ const DifficultySelector = ({ insertDifficulty, otherActions}) => {
                     <option> Select Agents </option>
                     {endlessDifficultyList}
                 </select>
+                <button className="saveGameProperties clkBtn"
+                    onClick={() => saveGameProperties()}>
+                    Save
+                </button>
             </div>
     )
 }

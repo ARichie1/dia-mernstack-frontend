@@ -527,6 +527,17 @@ li{text-decoration: none; list-style: none;}
   font-weight: bold;
   cursor: pointer;
 }
+.game .difficultyTable .saveGameProperties{
+  width: 50%; height: 40px;
+  margin-left: 25%;
+  border-radius: 5px;
+  background: var(--themeColor);
+  color: var(--themeFontColor);
+  box-shadow: var(--shadow);
+  font-weight: bold;  
+  text-transform: uppercase;
+  cursor: pointer;
+}
 
 .game .findAgents .toGame, 
 .game .multiPlayerOnline .toGame{

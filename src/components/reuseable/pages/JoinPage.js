@@ -10,8 +10,9 @@ const JoinPage = ({ PLAYERS }) => {
 
     const {assetsFolder, defaultImage} = useAppGlobalVariableContext()
     const imageSource = "images/faces/"
-    const {setIsHost, setIsJoin,
-        isInRoom, setIsInRoom} = useGameContext()
+    const {setIsHost, setIsJoin, setIsInRoom,
+            chosenDifficulty, insertDifficulty,
+            gameProperties} = useGameContext()
     
     const [selectedHost, setSelectedHost] = useState({
         active: false,
@@ -59,10 +60,7 @@ const JoinPage = ({ PLAYERS }) => {
     }
 
     useEffect(() => {
-        // if (showHostList.opened) {
-            getAvailableHosts()
-        //     console.log("fetched");
-        // }        
+        getAvailableHosts()       
     }, [])
 
     const selectHost = (host) => {
@@ -77,6 +75,9 @@ const JoinPage = ({ PLAYERS }) => {
         setHasRoomId(true)
         console.log(host.roomId);
 
+        console.log(host.diff);
+        insertDifficulty(host.diff)
+        
         toggleHostList()
     }
 
@@ -89,7 +90,7 @@ const JoinPage = ({ PLAYERS }) => {
         
 
         socket.sendBuffer = [];
-        const joined = await socketGameService.joinGameRoom(socket, roomId)
+        const joined = await socketGameService.joinGameRoom(socket, roomId, gameProperties)
         // .then(() => {
         //     setIsInRoom(true)
         //     setIsJoiningRoom(false)
@@ -142,12 +143,14 @@ const JoinPage = ({ PLAYERS }) => {
                          className="hostImg" alt="" />
                          <em>{selectedHost.selectedHostDetails.name}</em></span>
                     </div>
+                    
                     {selectedHost.active &&  (
-                        <div className="selectedDifficultyByHost">
+                        <div className="selectedDifficultyByHost" style={{background: chosenDifficulty.color}}>
                             <p>DIFFICULTY : </p>
-                            <span>HARD</span>
+                            <span> {chosenDifficulty.difficulty} ( {chosenDifficulty.agents} )</span>
                         </div>
                     )}
+
                     {showHostList.opened &&  (
                         <ul className="hosts"
                             style={hosts && {overflowY: `${hosts.length > 3 ? "scroll" : "none"}`}}>

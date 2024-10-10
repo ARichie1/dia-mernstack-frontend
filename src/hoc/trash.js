@@ -518,3 +518,49 @@ const playerDefaultValue = {
 }
 
 module.exports = playerDefaultValue
+
+
+// const setHostOpponent = () => {
+    const socket = socketInService.socket
+    let checkingForOpponent = setInterval(async () => {
+        const roomFull = await socketGameService.checkIfRoomFull(socket)
+        console.log("roomFull : ", roomFull);
+
+        if (roomFull) {
+            console.log("The room is Full")
+            setOpponent()
+            clearInterval(checkingForOpponent)
+        }else{
+            console.log("No opponent yet!!");
+            console.log("waiting ...");
+        }
+    }, 5000);
+    // }
+
+    if (isJoin) {
+        setOpponent()
+        recieveGameProps()
+
+        const checkingForNewGameProps = setInterval(() => {
+            
+            if (hasGameProps) {
+                console.log("Has GProps.");
+                clearInterval(checkingForNewGameProps)
+            }else{
+                console.log("No GProps Yet ...");
+                recieveGameProps()
+            }
+        }, 5000);
+    }
+
+    const requestGamePropertiesFromHost = async () => {
+    let opponent = Player.list[player.game.opponent.id]
+
+    console.log("Opponent Difficulty : ", opponent.game.difficulty);
+    
+    console.log("Joiner Saving Game Props ...");
+    player.game.difficulty = opponent.game.difficulty
+
+    console.log("Sending Game Props To Joiner Socket Client ...");   
+    playerSocket.emit("sendingGameProperties", {gameProperties: opponent.game.difficulty})
+}

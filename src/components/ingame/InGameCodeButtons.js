@@ -1,24 +1,38 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { GameContext } from '../../contexts/GameContext'
 import { InGameContext } from '../../contexts/InGameContext'
-import { useNavigate } from 'react-router-dom'
 import { CodeCreationContext } from '../../contexts/CodeCreationContext'
 
 const InGameCodeButtons = () => {
-
-    const navigate = useNavigate()
-
     const {
         isInGame, isOutGame,
+        isTurn, setIsTurn,
         showPlayBtn, showSaveBtn, showSendBtn,
         handlePlayBtn, handleSaveBtn, handleSendBtn, 
         codeSelection
     }  = useContext(GameContext)
 
-    const {activePrediction, sendActivePrediction} = useContext(InGameContext)
-
+    const {activePrediction, 
+        recieveOpponentAPandCP, setShowOpponentScreen,
+        sendValidActivePrediction} = useContext(InGameContext)
     const {codeButtons,handleCodeButton, handleCodeReset} = useContext(CodeCreationContext)
 
+    // Recieve oppenents AP and CP 
+    // If Player Is Not Player Turn To Play (isTurn = false)
+    const initiateRecievingOpponentAPandCP = () => {
+        recieveOpponentAPandCP()
+        if (!isTurn) {
+            setShowOpponentScreen(true)
+        }
+    }
+
+    useEffect(() => {
+        console.log("in use effect");
+        
+        console.log("isTurn : ", isTurn);
+        
+    }, [isTurn])
+    
     let codeButtonList = codeButtons.sort((a, b) => a - b).map(cb => {
         return (
             <li key={cb.id}>
@@ -32,22 +46,22 @@ const InGameCodeButtons = () => {
                         data-sound={`../sounds/${cb.id}.wav"`} 
                         type="button" key={cb.id}
                         onClick={() => handleCodeButton(cb.value, cb.id)}
-                        style={{opacity : `${cb.active ? "1" : "0.2"}`}}>
+                        style={{opacity : `${cb.active ? "1" : "0.2"}`}}
+                        disabled={isOutGame ? false : (isTurn ? false : true)}>
                         <img id={`_${cb.id}_`} src={`../../../assets/images/faces/pa_${cb.value}.png`} alt={`pa_${cb.value}.png`}/>
                     </button>) : (
                     <button 
                         className={`${cb.type} inGameBtn`} 
                         data-sound={`../sounds/${cb.id}.wav"`} 
                         type="button" key={cb.id}
-                        onClick={() => handleCodeReset()}>
+                        onClick={() => handleCodeReset()}
+                        disabled={isOutGame ? false : (isTurn ? false : true)}>
                         <p>{cb.value}</p>
                     </button>)
                 }
             </li>
         )
     })
-
-    const moveToInGame = () => {navigate("/game/in-game/single-player/:userid")}
 
     return (
         <div className="codedImages bottomContents">
@@ -63,7 +77,7 @@ const InGameCodeButtons = () => {
                                     type="button"
                                     onClick={() => {
                                         handleSendBtn(activePrediction)
-                                        sendActivePrediction()
+                                        sendValidActivePrediction()
                                         handleCodeReset()
                                     }}>
                                     <p>Send</p>
@@ -90,9 +104,10 @@ const InGameCodeButtons = () => {
                                     data-sound={`../sounds/0.wav`} 
                                     type="button"
                                     onClick={() => {
-                                        handlePlayBtn();
+                                        handlePlayBtn()
                                         handleCodeReset()
-                                        moveToInGame()}}>
+                                        initiateRecievingOpponentAPandCP()
+                                    }}>
                                     <p>Play</p>
                                 </button></li>}
                         </ul>

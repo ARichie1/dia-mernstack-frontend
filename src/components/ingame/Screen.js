@@ -2,14 +2,17 @@ import React, { useContext, useState } from 'react'
 import CodeAndResult from './CodeAndResult'
 import { GameContext } from '../../contexts/GameContext'
 import { InGameContext } from '../../contexts/InGameContext'
+import { useUserContext } from '../../hooks/useUserContext'
 
-const Screen = ({showOpponentPredictions, showPlayerPredictions}) => {
+const Screen = () => {
+    const { currentOpponent } = useUserContext()
 
-    const {isInGame, isOutGame, codeSelection}  = useContext(GameContext)
+    const {isInGame, isOutGame, codeSelection, isTurn}  = useContext(GameContext)
     const {activePrediction, currentPrediction, playerPredictions, 
-        opponentPredictions}  = useContext(InGameContext)
-
-    // const sendActivePrediction = () => {}
+        opponentActivePrediction, opponentCurrentPrediction, opponentPredictions,
+        showPlayerPredictions, showOpponentPredictions, 
+        showOpponentScreen, setShowOpponentScreen,
+        showOpponentCurrentPredictions} = useContext(InGameContext)
 
     // const createPlayerPredictions = () => {}
     const playerPredictionList = playerPredictions.map(plyPred => {
@@ -37,6 +40,14 @@ const Screen = ({showOpponentPredictions, showPlayerPredictions}) => {
     return (
         <div className="screen bottomContents">
             {isOutGame && <div className="codeShieldToggler">&#128065;</div>}
+            {isInGame && <div className="opponentScreenToggler"
+                onClick={() => setShowOpponentScreen(!showOpponentScreen)}>
+                   <div className='togglerInner'>
+                    &#128065;
+                    <p>view {showOpponentScreen ? " your" : currentOpponent.username + "'s"} screen</p>
+                   </div> 
+                </div>
+            }
             {isInGame && 
                 <div className='inGameScreen screenWrapper'>
                     <div className="screenHeader screenChild">
@@ -46,13 +57,33 @@ const Screen = ({showOpponentPredictions, showPlayerPredictions}) => {
 
                     <div className="predictions screenChild">
                         <div className="predictionResults">
-                            <div className="currentPrediction display screen_display">
-                                <CodeAndResult carAttr={
-                                    {prediction: currentPrediction,
-                                        type: "codesandresults",
-                                        class:"currentPredictionWrapper"
-                                    }}/>
-                            </div>
+                            {!showOpponentScreen && 
+                                <div className="currentPrediction display screen_display">
+                                    <CodeAndResult carAttr={
+                                        {prediction: currentPrediction,
+                                            type: "codesandresults",
+                                            class:"currentPredictionWrapper"
+                                        }}/>
+                                </div>
+                            }
+
+                            {showOpponentScreen && 
+                                <div className="currentPrediction opponentCurrentPrediction display screen_display">
+                                    {!showOpponentCurrentPredictions && <div className="activeGuess">
+                                        <CodeAndResult carAttr={
+                                            {prediction: opponentActivePrediction,
+                                                type: "codes",
+                                                class:"opponentActivePredictionWrapper"
+                                            }}/>
+                                    </div>}
+                                    {showOpponentCurrentPredictions && <CodeAndResult carAttr={
+                                        {prediction: opponentCurrentPrediction,
+                                            type: "codesandresults",
+                                            class:"opponentCurrentPredictionWrapper"
+                                        }}/>}
+                                </div>
+                            }
+                            
 
                             <div className="playerPredictions display screen_display multiplePredictions"
                                 style={{right: `${showPlayerPredictions ? "0%" : "-100%"}`}}>

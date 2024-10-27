@@ -7,8 +7,12 @@ class SocketService {
     }
 
     connect (url) {
+        console.log(url);
         return new Promise((rs, rj) => {
-            this.socket = io(url)
+            this.socket = io('http://127.0.0.1:4000')
+            // this.socket = io(
+            //     'http://127.0.0.1:4000',
+            //     {transports: ["websockets"]})
 
             if(!this.socket){
                 return rj()

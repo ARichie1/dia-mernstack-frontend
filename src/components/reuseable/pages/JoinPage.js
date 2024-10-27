@@ -12,6 +12,8 @@ const JoinPage = ({ PLAYERS }) => {
     const imageSource = "images/faces/"
     const {setIsHost, setIsJoin, setIsInRoom,
             chosenDifficulty, insertDifficulty,
+            turnOrder,  setTurnOrder,
+            isTurn,  setIsTurn,
             gameProperties} = useGameContext()
     
     const [selectedHost, setSelectedHost] = useState({
@@ -77,7 +79,14 @@ const JoinPage = ({ PLAYERS }) => {
 
         console.log(host.diff);
         insertDifficulty(host.diff)
-        
+
+        if (host.order === 0) {
+            setTurnOrder(1)
+            setIsTurn(false)
+        }else{
+            setTurnOrder(0)
+            setIsTurn(true)
+        }
         toggleHostList()
     }
 
@@ -90,7 +99,7 @@ const JoinPage = ({ PLAYERS }) => {
         
 
         socket.sendBuffer = [];
-        const joined = await socketGameService.joinGameRoom(socket, roomId, gameProperties)
+        const joined = await socketGameService.joinGameRoom(socket, roomId, gameProperties, turnOrder)
         // .then(() => {
         //     setIsInRoom(true)
         //     setIsJoiningRoom(false)
@@ -107,6 +116,10 @@ const JoinPage = ({ PLAYERS }) => {
             setIsJoiningRoom(false)
             setIsHost(false)
             setIsJoin(true)
+
+            console.log("TO : ", turnOrder);
+            console.log("Turn : ", isTurn);
+
             navigate("/game/multiplayer/face-off")
         }else{
             console.log("Cant join for some reason :(");

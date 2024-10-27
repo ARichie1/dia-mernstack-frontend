@@ -1,4 +1,6 @@
 import React, { createContext, useState } from 'react'
+import socketGameService from '../hooks/connections/gameService'
+import socketInService from '../hooks/connections/socketService'
 
 export const GameContext = new createContext()
 
@@ -85,6 +87,15 @@ const GameContextProvider = (props) => {
     
     const [isConnected,  setIsConnected] = useState(false)
     const [isOpponentConnected,  setIsOpponentConnected] = useState(false)
+    
+    const [isReadyToPlay,  setIsReadyToPlay] = useState(false)
+    const [isOpponentReadyToPlay,  setIsOpponentReadyToPlay] = useState(false)
+    
+    const [canBuildCode, setCanBuildCode] = useState(false)
+    const [canPlayGame, setCanPlayGame] = useState(false)
+
+    const [turnOrder,  setTurnOrder] = useState(null)
+    const [isTurn,  setIsTurn] = useState(false)
 
     const switchGameLocation = (location) => {
       if (location === "ingame"){
@@ -106,14 +117,37 @@ const GameContextProvider = (props) => {
       return selectedCodes
     }
 
-    const sendSelectedCode = (selection) => {
-      let selectedCodes = getSelectedCode(selection)
-      console.log(selectedCodes);
-    }
-
     const [showSendBtn, setShowSendBtn] = useState(false)
     const [showSaveBtn, setShowSaveBtn] = useState(false)
     const [showPlayBtn, setShowPlayBtn] = useState(false)
+
+    const sendSelectedCode = async (selection) => {
+      let selectedCodes = getSelectedCode(selection)
+      console.log(selectedCodes);
+
+      const socket = socketInService.socket
+      const saved = await socketGameService.saveCode(socket, selectedCodes)
+      .then((data)=> {
+        console.log("code saved : ", data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
+
+    const sendReadyToPlay = async () => {
+      const socket = socketInService.socket
+      const sent = await socketGameService.sendReadyToPlay(socket)
+      .then((data) => {
+        console.log("sent r2p : ", data);
+        
+        setIsReadyToPlay(data)
+        setCanPlayGame(data)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
 
     const handleSaveBtn = (selection) => {
       setShowSaveBtn(false)
@@ -122,14 +156,14 @@ const GameContextProvider = (props) => {
     }
     
     const handlePlayBtn = (action) => {
-      switchGameLocation("ingame")
+      sendReadyToPlay()
       setShowPlayBtn(false)
       setShowSaveBtn(true)
       setMaxSelection(false)
     }
 
     const handleSendBtn = (selection, func) => {
-      sendSelectedCode(selection)
+      // sendSelectedCode(selection)
 
       if (func) {
         func()
@@ -164,8 +198,16 @@ const GameContextProvider = (props) => {
             isOutGame,  setIsOutGame,
             isReady,  setIsReady,
             isOpponentReady,  setIsOpponentReady,
+            isReadyToPlay,  setIsReadyToPlay,
+            isOpponentReadyToPlay,  setIsOpponentReadyToPlay,
             isConnected,  setIsConnected,
             isOpponentConnected,  setIsOpponentConnected,
+
+            canBuildCode, setCanBuildCode,
+            canPlayGame, setCanPlayGame,
+
+            turnOrder,  setTurnOrder,
+            isTurn,  setIsTurn,
         
             switchGameLocation,
             showSaveBtn, setShowSaveBtn, 

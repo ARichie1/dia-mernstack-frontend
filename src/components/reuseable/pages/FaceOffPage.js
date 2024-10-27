@@ -16,12 +16,16 @@ const FaceOffPage = () => {
     const { currentOpponent, setCurrentOpponent} = useUserContext()
     const {defaultImage} = useAppGlobalVariableContext()
 
-    const {isHost, isJoin, isInRoom, setIsInRoom,
-        isRoomFull,  setIsRoomFull, gameProperties,
-        insertDifficulty, setGameProperties} = useGameContext()
+    const {isHost, isJoin, setIsInRoom, isRoomFull,  setIsRoomFull, 
+        insertDifficulty, gameProperties, setGameProperties,
+        canBuildCode, setCanBuildCode,
+        isReady,  setIsReady,
+        canPlayGame, setCanPlayGame} = useGameContext()
 
     const {chosenDifficulty, hasSelectedDifficulty} = useContext(GameContext)
     const [hasModifiedGameProps, setHasModifiedGameProps] = useState(false)
+    const [isHostReady, setIsHostReady] = useState(false)
+    let ready = false
 
     const setOpponent = async () => {
         const socket = socketInService.socket
@@ -47,20 +51,36 @@ const FaceOffPage = () => {
                 setIsRoomFull(false)
             })
         }
-        // else{setOpponent()}
     }
 
-    const recieveGameProps = async () => {
+    const recieveGameProps = async (interval) => {
         const socket = socketInService.socket
-        await socketGameService.recieveGameProperties(socket)
-        .then((gameProperties) => {
-            console.log(gameProperties);
+        const recieved = await socketGameService.recieveGameProperties(socket)
+        .then(({gameProperties, hostIsReady}) => {
             setHasModifiedGameProps(true)
+
             // Set the chosen difficulty for the game context
             insertDifficulty(gameProperties);
             setGameProperties({
                 difficulty : gameProperties
             })
+
+            console.log("face off hostIsReady : ", hostIsReady);
+
+            if (hostIsReady) {
+                console.log("Has GProps.");
+
+                // Player Becomes Ready To Build Code When Host Is Ready
+                setIsHostReady(hostIsReady)
+                setIsReady(hostIsReady)
+                setCanBuildCode(hostIsReady)
+
+                console.log("I am host ready : ", isHostReady);
+                console.log("I am ready : ", isReady);
+
+                // Stop the gameProps checker
+                clearInterval(interval)
+            }
         })
         .catch((err) => {
             console.log(err);
@@ -68,38 +88,18 @@ const FaceOffPage = () => {
         })
     }
 
-    // useEffect(() => {
-    //     if (isJoin) {
-    //         recieveGameProps()
-    //     }
-
-        // const checkingForNewGameProps = setInterval(() => {
-            
-        //     if (hasGameProps) {
-        //         console.log("Has GProps.");
-        //         clearInterval(checkingForNewGameProps)
-        //     }else{
-        //         console.log("No GProps Yet ...");
-        //         recieveGameProps()
-        //     }
-        // }, 5000);
-
-    // }, [])
-
     useEffect(() => {
         if (isJoin) {
             setOpponent()
-            // recieveGameProps()
 
-            const checkingForNewGameProps = setInterval(() => {
-                if (hasModifiedGameProps) {
-                    console.log("Has GProps.");
-                    clearInterval(checkingForNewGameProps)
-                }else{
-                    console.log("No GProps Yet ...");
-                    recieveGameProps()
-                }
-            }, 5000);
+            // Check if the host update the game properties
+            const checkingForNewGameProps = setInterval( () => {
+                // console.log("I am ready : ", isReady);
+                // console.log("I am ready : ", isHostReady);
+                
+                console.log("No GProps Yet ...");
+                recieveGameProps(checkingForNewGameProps)
+            }, 10000);
         }
 
         if (isHost) {
@@ -119,6 +119,15 @@ const FaceOffPage = () => {
             }, 5000);
         }
     }, [])
+
+    // Host Tells Room They Are Ready To Build Code
+    const playerReady = () => {
+        setCanBuildCode(true)
+        setIsReady(true)
+
+        const socket = socketInService.socket
+        let saved = socketGameService.saveGameProperties(socket, gameProperties, true)
+    }
 
     const [showHostSettings, setShowHostSettings] = useState({
         opened: false,
@@ -164,20 +173,25 @@ const FaceOffPage = () => {
                         <p>DIFFICULTY : </p>
                         <span>{chosenDifficulty.difficulty} ( {chosenDifficulty.agents} )</span>
                     </div>
-                )}
-                {isRoomFull && <div className="selectYourCode">
+                )} 
+                {isRoomFull && !isReady && isHost && <div className="selectYourCode">
+                    <div className="clkBtn"
+                        onClick={() => playerReady()}
+                    > Ready </div>
+                </div>}
+                {isRoomFull  && isReady && canBuildCode && <div className="selectYourCode">
                     <div className="clkBtn">
                         <Link to="/game/multiplayer/select-code">BUILD YOUR CODE</Link>
                     </div>
                 </div>}
             </div> 
-            {showHostSettings.opened && (
+            {showHostSettings.opened && !isReady && (
                 <div className="hostSettings">
                     <DifficultySelector otherActions={toggleHostSettings}/>
                 </div>
             )}   
             
-            {isHost && (
+            {isHost && !isReady && (
                 <div className="hostSettingsButton" 
                     onClick={() => {toggleHostSettings()}} 
                     style={{color: `${showHostSettings.buttonColor}`, 

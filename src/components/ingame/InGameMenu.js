@@ -5,12 +5,12 @@ const InGameMenu = () => {
     const {chosenDifficulty} = useContext(GameContext)
     return (
         <div className="inGameMenu">
-            <div className="exit menuItem inGameBtn">
+            <button className="exit menuItem inGameBtn">
                 <span>Exit</span>
-            </div>
-            <div className="mainnGameAudio menuItem inGameBtn">
+            </button>
+            <button className="mainnGameAudio menuItem inGameBtn">
                 <span>&#128266;</span>
-            </div>
+            </button>
             <div className="agentToSelect menuItem inGameBtn">{chosenDifficulty.agents}</div>
         </div>
     )

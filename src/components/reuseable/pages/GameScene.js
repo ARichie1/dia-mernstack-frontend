@@ -1,34 +1,43 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Screen from "../../ingame/Screen";
 import PowerUps from "../../ingame/PowerUps";
 import InGameMenu from "../../ingame/InGameMenu";
 import InGameCodeButtons from "../../ingame/InGameCodeButtons";
-import { GameContext } from "../../../contexts/GameContext";
+import { useGameContext } from "../../../hooks/useGameContext";
+import { useInGameContext } from "../../../hooks/useInGameContext";
 
 const GameScene = () => {
-    const [showOpponentPredictions, setShowOpponentPredictions] = useState(false)
-    const [showPlayerPredictions, setShowPlayerPredictions] = useState(false)
-    
+
+    const {isConnected, canPlayGame, 
+            turnOrder, setTurnOrder,
+            isTurn, setIsTurn} = useGameContext()
+
+    const {showPlayerPredictions, setShowPlayerPredictions,
+        showOpponentPredictions, setShowOpponentPredictions,
+        recieveOpponentAPandCP} = useInGameContext()
+
+    // useEffect(() => {
+    //     if ( canPlayGame && !isTurn) {recieveOpponentAPandCP(isTurn)}
+    // }, [])
+
     return (
         <div className="inGame">
-            <div className="opponentGuessesBtn guessesBtn inGameBtn"
+            <button className="opponentGuessesBtn guessesBtn inGameBtn"
                 onClick={() => 
                     {setShowOpponentPredictions(!showOpponentPredictions);
                         setShowPlayerPredictions(false)
                     }}>{showOpponentPredictions ? "C" : "O"}
-            </div>
-            <div className="playerGuessesBtn guessesBtn inGameBtn"
+            </button>
+            <button className="playerGuessesBtn guessesBtn inGameBtn"
                 onClick={() => 
                     {setShowPlayerPredictions(!showPlayerPredictions);
                       setShowOpponentPredictions(false)  
                     }}>{showPlayerPredictions ? "C" : "P"}
-            </div>
+            </button>
 
             <PowerUps />
             <InGameMenu />
-            <Screen 
-                showOpponentPredictions={showOpponentPredictions}
-                showPlayerPredictions={showPlayerPredictions}/>
+            <Screen />
             <InGameCodeButtons />
         </div>
     )

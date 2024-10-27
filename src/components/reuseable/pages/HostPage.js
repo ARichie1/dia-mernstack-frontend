@@ -11,6 +11,7 @@ const HostPage = () => {
     const [roomId, setRoomId] = useState("")
     const [hasRoomId, setHasRoomId]= useState(false)
     const {setIsHost, setIsJoin, isInRoom, setIsInRoom,
+            turnOrder,  setTurnOrder, isTurn,  setIsTurn,
             gameProperties, setGameProperties, setHasSelectedDifficulty
                 } = useGameContext()
     const [isCreatingRoom, setIsCreatingRoom] = useState(false)
@@ -29,13 +30,21 @@ const HostPage = () => {
         setIsCreatingRoom(true)
 
         const hosted = await socketGameService.hostGameRoom(socket, roomId, gameProperties)
-        .then(() => {
+        .then(({roomId, hostTurnOrder}) => {
             setIsCreatingRoom(false)
             setHasRoomId(true)
             setIsInRoom(true)
             setIsHost(true)
             setIsJoin(false)
             setHasSelectedDifficulty(true)
+            
+            setTurnOrder(hostTurnOrder)
+            if (hostTurnOrder === 0) {setIsTurn(true)}
+            else{setIsTurn(false)}
+
+            console.log("TO : ", hostTurnOrder);
+            console.log("Turn : ", isTurn);
+
             navigate("/game/multiplayer/face-off")
         })
         .catch((err) => {

@@ -14,7 +14,7 @@ export const useUser = () => {
         setIsLoading(true)
         setErrors({email: "", password: ""})
 
-        const response = await fetch("/api/user", {
+        const response = await fetch("http://localhost:4000/api/user", {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${user.token}`

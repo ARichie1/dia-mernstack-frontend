@@ -11,8 +11,10 @@ export const useLogin = () => {
     const login = async (email, password) => {
         setIsLoading(true)
         setErrors({email: "", password: ""})
+        console.log(email, password);
+        
 
-        const response = await fetch("/api/auth/user/login", {
+        const response = await fetch("http://localhost:4000/api/auth/user/login", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({email, password})
@@ -31,6 +33,8 @@ export const useLogin = () => {
 
             // update the auth context
             // dispatch({type: "LOGIN", payload: json})
+            console.log(json);
+            
             dispatch({type: "SET_USER_INFO", payload: {user: json, userInfo: await getUserInfo(json)}})
 
             setIsLoading(false)

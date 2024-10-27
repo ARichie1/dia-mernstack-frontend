@@ -1,6 +1,9 @@
 import React from 'react'
+import { useGameContext } from '../../hooks/useGameContext'
 
 const PowerUps = () => {
+
+    const {isTurn, setIsTurn} = useGameContext()
 
     // const icons = [🥶,🕛🕵️‍♀️,🕵️‍♂️,🧙‍♂️,🧙‍♀️]
 
@@ -15,13 +18,14 @@ const PowerUps = () => {
 
     const powerUpsList = powerUps.map( powerUp => {
         return (
-            <div className={`powerUp ${powerUp.title} ${powerUp.type === "common" ? "booster" : ""} ${powerUp.active ? "powerUpActive" : "powerUpInActive"} inGameBtn`}
+            <button className={`powerUp ${powerUp.title} ${powerUp.type === "common" ? "booster" : ""} ${powerUp.active ? "powerUpActive" : "powerUpInActive"} inGameBtn`}
+                disabled={isTurn}
                 key={powerUp.id}>
                 <div className="powerTime"></div>
                 <div className='iconWrapper'>
                     {powerUp.icon}
                 </div>
-            </div>
+            </button>
         )
     })
 

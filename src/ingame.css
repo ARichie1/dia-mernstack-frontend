@@ -278,6 +278,36 @@
     font-size: 50px;
     border-radius: inherit;
 }
+.screen .opponentScreenToggler{
+    position: absolute;
+    top: 15%; right: 10px;
+    /* width: 50px; height: 50px; */
+    text-align: center;
+    border-radius: inherit;
+    z-index: 9;
+    border: 1px solid yellow;
+    cursor: pointer;
+}
+.screen .opponentScreenToggler .togglerInner{
+    position: relative;
+    width: 100%; height: 100%;
+    font-size: 30px;
+}
+.screen .opponentScreenToggler .togglerInner p{
+    display: none;
+}
+.screen .opponentScreenToggler:hover .togglerInner p,
+.screen .opponentScreenToggler:active .togglerInner p{
+    position: absolute;
+    top: 0%; left: -210px;
+    display: block;
+    width: 200px; height: 100%;
+    font-size: 16px;
+    text-align: center;
+    border-radius: inherit;
+    z-index: 9;
+    border: 1px solid yellow;
+}
 .screenWrapper{
     position: relative;
     height: 100%;width: 100%;
@@ -377,7 +407,8 @@
     box-shadow: var(--shadow);
 }
 .opponentPredictions{left: -100%;overflow-y: scroll;}
-.currentPrediction{left: 0%;}
+.currentPrediction{left: 0%; background: blue;}
+.opponentCurrentPrediction{background: red;}
 .playerPredictions{right: -100%;overflow-y: scroll;}
 .display::-webkit-scrollbar{background: inherit}
 .display::-webkit-scrollbar-thumb{background: var(--themeColor);border-radius: 20px;box-shadow: var(--shadow);cursor: pointer;border-radius: 20px;}
@@ -422,6 +453,20 @@
     align-items: center;
 }
 /* Active Prediction End */
+
+/* Opponent Current Prediction Start */
+.opponentCurrentPrediction .activeGuess{
+    position: absolute;
+    top: 0;left: 0;
+    width: 100%;height: 100%;
+    border: none;outline: none;
+}
+.opponentCurrentPrediction .activeGuess .codeout{
+    width: 100%;height: 100%;
+    display: flex;justify-content: center;
+    align-items: center;
+}
+/* Opponent Current Prediction End */
 
 /* Hint Prediction Start */
 .hintPredicted{

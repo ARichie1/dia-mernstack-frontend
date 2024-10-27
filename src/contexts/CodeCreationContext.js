@@ -1,12 +1,17 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { GameContext } from './GameContext'
 import { InGameContext } from './InGameContext'
+import socketGameService from '../hooks/connections/gameService'
+import socketInService from '../hooks/connections/socketService'
 
 export const CodeCreationContext = new createContext()
 
 const CodeCreationContextProvider = (props) => {
     const {maxSelection, setMaxSelection,
         isOutGame, 
+        isConnected, isOpponentConnected,
+        canPlayGame, isTurn,  setIsTurn,
+
         setShowSaveBtn, setShowPlayBtn,setShowSendBtn, 
         codeSelection, setCodeSelection,
         handleInsertButtons
@@ -72,6 +77,19 @@ const CodeCreationContextProvider = (props) => {
     if (maxSelection) {disableButtons()}
     else{enableButtons()}
 
+    const sendActivePrediction = async (activeSeletion) => {
+        console.log("sending real tim aps");
+        
+        const socket = socketInService.socket
+        const sent = await socketGameService.sendActivePredictionToServer(socket, activeSeletion)
+        .then((data) => {
+            console.log("sent active selection : ", data);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+    
     const handleCodeButton = (value, id) => {
         if (codeButtonsObject[`button${id}`].active){
             let trimmedCodeSelection = 
@@ -87,6 +105,9 @@ const CodeCreationContextProvider = (props) => {
             handleInsertButtons(activePrediction.length - 1)
 
             codeButtonsObject[`button${id}`].active = false
+        
+            if (!isOutGame)
+            {sendActivePrediction(trimmedCodeSelection)}
         }else {
             isOutGame ? setCodeSelection([...codeSelection,
                 {value, btn_id: id, id}])
@@ -98,9 +119,13 @@ const CodeCreationContextProvider = (props) => {
             handleInsertButtons(activePrediction.length + 1)
 
             codeButtonsObject[`button${id}`].active = true
+        
+            if (!isOutGame){
+                sendActivePrediction([...activePrediction,
+                    {value, btn_id: id, id}])}
         }
     }
-
+    
     const handleCodeReset = () => {
         isOutGame ? 
             setCodeSelection([]) 

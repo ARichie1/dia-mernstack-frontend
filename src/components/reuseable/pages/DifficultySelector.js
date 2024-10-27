@@ -6,12 +6,12 @@ import socketGameService from "../../../hooks/connections/gameService";
 
 const DifficultySelector = ({otherActions}) => {
     const { Difficulties, insertDifficulty, 
-            chosenDifficulty, isHost,
+            chosenDifficulty, isHost, isReady,
             gameProperties, setGameProperties} = useContext(GameContext)
 
     const sendGameProperties = async () => {
         const socket = socketInService.socket
-        let saved = socketGameService.saveGameProperties(socket, gameProperties)
+        let saved = socketGameService.saveGameProperties(socket, gameProperties, isReady)
     }
 
     const saveGameProperties = () => {

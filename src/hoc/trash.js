@@ -564,3 +564,14 @@ module.exports = playerDefaultValue
     console.log("Sending Game Props To Joiner Socket Client ...");   
     playerSocket.emit("sendingGameProperties", {gameProperties: opponent.game.difficulty})
 }
+
+// socket.on("hostSendingGameProperties", ({gameProperties}) => {
+                //     console.log("checking the send ...");
+                //     console.log("seen props :)");
+                //     rs(gameProperties)
+                //     console.log("gprops : ", gameProperties);
+                //     // socket.off("hostSendingGameProperties")
+                
+                
+                //     socket.sendBuffer = []
+                // })

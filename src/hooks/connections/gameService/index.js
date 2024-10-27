@@ -47,11 +47,11 @@ class GameService {
                 if (sentRoomId) {
                     console.log("room id sent");
                     
-                    socket.on("roomCreated", (data) => {
+                    socket.on("roomCreated", ({roomId, hostTurnOrder}) => {
                     
                         console.log("getting created room ...");
-                        rs(true)
-                        console.log("Created " + data.roomId)
+                        rs({roomId, hostTurnOrder})
+                        console.log("Created " + roomId)
                     })
                 }
                 
@@ -63,10 +63,10 @@ class GameService {
         }
     }
 
-    async joinGameRoom (socket, roomId, gameProperties) {
+    async joinGameRoom (socket, roomId, gameProperties, order) {
         if (socket.connected) {
             return new Promise((rs, rj) => {
-                socket.emit("joinGame", {roomId, gameProperties})
+                socket.emit("joinGame", {roomId, gameProperties, order})
                 socket.on("roomJoined", (data) => {
                     rs(true)
                     console.log("Joined " + data.roomId)
@@ -171,9 +171,9 @@ class GameService {
     }
     
     // Host Sends Game Property To Room
-    async saveGameProperties (socket, properties) {
+    async saveGameProperties (socket, gameProperties, isReady) {
         if (socket.connected) {
-            socket.emit("saveGameProperties", {properties})
+            socket.emit("saveGameProperties", {gameProperties, isReady})
         }
     }
 
@@ -182,24 +182,137 @@ class GameService {
         if (socket.connected) {
             return new Promise((rs, rj) => {
                 socket.emit("requestGamePropertiesFromHost")
-                console.log("sent the request ...");
                 
-                socket.on("sendingGameProperties", ({gameProperties}) => {
-                    console.log("checking the send ...");
-                    rs(gameProperties)
-                    console.log(gameProperties)
+                socket.on("sendingGameProperties", ({gameProperties, hostIsReady}) => {
+                    rs({gameProperties, hostIsReady})
+                    console.log("hostIsReady : ", hostIsReady)
                 })
+            })
+        }
+    }
 
-                // socket.on("hostSendingGameProperties", ({gameProperties}) => {
-                //     console.log("checking the send ...");
-                //     console.log("seen props :)");
-                //     rs(gameProperties)
-                //     console.log("gprops : ", gameProperties);
-                //     // socket.off("hostSendingGameProperties")
+    // Save Secret Code Selected
+    async saveCode (socket, codeArray) {
+        if (socket.connected) {
+            return new Promise((rs, rj) => {
+                socket.emit("saveCode", {code: codeArray})
                 
+                socket.on("codeSaved", ({saved}) => {
+                    rs(saved)
+                    console.log("code saved : ", saved)
+                })
+            })
+        }
+    }
+    
+    // Let Room Know Player Is Ready To Play
+    async sendReadyToPlay (socket) {
+        if (socket.connected) {
+            return new Promise((rs, rj) => {
+                socket.emit("readyToPlay", {ready: true})
                 
-                //     socket.sendBuffer = []
-                // })
+                socket.on("sentReadyToPlay", ({sent}) => {
+                    rs(sent)
+                    console.log("ready to play : ", sent)
+                })
+            })
+        }
+    }
+
+    // Get The Opponent R2PS
+    async recieveOpponentReadyToPlayState (socket) {
+        if (socket.connected) {
+            return new Promise((rs, rj) => {
+                socket.emit("checkIfOpponentReadyToPlay")
+                
+                socket.on("opponentReadyToPlayState", ({opponentIsReady}) => {
+                    rs({opponentIsReady})
+                    console.log("opponentIsReadyToPlay : ", opponentIsReady)
+                })
+            })
+        }
+    }
+
+    
+    // Send RealTime Code Button Click To Server
+    // So Both Player Can View
+    async sendActivePredictionToServer (socket, selection) {
+        if (socket.connected) {
+            return new Promise((rs, rj) => {
+                socket.emit("sendingActivePrediction", {selection})
+                
+                socket.on("sentActivePrediction", ({sent}) => {
+                    rs(sent)
+                    // console.log("Sent My ActivePrediction : ", sent)
+                })
+            })
+        }
+    }
+
+    // Get RealTime Code Button From Opponent
+    async recieveOpponentActivePrediction (socket) {
+        if (socket.connected) {
+            return new Promise((rs, rj) => {
+                // socket.on("sendingOpponentActivePrediction", ({selection}) => {
+                socket.on("sendingMyActivePrediction", ({selection}) => {
+                    rs(selection)
+                    // console.log("recieved Opp ActivePrediction : ", selection)
+                })
+            })
+        }
+    }
+
+    // Send Current Prediction Code Button Click To Server
+    async sendCurrentPredictionToServer (socket, selection) {
+        if (socket.connected) {
+            return new Promise((rs, rj) => {
+                console.log("sending cp to server...");
+                
+                socket.emit("sendingCurrentPrediction", {selection})
+                
+                socket.on("sentCurrentPrediction", ({results}) => {
+                    rs(results)
+                    console.log("Sent My CurrentPrediction : ", results)
+                })
+            })
+        }
+    }
+    
+    // Get Opponent's Current Prediction (code and result)
+    async recieveOpponentCurrentPrediction (socket) {
+        if (socket.connected) {
+            return new Promise((rs, rj) => {
+                socket.on("sendingMyCurrentPrediction", ({selection, results}) => {
+                    rs({selection, results})
+                    console.log("recieved Opp CurrentPrediction : ", {selection, results})
+                })
+            })
+        }
+    }
+
+    // Send Predictions Code Button Click To Server
+    async sendPredictionsToServer (socket, predictions) {
+        if (socket.connected) {
+            return new Promise((rs, rj) => {
+                socket.emit("sendingPredictions", {predictions})
+                
+                socket.on("sentPredictions", ({result}) => {
+                    rs(result)
+                    console.log("Sent My Pedictions : ", result)
+                })
+            })
+        }
+    }
+
+    
+    // Get Opponent's Predictions (code and result)
+    async recieveOpponentPredictions (socket) {
+        if (socket.connected) {
+            return new Promise((rs, rj) => {
+                socket.on("sendingOpponentPredictions", ({selection}) => {
+                    rs(selection)
+                    console.log("recieved Opp Predictions: ", selection)
+                })
             })
         }
     }

@@ -14,12 +14,13 @@ const FaceOffPage = () => {
     const { currentOpponent, setCurrentOpponent} = useUserContext()
     const {defaultImage} = useAppGlobalVariableContext()
 
-    const {isHost, isJoin, setIsInRoom, isRoomFull,  setIsRoomFull, 
-        insertDifficulty, gameProperties, setGameProperties,
+    const {chosenDifficulty, hasSelectedDifficulty,
+        gameType, gameMode, isMultiplayer,
+        isHost, isJoin, setIsInRoom, isRoomFull,  setIsRoomFull, 
+        insertDifficulty, setGameProperties,
         canBuildCode, setCanBuildCode,
         isReady,  setIsReady} = useGameContext()
 
-    const {chosenDifficulty, hasSelectedDifficulty} = useContext(GameContext)
     const [hasModifiedGameProps, setHasModifiedGameProps] = useState(false)
     const [isHostReady, setIsHostReady] = useState(false)
 
@@ -122,7 +123,11 @@ const FaceOffPage = () => {
         setIsReady(true)
 
         const socket = socketInService.socket
-        socketGameService.saveGameProperties(socket, gameProperties, true)
+        socketGameService.saveGameProperties(socket,
+            {type: gameType, mode: gameMode,
+                multiplayer: isMultiplayer, difficulty: chosenDifficulty
+            },
+            true)
     }
 
     const [showHostSettings, setShowHostSettings] = useState({

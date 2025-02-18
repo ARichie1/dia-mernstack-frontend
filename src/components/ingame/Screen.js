@@ -7,7 +7,7 @@ import { useUserContext } from '../../hooks/useUserContext'
 const Screen = () => {
     const { currentOpponent } = useUserContext()
 
-    const {isInGame, isOutGame, codeSelection, gameType}  = useContext(GameContext)
+    const {isInGame, isOutGame, codeSelection, isMultiplayer}  = useContext(GameContext)
     const {activePrediction, currentPrediction, playerPredictions, 
         opponentActivePrediction, opponentCurrentPrediction, opponentPredictions,
         showPlayerPredictions, showOpponentPredictions, 
@@ -40,7 +40,7 @@ const Screen = () => {
     return (
         <div className="screen bottomContents">
             {isOutGame && <div className="codeShieldToggler">&#128065;</div>}
-            {isInGame && <div className="opponentScreenToggler"
+            {isMultiplayer && isInGame && <div className="opponentScreenToggler"
                 onClick={() => setShowOpponentScreen(!showOpponentScreen)}>
                    <div className='togglerInner'>
                     &#128065;
@@ -67,7 +67,7 @@ const Screen = () => {
                                 </div>
                             }
 
-                            {showOpponentScreen && 
+                            {isMultiplayer && showOpponentScreen && 
                                 <div className="currentPrediction opponentCurrentPrediction display screen_display">
                                     {!showOpponentCurrentPredictions && <div className="activeGuess">
                                         <CodeAndResult carAttr={
@@ -91,12 +91,13 @@ const Screen = () => {
                                     {playerPredictionList}
                                 </ol>
                             </div>
-                            <div className="opponentPredictions display screen_display multiplePredictions"
+
+                            {isMultiplayer && <div className="opponentPredictions display screen_display multiplePredictions"
                                 style={{left: `${showOpponentPredictions ? "0%" : "-100%"}`}}>
                                 <ol className="opponentPredictionWrapper">
                                     {opponentPredictionList}
                                 </ol>
-                            </div>
+                            </div>}
                         </div>
 
                         <div className="activePrediction screen_display">

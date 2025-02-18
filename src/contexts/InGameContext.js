@@ -12,7 +12,7 @@ const InGameContextProvider = (props) => {
     const [showOpponentCurrentPredictions, setShowOpponentCurrentPredictions] = useState(false)
     const [showOpponentScreen, setShowOpponentScreen] = useState(false)
   
-    const {gameType, setIsTurn} = useGameContext()
+    const {setIsTurn, isMultiplayer} = useGameContext()
     
     const [activePrediction, setActivePrediction] = useState([]) 
     const [currentPrediction, setCurrentPrediction] = useState(
@@ -110,6 +110,7 @@ const InGameContextProvider = (props) => {
 
             // if (gameType === "multiplayer") {
                 // Switch Turns
+            if (isMultiplayer) {
                 setIsTurn(false)
 
                 // After few seconds show the opponent screen
@@ -118,6 +119,7 @@ const InGameContextProvider = (props) => {
                     setShowOpponentCurrentPredictions(false)
                     setShowOpponentScreen(true)
                 }, 2000);
+            }
             // }  
 
             // Handle Result Outcome Here

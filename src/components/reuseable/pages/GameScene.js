@@ -8,7 +8,7 @@ import { useInGameContext } from "../../../hooks/useInGameContext";
 
 const GameScene = () => {
 
-    const {gameType} = useGameContext()
+    const {gameType, isMultiplayer} = useGameContext()
 
     const {showPlayerPredictions, setShowPlayerPredictions,
         showOpponentPredictions, setShowOpponentPredictions,
@@ -16,12 +16,13 @@ const GameScene = () => {
 
     return (
         <div className="inGame">
-            <button className="opponentGuessesBtn guessesBtn inGameBtn"
+            {isMultiplayer && <button className="opponentGuessesBtn guessesBtn inGameBtn"
                 onClick={() => 
                     {setShowOpponentPredictions(!showOpponentPredictions);
                         setShowPlayerPredictions(false)
                     }}>{showOpponentPredictions ? "C" : "O"}
-            </button>
+            </button>}
+            
             <button className="playerGuessesBtn guessesBtn inGameBtn"
                 onClick={() => 
                     {setShowPlayerPredictions(!showPlayerPredictions);

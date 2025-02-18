@@ -71,8 +71,10 @@ const GameContextProvider = (props) => {
 
     const [gameType, setGameType] = useState(null)
     const [gameMode, setGameMode] = useState(null)
+    const [isMultiplayer, setIsMultiplayer] = useState(false)
     const [gameProperties, setGameProperties] = useState({
       type: gameType, mode: gameMode,
+      multiplayer: isMultiplayer,
       difficulty: chosenDifficulty
     })
     
@@ -193,6 +195,7 @@ const GameContextProvider = (props) => {
             gameType, setGameType,
             gameMode, setGameMode,
             gameProperties, setGameProperties,
+            isMultiplayer, setIsMultiplayer,
 
             isHost,  setIsHost,
             isJoin,  setIsJoin,

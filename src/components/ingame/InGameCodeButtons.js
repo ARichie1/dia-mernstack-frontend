@@ -5,7 +5,7 @@ import { CodeCreationContext } from '../../contexts/CodeCreationContext'
 
 const InGameCodeButtons = () => {
     const {
-        isInGame, isOutGame,
+        gameType, isInGame, isOutGame,
         isTurn, setIsTurn,
         showPlayBtn, showSaveBtn, showSendBtn,
         handlePlayBtn, handleSaveBtn, handleSendBtn, 
@@ -17,21 +17,19 @@ const InGameCodeButtons = () => {
         sendValidActivePrediction} = useContext(InGameContext)
     const {codeButtons,handleCodeButton, handleCodeReset} = useContext(CodeCreationContext)
 
-    // Recieve oppenents AP and CP 
+    // If In Multiplayer Mode
+    // Initiate Recieveing oppenents AP and CP 
     // If Player Is Not Player Turn To Play (isTurn = false)
     const initiateRecievingOpponentAPandCP = () => {
-        recieveOpponentAPandCP()
-        if (!isTurn) {
-            setShowOpponentScreen(true)
-        }
+        // if (gameType === "multiplayer"){
+        //     console.log("in multiplayer");
+            
+            recieveOpponentAPandCP()
+            if (!isTurn) {
+                setShowOpponentScreen(true)
+            }
+        // }
     }
-
-    useEffect(() => {
-        console.log("in use effect");
-        
-        console.log("isTurn : ", isTurn);
-        
-    }, [isTurn])
     
     let codeButtonList = codeButtons.sort((a, b) => a - b).map(cb => {
         return (

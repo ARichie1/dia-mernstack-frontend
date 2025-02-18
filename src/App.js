@@ -134,8 +134,8 @@ const App = () => {
             </Route>
 
             <Route path="in-game" element={<GamePage />}>
-              <Route path="single-player/:userid" element={<SinglePlayerGamePage />} />
-              <Route path="multiplayer/:userid" element={<MultiplayerGamePage />} />
+              <Route path="single-player" element={<SinglePlayerGamePage />} />
+              <Route path="multiplayer" element={<MultiplayerGamePage />} />
             </Route>
  
             <Route path="settings" element={<SettingsPage />}>

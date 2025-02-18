@@ -10,7 +10,7 @@ const WaitingToPlay = () => {
             switchGameLocation
                 } = useGameContext()
 
-    const moveToInGame = () => {navigate("/game/in-game/single-player/:userid")}
+    const moveToInGame = () => {navigate("/game/in-game/multiplayer")}
     
     useEffect(() => {
         // Move To InGame If Both Players Are Ready

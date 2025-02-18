@@ -574,4 +574,102 @@ module.exports = playerDefaultValue
                 
                 
                 //     socket.sendBuffer = []
-                // })
+                // }
+
+
+
+
+
+                
+    const [activePrediction, setActivePrediction] = useState([]) 
+    
+    const [currentPrediction, setCurrentPrediction] = useState(
+        {codes: [
+            {value: "paid_wakanda", btn_id: 7, id: 0},
+            {value: "paid_wakanda", btn_id: 3, id: 1},
+            {value: "paid_wakanda", btn_id: 2, id: 2},
+            {value: "paid_wakanda", btn_id: 6, id: 3}
+        ], 
+        results: [
+            {title: "dead", value: "D", emoji: "💀", id: 0},
+            {title: "dead", value: "D", emoji: "💀", id: 1},
+            {title: "injured", value: "I", emoji: "🤕", id: 2},
+            {title: "alive", value: "A", emoji: "😁", id: 3},
+        ], 
+        id: 0}
+    ) 
+
+    const [playerPredictions, setPlayerPredictions] = useState([
+        {codes: [
+            {value: "paid_wakanda", btn_id: 7, id: 0},
+            {value: "paid_wakanda", btn_id: 3, id: 1},
+            {value: "paid_wakanda", btn_id: 2, id: 2},
+            {value: "paid_wakanda", btn_id: 6, id: 3}
+        ], 
+        results: [
+            {title: "dead", value: "D", emoji: "💀", id: 0},
+            {title: "dead", value: "D", emoji: "💀", id: 1},
+            {title: "injured", value: "I", emoji: "🤕", id: 2},
+            {title: "alive", value: "A", emoji: "😁", id: 3},
+        ], 
+        id: 0},
+        {codes: [
+            {value: "paid_wakanda", btn_id: 7, id: 0},
+            {value: "paid_wakanda", btn_id: 3, id: 1},
+            {value: "paid_wakanda", btn_id: 2, id: 2},
+            {value: "paid_wakanda", btn_id: 6, id: 3}
+        ], 
+        results: [
+            {title: "dead", value: "D", emoji: "💀", id: 0},
+            {title: "dead", value: "D", emoji: "💀", id: 1},
+            {title: "injured", value: "I", emoji: "🤕", id: 2},
+            {title: "alive", value: "A", emoji: "😁", id: 3},
+        ], 
+        id: 1}
+    ]) 
+
+    const [opponentActivePrediction, setOpponentActivePrediction] = useState([]) 
+    
+    const [opponentCurrentPrediction, setOpponentCurrentPrediction] = useState(
+        {codes: [
+            {value: "paid_wakanda", btn_id: 7, id: 0},
+            {value: "paid_wakanda", btn_id: 3, id: 1},
+            {value: "paid_wakanda", btn_id: 2, id: 2},
+            {value: "paid_wakanda", btn_id: 6, id: 3}
+        ], 
+        results: [
+            {title: "dead", value: "D", emoji: "💀", id: 0},
+            {title: "dead", value: "D", emoji: "💀", id: 1},
+            {title: "injured", value: "I", emoji: "🤕", id: 2},
+            {title: "alive", value: "A", emoji: "😁", id: 3},
+        ], 
+        id: 0}
+    ) 
+    const [opponentPredictions, setOpponentPredictions] = useState([
+        {codes: [
+            {value: "paid_wakanda", btn_id: 7, id: 0},
+            {value: "paid_wakanda", btn_id: 3, id: 1},
+            {value: "paid_wakanda", btn_id: 2, id: 2},
+            {value: "paid_wakanda", btn_id: 6, id: 3}
+        ], 
+        results: [
+            {title: "dead", value: "D", emoji: "💀", id: 0},
+            {title: "dead", value: "D", emoji: "💀", id: 1},
+            {title: "injured", value: "I", emoji: "🤕", id: 2},
+            {title: "alive", value: "A", emoji: "😁", id: 3},
+        ], 
+        id: 0},
+        {codes: [
+            {value: "paid_wakanda", btn_id: 7, id: 0},
+            {value: "paid_wakanda", btn_id: 3, id: 1},
+            {value: "paid_wakanda", btn_id: 2, id: 2},
+            {value: "paid_wakanda", btn_id: 6, id: 3}
+        ], 
+        results: [
+            {title: "dead", value: "D", emoji: "💀", id: 0},
+            {title: "dead", value: "D", emoji: "💀", id: 1},
+            {title: "injured", value: "I", emoji: "🤕", id: 2},
+            {title: "alive", value: "A", emoji: "😁", id: 3},
+        ], 
+        id: 1}
+    ]) 

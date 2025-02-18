@@ -1,33 +1,40 @@
 import React, { useContext, useState } from "react";
-import { GameContext } from "../../../contexts/GameContext";
+import { useGameContext } from "../../../hooks/useGameContext";
 import socketInService from "../../../hooks/connections/socketService";
 import socketGameService from "../../../hooks/connections/gameService";
+import { useNavigate } from "react-router-dom";
 
 
 const DifficultySelector = ({otherActions}) => {
-    const { Difficulties, insertDifficulty, 
-            chosenDifficulty, isHost, isReady,
-            gameProperties, setGameProperties} = useContext(GameContext)
+    const navigate = useNavigate()
 
+    const { Difficulties, insertDifficulty, chosenDifficulty, 
+            gameType, gameMode,
+            gameProperties, setGameProperties,
+            isHost, isReady,
+            } = useGameContext()
+
+    // SOCKET IO - send game properties to server
     const sendGameProperties = async () => {
         const socket = socketInService.socket
-        let saved = socketGameService.saveGameProperties(socket, gameProperties, isReady)
+        let saved = await socketGameService.saveGameProperties(socket, gameProperties, isReady)
+        .then( ({saved}) => {
+            console.log("saved");
+        })
     }
 
+    // Save the game properties when in single game mode
+    // or a host in multiplayer mode
     const saveGameProperties = () => {
-        if (isHost) {
+        if (gameType === "single-player") {
             sendGameProperties()
         }
-        otherActions()
+        if (isHost) {sendGameProperties()}
+        // otherActions()
     }
 
+    // Generate a list of available and valid difficulties
     const difficultyList = Difficulties.map( diff => {
-
-        const runOtherActions = () => {
-            if (otherActions){otherActions()}
-            else{return}
-        }
-
         return (
             <div className={`${diff.difficulty} difficulty`} 
                 style={{background: diff.color}} 
@@ -36,12 +43,9 @@ const DifficultySelector = ({otherActions}) => {
                     // Set the chosen difficulty for the game context
                     insertDifficulty(diff);
                     setGameProperties({
+                        type: gameType, mode: gameMode,
                         difficulty : diff
                     })
-
-                    // If in single player mode, 
-                    // toggle the difficulty selector
-                    if(!isHost){runOtherActions()} 
                 }}
                 key={diff.id}>  
                 <div className="difficultyHeader" key={Math.random()}>{diff.difficulty}</div>
@@ -75,10 +79,12 @@ const DifficultySelector = ({otherActions}) => {
                     <option> Select Agents </option>
                     {endlessDifficultyList}
                 </select>
-                <button className="saveGameProperties clkBtn"
-                    onClick={() => saveGameProperties()}>
-                    Save
-                </button>
+                {gameType === "multiplayer" ?
+                    <button className="saveGameProperties clkBtn"
+                        onClick={() => saveGameProperties()}>
+                        Save
+                    </button> : <p></p>
+                }
             </div>
     )
 }

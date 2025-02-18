@@ -1,31 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
 import DifficultySelector from "./DifficultySelector";
 import { GameContext } from "../../../contexts/GameContext";
-import { AuthContext } from "../../../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { useUserContext } from "../../../hooks/useUserContext";
 import { useAppGlobalVariableContext } from "../../../hooks/useAppGlobalVariableContext";
-import { useUser } from "../../../hooks/useUser";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useGameContext } from "../../../hooks/useGameContext";
 import socketInService from "../../../hooks/connections/socketService";
 import socketGameService from "../../../hooks/connections/gameService";
 
 const FaceOffPage = () => {
-    const { user, userInfo: currentPlayer } = useAuthContext()
+    const { userInfo: currentPlayer } = useAuthContext()
     const { currentOpponent, setCurrentOpponent} = useUserContext()
     const {defaultImage} = useAppGlobalVariableContext()
 
     const {isHost, isJoin, setIsInRoom, isRoomFull,  setIsRoomFull, 
         insertDifficulty, gameProperties, setGameProperties,
         canBuildCode, setCanBuildCode,
-        isReady,  setIsReady,
-        canPlayGame, setCanPlayGame} = useGameContext()
+        isReady,  setIsReady} = useGameContext()
 
     const {chosenDifficulty, hasSelectedDifficulty} = useContext(GameContext)
     const [hasModifiedGameProps, setHasModifiedGameProps] = useState(false)
     const [isHostReady, setIsHostReady] = useState(false)
-    let ready = false
 
     const setOpponent = async () => {
         const socket = socketInService.socket
@@ -35,7 +31,7 @@ const FaceOffPage = () => {
         console.log("roomFull : ", roomFull);
         
         if (roomFull) {
-            const opponent = await socketGameService.getOpponent(socket)
+            await socketGameService.getOpponent(socket)
             .then((data) => {
                 if (data) {
                     console.log(data); 
@@ -55,7 +51,7 @@ const FaceOffPage = () => {
 
     const recieveGameProps = async (interval) => {
         const socket = socketInService.socket
-        const recieved = await socketGameService.recieveGameProperties(socket)
+        await socketGameService.recieveGameProperties(socket)
         .then(({gameProperties, hostIsReady}) => {
             setHasModifiedGameProps(true)
 
@@ -126,7 +122,7 @@ const FaceOffPage = () => {
         setIsReady(true)
 
         const socket = socketInService.socket
-        let saved = socketGameService.saveGameProperties(socket, gameProperties, true)
+        socketGameService.saveGameProperties(socket, gameProperties, true)
     }
 
     const [showHostSettings, setShowHostSettings] = useState({

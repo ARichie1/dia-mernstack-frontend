@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import { GameContext } from './GameContext'
 import { InGameContext } from './InGameContext'
 import socketGameService from '../hooks/connections/gameService'
@@ -8,10 +8,7 @@ export const CodeCreationContext = new createContext()
 
 const CodeCreationContextProvider = (props) => {
     const {maxSelection, setMaxSelection,
-        isOutGame, 
-        isConnected, isOpponentConnected,
-        canPlayGame, isTurn,  setIsTurn,
-
+        isOutGame,
         setShowSaveBtn, setShowPlayBtn,setShowSendBtn, 
         codeSelection, setCodeSelection,
         handleInsertButtons
@@ -81,7 +78,7 @@ const CodeCreationContextProvider = (props) => {
         console.log("sending real tim aps");
         
         const socket = socketInService.socket
-        const sent = await socketGameService.sendActivePredictionToServer(socket, activeSeletion)
+        await socketGameService.sendActivePredictionToServer(socket, activeSeletion)
         .then((data) => {
             console.log("sent active selection : ", data);
         })

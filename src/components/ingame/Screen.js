@@ -7,7 +7,7 @@ import { useUserContext } from '../../hooks/useUserContext'
 const Screen = () => {
     const { currentOpponent } = useUserContext()
 
-    const {isInGame, isOutGame, codeSelection, isTurn}  = useContext(GameContext)
+    const {isInGame, isOutGame, codeSelection, gameType}  = useContext(GameContext)
     const {activePrediction, currentPrediction, playerPredictions, 
         opponentActivePrediction, opponentCurrentPrediction, opponentPredictions,
         showPlayerPredictions, showOpponentPredictions, 

@@ -8,17 +8,17 @@ const GameContextProvider = (props) => {
     const GameUiLinks = {
         game : [
           {title: "HOW TO PLAY", to: "tutorial", id: 0},
-          {title: "SINGLE PLAYER", to: "single-player", id: 1},
-          {title: "MULTIPLAYER", to: "multiplayer", id: 2},
+          {title: "SINGLE PLAYER", to: "single-player", gtype: true, id: 1},
+          {title: "MULTIPLAYER", to: "multiplayer", gtype: true, id: 2},
           {title: "SETTINGS", to: "settings", id: 3},
           {title: "MORE GAMES", to: "more-games", id: 4},
           {title: "QUIT", to: "/", id: 5}
         ],
         
         singleplayer : [
-          {title: "FIND AGENT", to: "find-agents", id: 0},
-          {title: "STORY", to: "story-mode", id: 1},
-          {title: "SURVIVAL", to: "survival-mode", id: 2}
+          {title: "FIND AGENT", to: "find-agents", gmode: true, id: 0},
+          {title: "STORY", to: "story-mode", gmode: true, id: 1},
+          {title: "SURVIVAL", to: "survival-mode", gmode: true, id: 2}
         ],
     
         multiplayer : [
@@ -32,8 +32,8 @@ const GameContextProvider = (props) => {
         ],
     
         multiplayerOnline : [
-          {title: "QUICK PLAY", to: "quickplay", id: 0},
-          {title: "CHALLENGE", to: "challenge", id: 1}
+          {title: "QUICK PLAY", to: "quickplay", gmode: true, id: 0},
+          {title: "CHALLENGE", to: "challenge", gmode: true, id: 1}
         ],
     
         multiplayerOnlineChallenge : [
@@ -69,10 +69,13 @@ const GameContextProvider = (props) => {
 
     const [maxSelection, setMaxSelection] = useState(false)
 
+    const [gameType, setGameType] = useState(null)
     const [gameMode, setGameMode] = useState(null)
     const [gameProperties, setGameProperties] = useState({
+      type: gameType, mode: gameMode,
       difficulty: chosenDifficulty
     })
+    
     
     const [isHost,  setIsHost] = useState(false)
     const [isJoin,  setIsJoin] = useState(false)
@@ -126,7 +129,7 @@ const GameContextProvider = (props) => {
       console.log(selectedCodes);
 
       const socket = socketInService.socket
-      const saved = await socketGameService.saveCode(socket, selectedCodes)
+      await socketGameService.saveCode(socket, selectedCodes)
       .then((data)=> {
         console.log("code saved : ", data);
       })
@@ -137,7 +140,7 @@ const GameContextProvider = (props) => {
 
     const sendReadyToPlay = async () => {
       const socket = socketInService.socket
-      const sent = await socketGameService.sendReadyToPlay(socket)
+      await socketGameService.sendReadyToPlay(socket)
       .then((data) => {
         console.log("sent r2p : ", data);
         
@@ -182,11 +185,12 @@ const GameContextProvider = (props) => {
 
     return (
         <GameContext.Provider value={{
-            GameUiLinks, Difficulties,
+            GameUiLinks, Difficulties, defaultDifficulty,
             chosenDifficulty, setChosenDifficulty,
             hasSelectedDifficulty,  setHasSelectedDifficulty,
             insertDifficulty,
             maxSelection, setMaxSelection,
+            gameType, setGameType,
             gameMode, setGameMode,
             gameProperties, setGameProperties,
 

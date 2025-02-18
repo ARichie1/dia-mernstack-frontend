@@ -5,17 +5,23 @@ import { useAppGlobalVariableContext } from "../../hooks/useAppGlobalVariableCon
 import socketInService from "../../hooks/connections/socketService";
 import socketGameService from "../../hooks/connections/gameService";
 import GameHeader from "./GameHeader";
+import { useGameContext } from "../../hooks/useGameContext";
 
 const GameHome = () => {
     const {user, userInfo: currentPlayer} = useAuthContext()
     const {showNavBlock} = useAppGlobalVariableContext()
+    const {isInGame, isOutGame} = useGameContext()
 
     return (
         <div className="container-fluid game">
-            <GameHeader showNavBlock={showNavBlock}/>
-            {user && <div className="gameUiWrapper">
-                <Outlet />
-            </div>}
+            {isOutGame && 
+                <GameHeader showNavBlock={showNavBlock}/>}
+            {user && 
+                <div className="gameUiWrapper"
+                    style={{height: isInGame ? "100%" : "90%"}}>
+                    <Outlet />
+                </div>
+            }
         </div>
     )
 }

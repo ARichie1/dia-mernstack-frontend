@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useState } from 'react'
 import { useGameContext } from '../hooks/useGameContext'
 import socketInService from '../hooks/connections/socketService'
 import socketGameService from '../hooks/connections/gameService'
@@ -12,133 +12,45 @@ const InGameContextProvider = (props) => {
     const [showOpponentCurrentPredictions, setShowOpponentCurrentPredictions] = useState(false)
     const [showOpponentScreen, setShowOpponentScreen] = useState(false)
   
-    const {isTurn,  setIsTurn} = useGameContext()
+    const {gameType, setIsTurn} = useGameContext()
     
     const [activePrediction, setActivePrediction] = useState([]) 
-    
     const [currentPrediction, setCurrentPrediction] = useState(
-        {codes: [
-            {value: "paid_wakanda", btn_id: 7, id: 0},
-            {value: "paid_wakanda", btn_id: 3, id: 1},
-            {value: "paid_wakanda", btn_id: 2, id: 2},
-            {value: "paid_wakanda", btn_id: 6, id: 3}
-        ], 
-        results: [
-            {title: "dead", value: "D", emoji: "💀", id: 0},
-            {title: "dead", value: "D", emoji: "💀", id: 1},
-            {title: "injured", value: "I", emoji: "🤕", id: 2},
-            {title: "alive", value: "A", emoji: "😁", id: 3},
-        ], 
-        id: 0}
+        {codes: [], results: [], id: 0}
     ) 
 
-    const [playerPredictions, setPlayerPredictions] = useState([
-        {codes: [
-            {value: "paid_wakanda", btn_id: 7, id: 0},
-            {value: "paid_wakanda", btn_id: 3, id: 1},
-            {value: "paid_wakanda", btn_id: 2, id: 2},
-            {value: "paid_wakanda", btn_id: 6, id: 3}
-        ], 
-        results: [
-            {title: "dead", value: "D", emoji: "💀", id: 0},
-            {title: "dead", value: "D", emoji: "💀", id: 1},
-            {title: "injured", value: "I", emoji: "🤕", id: 2},
-            {title: "alive", value: "A", emoji: "😁", id: 3},
-        ], 
-        id: 0},
-        {codes: [
-            {value: "paid_wakanda", btn_id: 7, id: 0},
-            {value: "paid_wakanda", btn_id: 3, id: 1},
-            {value: "paid_wakanda", btn_id: 2, id: 2},
-            {value: "paid_wakanda", btn_id: 6, id: 3}
-        ], 
-        results: [
-            {title: "dead", value: "D", emoji: "💀", id: 0},
-            {title: "dead", value: "D", emoji: "💀", id: 1},
-            {title: "injured", value: "I", emoji: "🤕", id: 2},
-            {title: "alive", value: "A", emoji: "😁", id: 3},
-        ], 
-        id: 1}
-    ]) 
+    const [playerPredictions, setPlayerPredictions] = useState([]) 
 
     const [opponentActivePrediction, setOpponentActivePrediction] = useState([]) 
-    
     const [opponentCurrentPrediction, setOpponentCurrentPrediction] = useState(
-        {codes: [
-            {value: "paid_wakanda", btn_id: 7, id: 0},
-            {value: "paid_wakanda", btn_id: 3, id: 1},
-            {value: "paid_wakanda", btn_id: 2, id: 2},
-            {value: "paid_wakanda", btn_id: 6, id: 3}
-        ], 
-        results: [
-            {title: "dead", value: "D", emoji: "💀", id: 0},
-            {title: "dead", value: "D", emoji: "💀", id: 1},
-            {title: "injured", value: "I", emoji: "🤕", id: 2},
-            {title: "alive", value: "A", emoji: "😁", id: 3},
-        ], 
-        id: 0}
+        {codes: [], results: [], id: 0}
     ) 
-    const [opponentPredictions, setOpponentPredictions] = useState([
-        {codes: [
-            {value: "paid_wakanda", btn_id: 7, id: 0},
-            {value: "paid_wakanda", btn_id: 3, id: 1},
-            {value: "paid_wakanda", btn_id: 2, id: 2},
-            {value: "paid_wakanda", btn_id: 6, id: 3}
-        ], 
-        results: [
-            {title: "dead", value: "D", emoji: "💀", id: 0},
-            {title: "dead", value: "D", emoji: "💀", id: 1},
-            {title: "injured", value: "I", emoji: "🤕", id: 2},
-            {title: "alive", value: "A", emoji: "😁", id: 3},
-        ], 
-        id: 0},
-        {codes: [
-            {value: "paid_wakanda", btn_id: 7, id: 0},
-            {value: "paid_wakanda", btn_id: 3, id: 1},
-            {value: "paid_wakanda", btn_id: 2, id: 2},
-            {value: "paid_wakanda", btn_id: 6, id: 3}
-        ], 
-        results: [
-            {title: "dead", value: "D", emoji: "💀", id: 0},
-            {title: "dead", value: "D", emoji: "💀", id: 1},
-            {title: "injured", value: "I", emoji: "🤕", id: 2},
-            {title: "alive", value: "A", emoji: "😁", id: 3},
-        ], 
-        id: 1}
-    ]) 
-
-    const updatePlayerPredictionsList = () => {
-        setPlayerPredictions([...playerPredictions, currentPrediction])
-    }
-    const updateOpponentPredictionsList = () => {
-        setPlayerPredictions([...opponentPredictions, opponentCurrentPrediction])
-    }
-
-    const recieveOpponentAP = async (interval) => {
-        // console.log("recieving real tim aps");
-        
+    const [opponentPredictions, setOpponentPredictions] = useState([]) 
+    
+    // Recieve Opponent Active Prediction
+    const recieveOpponentAP = async () => {
         const socket = socketInService.socket
-        const sent = await socketGameService.recieveOpponentActivePrediction(socket)
-        .then((data) => {
-            // console.log("recieved active selection : ", data);
-            setOpponentActivePrediction(data)
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+        await socketGameService.recieveOpponentActivePrediction(socket)
+        .then((data) => {setOpponentActivePrediction(data)})
+        .catch((err) => {console.log(err);})
     }
 
-    const recieveOpponentCP = async (interval) => {
-        // console.log("recieving real tim cp");
-        
+    // Recieve Opponent Current Prediction
+    const recieveOpponentCP = async () => {
         const socket = socketInService.socket
-        const sent = await socketGameService.recieveOpponentCurrentPrediction(socket)
+        await socketGameService.recieveOpponentCurrentPrediction(socket)
         .then(({selection, results}) => {
-            // console.log("recieved opponent current selection : ", selection);
+             // Update Opponent Current Prediction
             setOpponentCurrentPrediction({
                 codes : selection,
                 results, id: Math.random()
             })
+
+            // Add Opponent Current CP To Opponent Prediction List
+            setOpponentPredictions([
+                ...opponentPredictions, 
+                {codes : selection, results, id: Math.random()}
+            ])
 
             // Switch To Showing CP ON Opponent Screen Mirror
             setShowOpponentCurrentPredictions(true)
@@ -159,92 +71,63 @@ const InGameContextProvider = (props) => {
             // Switch turns so reciever can now play
             setIsTurn(true)
             console.log("I am playing now");
-            
-            // Stop the gameProps checker
-            if (interval) {
-                clearInterval(interval)
-                console.log("interval cleared");
-            }
         })
         .catch((err) => {
             console.log(err);
         })
     }
 
-    
+    // Run an interval loop 
+    // that checks for real time opponent's APs and CP
     const recieveOpponentAPandCP = (turn) => {
-        let checkingForOpponentAP
-        // console.log("passed turn : ", turn);
-        // console.log("isTurn : ", isTurn);
-
-        // if (!isTurn) {
-        //     recieveOpponentAPandCP(isTurn)
-        //     setShowOpponentScreen(true)
-        // }
-        
-        // if (!isTurn) {
-            // Check for real time opponent action
-            // console.log("Check for real time opponent action");
-            setInterval( () => {
-                // console.log("No OAP Yet ...");
-                recieveOpponentAP()
-                recieveOpponentCP()
-            }, 1000);
-        // }
+        setInterval( () => {
+            recieveOpponentAP()
+            recieveOpponentCP()
+        }, 1000)
     }
 
+    // Send The Players CP To The Server
     const sendValidActivePrediction = async () => {
         console.log("sent VALID active selection : ");
             
         const socket = socketInService.socket
-        const sent = await socketGameService.sendCurrentPredictionToServer(socket, activePrediction)
+        await socketGameService.sendCurrentPredictionToServer(socket, activePrediction)
         .then((data) => {
             console.log("sending valid Cp cp");
             
+            // Update Player's Current Prediction
             setCurrentPrediction({
                 codes : activePrediction,
-                results : data
+                results : data,
+                id: Math.random()
             })
 
-            // Switch Turns
-            setIsTurn(false)
+            // Add Player's CP To Player's Prediction List
+            setPlayerPredictions([
+                ...playerPredictions, 
+                {codes : activePrediction, results : data, id: Math.random()}
+            ])
 
-            // Switch To Showing AP ON Opponent Screen Mirror
-            setShowOpponentCurrentPredictions(false)
+            // if (gameType === "multiplayer") {
+                // Switch Turns
+                setIsTurn(false)
 
-            // After few seconds show the opponent screen
-            setTimeout(() => {
-                setShowOpponentCurrentPredictions(true)
-                setShowOpponentScreen(true)
-            }, 2000);
+                // After few seconds show the opponent screen
+                setTimeout(() => {
+                    // Switch To Showing AP ON Opponent Screen Mirror
+                    setShowOpponentCurrentPredictions(false)
+                    setShowOpponentScreen(true)
+                }, 2000);
+            // }  
 
-            // Check for real time opponent action
-            // console.log("Check for real time opponent action");
-            // let checkingForOpponentAP = setInterval( () => {
-                // console.log("No OAP Yet ...");
-                // recieveOpponentAP()
-                // recieveOpponentCP(checkingForOpponentAP)
-            // }, 1000);
-
-            // Start recieving opponent AP and CP Again
-            // recieveOpponentAPandCP(false)
-            console.log("Starting to recieving opponent AP and CP Again ...");
+            // Handle Result Outcome Here
         })
         .catch((err) => {
             console.log(err);
             console.log("no cp cps");
             
         }) 
-        // setPlayerPredictions([...playerPredictions, currentPrediction])
-        // updatePlayerPredictionsList()
     }
-
-    // useEffect(() => {
-    //     updatePlayerPredictionsList()
-    // }, [currentPrediction])
-    // useEffect(() => {
-    //     updateOpponentPredictionsList()
-    // }, [opponentCurrentPrediction])
 
     return (
         <InGameContext.Provider value={{

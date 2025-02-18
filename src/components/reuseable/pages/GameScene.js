@@ -8,17 +8,11 @@ import { useInGameContext } from "../../../hooks/useInGameContext";
 
 const GameScene = () => {
 
-    const {isConnected, canPlayGame, 
-            turnOrder, setTurnOrder,
-            isTurn, setIsTurn} = useGameContext()
+    const {gameType} = useGameContext()
 
     const {showPlayerPredictions, setShowPlayerPredictions,
         showOpponentPredictions, setShowOpponentPredictions,
-        recieveOpponentAPandCP} = useInGameContext()
-
-    // useEffect(() => {
-    //     if ( canPlayGame && !isTurn) {recieveOpponentAPandCP(isTurn)}
-    // }, [])
+        } = useInGameContext()
 
     return (
         <div className="inGame">

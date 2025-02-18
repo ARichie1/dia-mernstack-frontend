@@ -173,7 +173,14 @@ class GameService {
     // Host Sends Game Property To Room
     async saveGameProperties (socket, gameProperties, isReady) {
         if (socket.connected) {
-            socket.emit("saveGameProperties", {gameProperties, isReady})
+            return new Promise((rs, rj) => {
+                socket.emit("saveGameProperties", {gameProperties, isReady})
+
+                socket.on("savedGameProperties", ({saved}) => {
+                    rs({saved})
+                    console.log("GProps saved: " + saved)
+                })
+            })
         }
     }
 

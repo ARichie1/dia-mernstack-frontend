@@ -1,12 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { GameContext } from "../../contexts/GameContext";
 import { Link } from "react-router-dom";
+import MoveInGameButton from "../reuseable/controls/MoveInGameButton";
 
 const StoryModePage = () => {
     const { Difficulties, insertDifficulty } = useContext(GameContext)
 
+    const [hasSeletedStage, setHasSeletedStage] = useState(false)
+    
     let difficulties = Difficulties
-
     const levels = [
         2, 2, 2, 2, 2, 2, 2, 2, 
         3, 3, 3, 3, 3, 3, 3, 3, 3, 
@@ -59,9 +61,11 @@ const StoryModePage = () => {
                     <div className="level toGame" 
                         id="singlePlayerMainGame" 
                         style={{background: lvl.color}} key={lvl.id}
-                        onClick={() => insertDifficulty(lvl)}>
-                        
-                        <Link to="/game/in-game/single-player/:userid">{lvl.id}</Link>
+                        onClick={() => {
+                            insertDifficulty(lvl)
+                            setHasSeletedStage(true)}
+                        }>
+                        <p>{lvl.id}</p>
                     </div>                     
                 )
             })
@@ -88,12 +92,19 @@ const StoryModePage = () => {
     createStagesLevels()
     const stageList = renderStages()
 
+    // <Link to="/game/in-game/single-player/:userid"></Link>
+
     return (
         <div className="storyMode wrapper">
             <h5>TERMINATE ENEMY SPIES ACROSS THE WORLD</h5>
             <div className="stages">
                 {stageList}
             </div>
+            {hasSeletedStage && 
+                <div className="moveInGameButonWrapper">
+                    <MoveInGameButton />
+                </div>
+            }
         </div>
     )
 }

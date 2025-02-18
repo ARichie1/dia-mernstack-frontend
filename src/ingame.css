@@ -1,47 +1,45 @@
-.singlePlayerMainGame{
-    width: 100%;height: 100%;
-}
-.multiPlayerMainGame{
+.gameSceneWrapper{
     position: relative;
     width: 100%;height: 100%;
     display: flex; align-items: center;
     justify-content: space-evenly;
     flex-direction: column;
     border-radius: 10px;
-    display: none;
 }
-.multiPlayerMainGame .players{
+.gameSceneWrapper .playersTab{
     position: relative;
-    width: 100%;height: 7.5%;
-    border-radius: 25px;
+    width: 100%;height: 7%;
+    border-radius: 5px;
+    display: flex; align-items: center;
+    justify-content: space-evenly;
+    box-shadow: var(--shadow);
+}
+.gameSceneWrapper .playerTab{background: var(--playerColor)}
+.gameSceneWrapper .opponentTab{background: var(--opponentColor)}
+
+.gameSceneWrapper .playersTab .playersStatWrapper{
+    position: relative;
+    width: 100%;height: 100%;
     display: flex; align-items: center;
     justify-content: space-evenly;
 }
-.multiPlayerMainGame .opponentStats{
-    border-bottom: 2px solid var(--themeColor);
-}
-
-.multiPlayerMainGame .yourStats{
-    border-top: 2px solid var(--themeColor);
-}
-
-.multiPlayerMainGame .players .playerImg{
+.gameSceneWrapper .playersTab 
+.playersStatWrapper .playerImg{
     width: 30px;height: 30px;
     border: 2px solid var(--themeFontColor);
     border-radius: 100%;
+    cursor: pointer;
 }
-.multiPlayerMainGame .players .playerImg img{
+.gameSceneWrapper .playersTab 
+.playersStatWrapper .playerImg img{
     width: 100%;height: 100%;
     border-radius: 100%;
 }
-.multiPlayerMainGame .players .playerCountry{display: var(--Country);}
-.multiPlayerMainGame .players .playerRank{display: var(--Rank);}
+.gameSceneWrapper .playersTab 
+.playersStatWrapper .playerCountry{display: var(--Country);}
+.gameSceneWrapper .playersTab 
+.playersStatWrapper .playerRank{display: var(--Rank);}
 
-.multiPlayerMainGame .gameScene{
-    position: relative;
-    width: 100%;height: 85%;
-    border-radius: inherit;
-}
 .gameAlert{
     position: absolute;top:27%;
     left: 50%;transform: translateX(-50%);
@@ -672,4 +670,7 @@
     display: none;
 }
 /* =====PLAYER CODE SELECTION END===== */
+
+
+
 

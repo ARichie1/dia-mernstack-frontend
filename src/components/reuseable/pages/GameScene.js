@@ -5,6 +5,7 @@ import InGameMenu from "../../ingame/InGameMenu";
 import InGameCodeButtons from "../../ingame/InGameCodeButtons";
 import { useGameContext } from "../../../hooks/useGameContext";
 import { useInGameContext } from "../../../hooks/useInGameContext";
+import OutComePopUp from "../pop_ups/OutComePopUp";
 
 const GameScene = () => {
 

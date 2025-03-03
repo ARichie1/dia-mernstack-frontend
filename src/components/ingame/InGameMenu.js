@@ -1,15 +1,15 @@
 import React, { useContext } from 'react'
 import { GameContext } from '../../contexts/GameContext'
-import { useNavigate } from 'react-router-dom'
+import { useInGameContext } from '../../hooks/useInGameContext'
 
 const InGameMenu = () => {
-    const navigate = useNavigate()
-
     const {chosenDifficulty} = useContext(GameContext)
+    const {setshowOutcomePopUp} = useInGameContext()
+
     return (
         <div className="inGameMenu">
             <button className="exit menuItem inGameBtn"
-                onClick={() => navigate("/")}>
+                onClick={() => setshowOutcomePopUp(true)}>
                 <span>Exit</span>
             </button>
             <button className="mainnGameAudio menuItem inGameBtn">

@@ -7,6 +7,13 @@ export const InGameContext = new createContext()
 
 const InGameContextProvider = (props) => {
 
+    const [showOutcomePopUp, setshowOutcomePopUp] = useState(false) 
+    const [isCodeCracked, setIsCodeCracked] = useState(false) 
+    const [isTimeOut, setIsTimeOut] = useState(false) 
+    const [gameTime, setGameTime] = useState(0) 
+    const [isOutOfMove, setIsOutOfMove] = useState(false) 
+    const [gameMoves, setGameMoves] = useState(8)
+
     const [showPlayerPredictions, setShowPlayerPredictions] = useState(false)
     const [showOpponentPredictions, setShowOpponentPredictions] = useState(false)
     const [showOpponentCurrentPredictions, setShowOpponentCurrentPredictions] = useState(false)
@@ -129,10 +136,18 @@ const InGameContextProvider = (props) => {
             console.log("no cp cps");
             
         }) 
-    }
+    } 
 
     return (
         <InGameContext.Provider value={{
+
+            showOutcomePopUp, setshowOutcomePopUp,
+            isCodeCracked, setIsCodeCracked,
+            isTimeOut, setIsTimeOut,
+            gameTime, setGameTime,
+            isOutOfMove, setIsOutOfMove,
+            gameMoves, setGameMoves,
+
             activePrediction, setActivePrediction,
             currentPrediction, setCurrentPrediction,
             playerPredictions, setPlayerPredictions,

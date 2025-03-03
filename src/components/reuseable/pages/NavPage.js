@@ -4,7 +4,7 @@ import { useGameContext } from "../../../hooks/useGameContext";
 
 const NavPage = ({ GameUiLinks }) => {
 
-    const { setGameType, setGameMode, isMultiplayer, setIsMultiplayer} = useGameContext()
+    const {  setGameModes, setGameType, isMultiplayer, setIsMultiplayer} = useGameContext()
 
     const linkList = GameUiLinks.length ? (
         GameUiLinks.map( link => {
@@ -19,7 +19,7 @@ const NavPage = ({ GameUiLinks }) => {
                         }
                         console.log("Multiplayer = " + isMultiplayer);
 
-                        link.gmode ? setGameMode(link.to) : setGameMode(null)
+                        link.gmode ? setGameModes(link.to) : setGameModes("null")
                     }}
                     key={link.id}>
                     <NavLink to={link.to}>{link.title}</NavLink>

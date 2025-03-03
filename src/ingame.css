@@ -54,7 +54,22 @@
     opacity: 0;
     transition: 0.2s ease-in-out;
 }
-.outcomeDisplayDiv{
+
+.outcomeWrapper{
+    position: absolute;
+    top: 0%; left: 0%;
+    width: 100%; height: 100%;
+    background-image: linear-gradient(
+        to right bottom,
+        rgba(255, 255, 255, 0.4),
+        rgba(255, 255, 255, 0.1)
+    );
+    backdrop-filter: blur(30px);
+    box-shadow: var(--shadow);   
+    z-index: 9;
+}
+
+.outcomeWrapper .outcomeModal{
     position: absolute;
     top: 50%;left: 50%;
     transform: translate(-50%, -50%);
@@ -71,18 +86,17 @@
     );
     backdrop-filter: blur(30px);
     box-shadow: var(--shadow);
-    opacity: 0;
-    z-index: -1;
 }
-.outcomeDisplayDiv .theMessage{
+
+.outcomeWrapper .theMessage{
     width: 100%;height: 20%;
     display: flex;justify-content: center;
     align-items: center;
 }
-.outcomeDisplayDiv .theMessage h1{
+.outcomeWrapper .theMessage h1{
     text-align: center;
 }
-.outcomeDisplayDiv .theMessageGraphics{
+.outcomeWrapper .theMessageGraphics{
     width: 100%;height: 30%;
     font-size: 100px;
     display: flex;justify-content: center;
@@ -90,12 +104,12 @@
 }
 .outcomeButtons{
     position: relative;
-    width: 100%;height: 20%;
+    width: 98%;height: 20%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
 }
-.outcomeDisplayDiv .outcomeBtn{
+.outcomeWrapper .outcomeBtn{
     position: relative;
     width: 30%;height: 60%;
     display: flex;justify-content: center;
@@ -107,17 +121,17 @@
     font-weight: bolder;
     cursor: pointer;
 }
-.outcomeDisplayDiv .next{display: none;}
-.outcomeDisplayDiv .outcomeBtn:active{
+.outcomeWrapper .next{display: none;}
+.outcomeWrapper .outcomeBtn:active{
     transform: scale(0.9);
 }
-.outcomeDisplayDiv .theCombination{
+.outcomeWrapper .theCombination{
     position: relative;
     width: 100%;height: 30%;
     display: flex;justify-content: center;
     align-items: center;
 }
-.outcomeDisplayDiv .theCombination::before{
+.outcomeWrapper .theCombination::before{
     content: 'SECRET COMBINATION';
     position: absolute;
     top: -10%;
@@ -125,7 +139,7 @@
     display: flex;justify-content: center;
     align-items: center;
 }
-.outcomeDisplayDiv .codeout{
+.outcomeWrapper .codeout{
     position: absolute;
     margin: auto 1%;
     width: 80%;height: 100%;
@@ -133,22 +147,26 @@
     justify-content: space-evenly;
     align-items: center;
 }
-.outcomeDisplayDiv .codeout .codediv{
+.outcomeWrapper .codeout .codediv{
     position: relative;
     width: 25%;height: 50%;
     margin: 0.5%;
     border-radius: 10px;
     box-shadow: var(--shadow);
 }
-.outcomeDisplayDiv .codeout .codediv img{
+.outcomeWrapper .codeout .codediv img{
     position: absolute;z-index: -1;
     width: 100%;height: 100%;
     border-radius: 10px;
 }
-.outcomeDisplayDiv .hideOutcome{
-    position: absolute;z-index: -1;
+.outcomeWrapper .hideOutcome{
+    position: absolute;
     top: 10px; right: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
     width: 30px;height: 30px;
+    border: 2px solid red;
     border-radius: 10px;
     color: red;
     cursor: pointer;

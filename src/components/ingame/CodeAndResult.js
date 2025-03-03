@@ -52,8 +52,8 @@ const CodeAndResult = ({carAttr}) => {
                 ) : (
                     <div className="outputsWrapper">
                         <div className={"codeout outputs"}>{codeList}</div>
-                        <div  className="arrowWrapper"><Arrow /></div>
-                        <div className="result outputs">{resultList}</div>
+                        {carAttr.showResult && <div  className="arrowWrapper"><Arrow /></div>}
+                        {carAttr.showResult && <div className="result outputs">{resultList}</div>}
                     </div>
                 )
             }

@@ -69,9 +69,27 @@ const GameContextProvider = (props) => {
 
     const [maxSelection, setMaxSelection] = useState(false)
 
-    const [gameType, setGameType] = useState(null)
     const [gameMode, setGameMode] = useState(null)
-    const [isMultiplayer, setIsMultiplayer] = useState(false)
+    const [isFindAgentsMode, setIsFindAgentsMode] = useState(false)
+    const [isStoryMode, setIsStoryMode] = useState(false)
+    const [isSurvivalMode, setIsSurvivalMode] = useState(false)
+    
+    const setGameModes = (mode) => {
+      if (mode === "find-agents") {
+        setIsFindAgentsMode(true) ; setIsStoryMode(false)
+        setIsSurvivalMode(false)
+      } else if (mode === "story-mode") {
+        setIsFindAgentsMode(false); setIsStoryMode(true)
+        setIsSurvivalMode(false)
+      } else if (mode === "survival-mode") {
+        setIsFindAgentsMode(false); setIsStoryMode(false)
+        setIsSurvivalMode(true) 
+      }
+    }
+
+    const [gameType, setGameType] = useState(null)
+    const [isMultiplayer, setIsMultiplayer] = useState(null)
+
     const [gameProperties, setGameProperties] = useState({
       type: gameType, mode: gameMode,
       multiplayer: isMultiplayer,
@@ -185,6 +203,41 @@ const GameContextProvider = (props) => {
       }
     }
 
+    // const resetGameStates = () => {
+    //   setChosenDifficulty,
+    //   setHasSelectedDifficulty,
+    //   setMaxSelection,
+    //   setGameType,
+    //   setGameMode,
+    //   setGameProperties,
+    //   setIsMultiplayer,
+
+    //   setIsHost,
+    //   setIsJoin,
+    //   setIsInRoom,
+    //   setIsRoomFull,
+    //   setIsInGame,
+    //   setIsOutGame,
+    //   setIsReady,
+    //   setIsOpponentReady,
+    //   setIsReadyToPlay,
+    //   setIsOpponentReadyToPlay,
+    //   setIsConnected,
+    //   setIsOpponentConnected,
+
+    //   setCanBuildCode,
+    //   setCanPlayGame,
+
+    //   setTurnOrder,
+    //   setIsTurn,
+        
+    //   setShowSaveBtn, 
+    //   setShowPlayBtn,
+    //   setShowSendBtn,
+    //   setCodeSelection,
+    // }
+
+
     return (
         <GameContext.Provider value={{
             GameUiLinks, Difficulties, defaultDifficulty,
@@ -192,8 +245,15 @@ const GameContextProvider = (props) => {
             hasSelectedDifficulty,  setHasSelectedDifficulty,
             insertDifficulty,
             maxSelection, setMaxSelection,
-            gameType, setGameType,
+
+            
             gameMode, setGameMode,
+            isFindAgentsMode, setIsFindAgentsMode,
+            isStoryMode, setIsStoryMode,
+            isSurvivalMode, setIsSurvivalMode,
+            setGameModes,
+            
+            gameType, setGameType,
             gameProperties, setGameProperties,
             isMultiplayer, setIsMultiplayer,
 

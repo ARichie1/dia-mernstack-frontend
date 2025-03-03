@@ -1,8 +1,11 @@
 import React from 'react'
 import { useAppGlobalVariableContext } from '../../hooks/useAppGlobalVariableContext'
+import { useInGameContext } from '../../hooks/useInGameContext'
 
 const PlayerTab = ({playerInfo}) => {
     const {defaultImage} = useAppGlobalVariableContext()
+
+    const {gameTime, gameMoves} = useInGameContext()
 
     return (
         <div className="playersStatWrapper">
@@ -18,8 +21,8 @@ const PlayerTab = ({playerInfo}) => {
             }
             <div className="playerName">{playerInfo ? playerInfo.username : "name"}</div>
             <div className="playerCountry">usa</div>
-            <div className="playerTime">0:00</div>
-            <div className="playerMoves">10</div>
+            <div className="playerTime">{gameTime}:00</div>
+            <div className="playerMoves">{gameMoves}</div>
         </div>
     )
 }

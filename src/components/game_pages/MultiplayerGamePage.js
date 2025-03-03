@@ -3,6 +3,7 @@ import GameScene from "../reuseable/pages/GameScene";
 import { useUserContext } from "../../hooks/useUserContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import PlayerTab from "../ingame/PlayerTab";
+import OutComePopUp from "../reuseable/pop_ups/OutComePopUp";
 
 const MultiplayerGamePage = () => {
     const { userInfo } = useAuthContext()
@@ -18,6 +19,7 @@ const MultiplayerGamePage = () => {
                 <div className="playerTab playersTab">
                     <PlayerTab playerInfo={userInfo}/>
                 </div>
+                <OutComePopUp />
             </div>
         </div> 
     )

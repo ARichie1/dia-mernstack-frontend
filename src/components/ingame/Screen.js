@@ -20,6 +20,7 @@ const Screen = () => {
             <li key={Math.random()}><CodeAndResult carAttr={
                 {prediction: plyPred,
                     type: "codesandresults",
+                    showResult: true,
                     class:"playerPrediction"
                 }}/></li>
         )
@@ -31,6 +32,7 @@ const Screen = () => {
             <li key={Math.random()}><CodeAndResult carAttr={
                 {prediction: oppPred,
                     type: "codesandresults",
+                    showResult: true,
                     class:"opponentPrediction"
                 }}/></li>
         )
@@ -62,6 +64,7 @@ const Screen = () => {
                                     <CodeAndResult carAttr={
                                         {prediction: currentPrediction,
                                             type: "codesandresults",
+                                            showResult: true,
                                             class:"currentPredictionWrapper"
                                         }}/>
                                 </div>
@@ -73,12 +76,14 @@ const Screen = () => {
                                         <CodeAndResult carAttr={
                                             {prediction: opponentActivePrediction,
                                                 type: "codes",
+                                                showResult: true,
                                                 class:"opponentActivePredictionWrapper"
                                             }}/>
                                     </div>}
                                     {showOpponentCurrentPredictions && <CodeAndResult carAttr={
                                         {prediction: opponentCurrentPrediction,
                                             type: "codesandresults",
+                                            showResult: true,
                                             class:"opponentCurrentPredictionWrapper"
                                         }}/>}
                                 </div>
@@ -105,6 +110,7 @@ const Screen = () => {
                                 <CodeAndResult carAttr={
                                     {prediction: activePrediction,
                                         type: "codes",
+                                        showResult: false,
                                         class:"activePredictionWrapper"
                                     }}/>
                             </div>
@@ -120,6 +126,7 @@ const Screen = () => {
                 <CodeAndResult carAttr={
                     {prediction: codeSelection,
                         type: "codes",
+                        showResult: false,
                         class:"codeSelectionWrapper"
                     }}/>
             </div>}

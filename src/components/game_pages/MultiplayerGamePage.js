@@ -1,13 +1,15 @@
 import React from "react";
-import GameScene from "../reuseable/pages/GameScene";
 import { useUserContext } from "../../hooks/useUserContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { useOutcomeContext } from "../../hooks/useOutcomeContext";
+import GameScene from "../reuseable/pages/GameScene";
 import PlayerTab from "../ingame/PlayerTab";
 import OutComePopUp from "../reuseable/pop_ups/OutComePopUp";
 
 const MultiplayerGamePage = () => {
     const { userInfo } = useAuthContext()
     const { currentOpponent} = useUserContext()
+    const {showOutcomePopUp} = useOutcomeContext()
 
     return (
         <div className="multiplayerGamePage wrapper">
@@ -19,7 +21,7 @@ const MultiplayerGamePage = () => {
                 <div className="playerTab playersTab">
                     <PlayerTab playerInfo={userInfo}/>
                 </div>
-                <OutComePopUp />
+                {showOutcomePopUp && <OutComePopUp />}
             </div>
         </div> 
     )

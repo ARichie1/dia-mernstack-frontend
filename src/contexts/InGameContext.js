@@ -2,24 +2,24 @@ import React, { createContext, useState } from 'react'
 import { useGameContext } from '../hooks/useGameContext'
 import socketInService from '../hooks/connections/socketService'
 import socketGameService from '../hooks/connections/gameService'
+import { useOutcomeContext } from '../hooks/useOutcomeContext'
+import { useTimeContext } from '../hooks/useTimeContext'
 
 export const InGameContext = new createContext()
 
 const InGameContextProvider = (props) => {
+    const {setAndShowOutcomePopUp} = useOutcomeContext()
 
-    const [showOutcomePopUp, setshowOutcomePopUp] = useState(false) 
-    const [isCodeCracked, setIsCodeCracked] = useState(false) 
-    const [isTimeOut, setIsTimeOut] = useState(false) 
-    const [gameTime, setGameTime] = useState(0) 
-    const [isOutOfMove, setIsOutOfMove] = useState(false) 
-    const [gameMoves, setGameMoves] = useState(8)
+    const {gameTime, setGameTime,
+        isTimeOut, setIsTimeOut} = useTimeContext()
 
+    // Player Prediction Logic Starts Here
     const [showPlayerPredictions, setShowPlayerPredictions] = useState(false)
     const [showOpponentPredictions, setShowOpponentPredictions] = useState(false)
     const [showOpponentCurrentPredictions, setShowOpponentCurrentPredictions] = useState(false)
     const [showOpponentScreen, setShowOpponentScreen] = useState(false)
   
-    const {setIsTurn, isMultiplayer} = useGameContext()
+    const {chosenDifficulty, setIsTurn, isMultiplayer} = useGameContext()
     
     const [activePrediction, setActivePrediction] = useState([]) 
     const [currentPrediction, setCurrentPrediction] = useState(
@@ -36,7 +36,7 @@ const InGameContextProvider = (props) => {
     
     // Recieve Opponent Active Prediction
     const recieveOpponentAP = async () => {
-        const socket = socketInService.socket
+       const socket = socketInService.socket
         await socketGameService.recieveOpponentActivePrediction(socket)
         .then((data) => {setOpponentActivePrediction(data)})
         .catch((err) => {console.log(err);})
@@ -109,14 +109,28 @@ const InGameContextProvider = (props) => {
                 id: Math.random()
             })
 
+            // Check If All Agents Are Dead
+            let deadCount = 0
+            data.forEach(result => {
+                if (result.value === "D"){
+                    deadCount++
+                }
+            });
+
+            // If All Agents Are Dead, 
+            // Let Player Know Show Outcome.
+            if (deadCount === chosenDifficulty.agents){
+                console.log("all dead ^-^");
+                setAndShowOutcomePopUp("terminated")
+            }
+
             // Add Player's CP To Player's Prediction List
             setPlayerPredictions([
                 ...playerPredictions, 
                 {codes : activePrediction, results : data, id: Math.random()}
             ])
 
-            // if (gameType === "multiplayer") {
-                // Switch Turns
+            // Switch Turns
             if (isMultiplayer) {
                 setIsTurn(false)
 
@@ -127,9 +141,7 @@ const InGameContextProvider = (props) => {
                     setShowOpponentScreen(true)
                 }, 2000);
             }
-            // }  
-
-            // Handle Result Outcome Here
+        // Handle Result Outcome Here
         })
         .catch((err) => {
             console.log(err);
@@ -140,14 +152,6 @@ const InGameContextProvider = (props) => {
 
     return (
         <InGameContext.Provider value={{
-
-            showOutcomePopUp, setshowOutcomePopUp,
-            isCodeCracked, setIsCodeCracked,
-            isTimeOut, setIsTimeOut,
-            gameTime, setGameTime,
-            isOutOfMove, setIsOutOfMove,
-            gameMoves, setGameMoves,
-
             activePrediction, setActivePrediction,
             currentPrediction, setCurrentPrediction,
             playerPredictions, setPlayerPredictions,

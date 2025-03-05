@@ -1,15 +1,15 @@
 import React, { useContext } from 'react'
 import { GameContext } from '../../contexts/GameContext'
-import { useInGameContext } from '../../hooks/useInGameContext'
+import { useOutcomeContext } from '../../hooks/useOutcomeContext'
 
 const InGameMenu = () => {
     const {chosenDifficulty} = useContext(GameContext)
-    const {setshowOutcomePopUp} = useInGameContext()
+    const {setAndShowOutcomePopUp} = useOutcomeContext()
 
     return (
         <div className="inGameMenu">
             <button className="exit menuItem inGameBtn"
-                onClick={() => setshowOutcomePopUp(true)}>
+                onClick={() => setAndShowOutcomePopUp("exit")}>
                 <span>Exit</span>
             </button>
             <button className="mainnGameAudio menuItem inGameBtn">

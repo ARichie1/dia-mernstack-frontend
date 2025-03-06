@@ -49,12 +49,12 @@ const GameContextProvider = (props) => {
     }
     
     const Difficulties = [
-        {difficulty : "endless", agents : null, time: null, moves: null, color: "var(--themeColor)", id: 1} , 
-        {difficulty : "easy", agents : 2, time: 60, moves: 8, color: "green", id: 2}, 
-        {difficulty : "medium", agents : 3, time: 90, moves: 9, color: "greenyellow", id: 3}, 
-        {difficulty : "hard", agents : 4, time: 180, moves: 10, color: "orange", id: 4}, 
-        {difficulty : "detective", agents : 5, time: 210, moves: 11, color: "red", id: 5}, 
-        {difficulty : "wizard", agents : 6, time: 300, moves: 12, color: "purple", id: 6}
+        {difficulty : "endless", agents : null, time: null, moves: null, saveMeTime: null, saveMeMoves: null, color: "var(--themeColor)", id: 1} , 
+        {difficulty : "easy", agents : 2, time: 5, moves: 8, saveMeTime: 2.5, saveMeMoves: 4, color: "green", id: 2}, 
+        {difficulty : "medium", agents : 3, time: 10, moves: 12, saveMeTime: 5, saveMeMoves: 6, color: "greenyellow", id: 3}, 
+        {difficulty : "hard", agents : 4, time: 15, moves: 16, saveMeTime: 7.5, saveMeMoves: 8, color: "orange", id: 4}, 
+        {difficulty : "detective", agents : 5, time: 20, moves: 20, saveMeTime: 10, saveMeMoves: 10, color: "red", id: 5}, 
+        {difficulty : "wizard", agents : 6, time: 25, moves: 24, saveMeTime: 12.5, saveMeMoves: 12, color: "purple", id: 6}
     ]
 
     const defaultDifficulty = Difficulties[1]
@@ -74,6 +74,7 @@ const GameContextProvider = (props) => {
     const [isStoryMode, setIsStoryMode] = useState(false)
     const [isSurvivalMode, setIsSurvivalMode] = useState(false)
     
+
     const setGameModes = (mode) => {
       if (mode === "find-agents") {
         setIsFindAgentsMode(true) ; setIsStoryMode(false)
@@ -95,7 +96,17 @@ const GameContextProvider = (props) => {
       multiplayer: isMultiplayer,
       difficulty: chosenDifficulty
     })
+
+    const [deadlineParameter, setDeadlineParameter] = useState("time")
     
+    const initializeDeadlineParameters = (timeStarter, moveStater) => {
+      if (timeStarter){
+        timeStarter()
+      }
+      if (moveStater){
+        moveStater()
+      }
+    }
     
     const [isHost,  setIsHost] = useState(false)
     const [isJoin,  setIsJoin] = useState(false)

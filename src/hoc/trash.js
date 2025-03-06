@@ -732,3 +732,20 @@ module.exports = playerDefaultValue
     //             break;
     //     }
     // });
+
+
+    
+    <div className="timeFuncWrapper">
+    <div className='startTime' 
+        onClick={() => initiateMoveCount(8)}>sm</div>
+    <div className='startTime' 
+        onClick={() => pauseMove(5000)}>pm</div>
+    <div className='resumeTime' 
+        onClick={() => resumeMove()}>rm</div>
+    <div className='resumeTime' 
+        onClick={() => addMove(5)}>am</div>
+    <div className='resumeTime' 
+        onClick={() => reduceMove(1)}>rdm</div>
+    <div className='resumeTime' 
+        onClick={() => resetMove()}>rstm</div>
+</div>

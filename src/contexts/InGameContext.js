@@ -4,14 +4,17 @@ import socketInService from '../hooks/connections/socketService'
 import socketGameService from '../hooks/connections/gameService'
 import { useOutcomeContext } from '../hooks/useOutcomeContext'
 import { useTimeContext } from '../hooks/useTimeContext'
+import { useMoveContext } from '../hooks/useMoveContext'
 
 export const InGameContext = new createContext()
 
 const InGameContextProvider = (props) => {
     const {setAndShowOutcomePopUp} = useOutcomeContext()
 
-    const {gameTime, setGameTime,
-        isTimeOut, setIsTimeOut} = useTimeContext()
+    const {pauseTime, resumeTime} = useTimeContext()
+
+    const { gameMove, initiateMoveCount, addMove, reduceMove, 
+            pauseMove, resumeMove, resetMove} = useMoveContext()
 
     // Player Prediction Logic Starts Here
     const [showPlayerPredictions, setShowPlayerPredictions] = useState(false)
@@ -77,6 +80,11 @@ const InGameContextProvider = (props) => {
 
             // Switch turns so reciever can now play
             setIsTurn(true)
+            
+            // Resume counting the deadline params
+            resumeTime()
+            resumeMove()
+
             console.log("I am playing now");
         })
         .catch((err) => {
@@ -109,6 +117,12 @@ const InGameContextProvider = (props) => {
                 id: Math.random()
             })
 
+            // Add Player's CP To Player's Prediction List
+            setPlayerPredictions([
+                ...playerPredictions, 
+                {codes : activePrediction, results : data, id: Math.random()}
+            ])
+
             // Check If All Agents Are Dead
             let deadCount = 0
             data.forEach(result => {
@@ -124,15 +138,16 @@ const InGameContextProvider = (props) => {
                 setAndShowOutcomePopUp("terminated")
             }
 
-            // Add Player's CP To Player's Prediction List
-            setPlayerPredictions([
-                ...playerPredictions, 
-                {codes : activePrediction, results : data, id: Math.random()}
-            ])
+            // Reduce Move
+            reduceMove(1)
 
             // Switch Turns
             if (isMultiplayer) {
                 setIsTurn(false)
+
+                // Pause counting the deadline params
+                pauseMove()
+                pauseTime()
 
                 // After few seconds show the opponent screen
                 setTimeout(() => {

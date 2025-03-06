@@ -7,7 +7,7 @@ const TimeContextProvider = (props) => {
     
     const {setAndShowOutcomePopUp} = useOutcomeContext()
 
-    const [gameTime, setGameTime] = useState(0) 
+    const [gameTime, setGameTime] = useState("0:00") 
     const [isTimeUp, setIsTimeUp] = useState(false) 
     const [currentMinutes, setCurrentMinutes] = useState(0) 
     const [currentSeconds, setCurrentSeconds] = useState(0) 
@@ -36,8 +36,8 @@ const TimeContextProvider = (props) => {
         // SO IT LOOKS LIKE A DOUBLE DIGIT NUMBER
             seconds = seconds < 10 ? '0' + seconds : seconds;
         // GET THE CURRENT MINUTES AND SECONDS
-            setCurrentMinutes(minutes);
-            setCurrentSeconds(seconds);
+            setCurrentMinutes(minutes)
+            setCurrentSeconds(seconds)
 
         // IF THE NO MORE TIME
             if(seconds <= 0 && minutes <= 0){
@@ -65,7 +65,7 @@ const TimeContextProvider = (props) => {
     }
     
     // Start Time
-    const startTimeFunc = (time) => {
+    const initiateTimeCount = (time) => {
         let duration = 60 * time
         startTimer(duration);
     }
@@ -82,7 +82,7 @@ const TimeContextProvider = (props) => {
     const resumeTime = () =>  {
             let currentTime = (currentMinutes * 60) + (currentSeconds);
             let newTime = currentTime / 60;
-            startTimeFunc(newTime);
+            initiateTimeCount(newTime);
     }
 
     // Add Time
@@ -90,7 +90,7 @@ const TimeContextProvider = (props) => {
         pauseTime()
         let currentTime = (currentMinutes * 60) + (currentSeconds);
         let oldTime = currentTime / 60;
-        startTimeFunc(oldTime + addedTime);
+        initiateTimeCount(oldTime + addedTime);
     }
     
     // Reduce Time
@@ -99,7 +99,7 @@ const TimeContextProvider = (props) => {
         let currentTime = (currentMinutes * 60) + (currentSeconds);
         let oldTime = currentTime / 60;
         if (oldTime > reducedTime) {
-            startTimeFunc(oldTime - reducedTime);
+            initiateTimeCount(oldTime - reducedTime);
         }else{
             resumeTime()
         }
@@ -110,7 +110,7 @@ const TimeContextProvider = (props) => {
         let currentTime = (currentMinutes * 60) + (currentSeconds);
         let oldTime = currentTime / 60;
         let diffInTime = rTime - oldTime;
-        startTimeFunc(oldTime + diffInTime);
+        initiateTimeCount(oldTime + diffInTime);
     }
     
 
@@ -118,7 +118,7 @@ const TimeContextProvider = (props) => {
         <TimeContext.Provider value={{
             gameTime, setGameTime,
             isTimeUp, setIsTimeUp,
-            startTimeFunc, pauseTime, resumeTime,
+            initiateTimeCount, pauseTime, resumeTime,
             addTime, reduceTime, resetTime
         }}>
             {props.children}

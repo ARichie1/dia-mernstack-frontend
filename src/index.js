@@ -13,6 +13,7 @@ import CodeCreationContextProvider from './contexts/CodeCreationContext';
 import UserContextProvider from './contexts/UserContext';
 import TimeContextProvider from './contexts/TimeContext';
 import OutcomeContextProvider from './contexts/OutcomeContext';
+import MoveContextProvider from './contexts/MoveContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -24,11 +25,13 @@ root.render(
             <GameContextProvider>
               <OutcomeContextProvider>
                 <TimeContextProvider>
-                  <InGameContextProvider>
-                    <CodeCreationContextProvider>
-                      <App />
-                    </CodeCreationContextProvider>
-                  </InGameContextProvider>
+                  <MoveContextProvider>
+                    <InGameContextProvider>
+                      <CodeCreationContextProvider>
+                        <App />
+                      </CodeCreationContextProvider>
+                    </InGameContextProvider>
+                  </MoveContextProvider>
                 </TimeContextProvider>
               </OutcomeContextProvider>
             </GameContextProvider>

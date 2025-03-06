@@ -1,17 +1,20 @@
 import React, { createContext, useState } from 'react'
+import { useGameContext } from '../hooks/useGameContext'
 
 export const OutcomeContext = new createContext()
 
 const OutcomeContextProvider = (props) => {
+
+    const {isMultiplayer} = useGameContext()
+
     const [outcomeInfo, setOutcomeInfo] = useState({})
     const [showOutcomePopUp, setShowOutcomePopUp] = useState(false)
     const [isPauseGame, setIsPauseGame] = useState(false) 
     const [isExitGame, setIsExitGame] = useState(false)  
-    const [isCodeCracked, setIsCodeCracked] = useState(false) 
-    const [isOutOfMove, setIsOutOfMove] = useState(false) 
-    const [gameMoves, setGameMoves] = useState(8)
+    const [isCodeCracked, setIsCodeCracked] = useState(false)  
+    const [isOutOfMove, setIsOutOfMove] = useState(false)
 
-    const [saveMe, setSaveMe] = useState(false)
+    const [canSaveMe, setCanSaveMe] = useState(false)
     const [showSaveMeBtn, setShowSaveMeBtn] = useState(false)
 
     const [canTryAgain, setCanTryAgain] = useState(false)
@@ -45,14 +48,14 @@ const OutcomeContextProvider = (props) => {
         outofmoves : {
             audio : "outofmoves", image : "#&128695;",
             title: "Oops!! No More Move",
-            message: "You Had Move But Wasted It Asshole",
+            message: "You Had Moves But Wasted It Asshole",
         }
     }
 
     const setAndShowOutcomePopUp = (outcome) => {
         
         setIsExitGame(false); setIsCodeCracked(false)
-        setSaveMe(false); setShowSaveMeBtn(false)
+        setShowSaveMeBtn(false)
         setShowMenuBtn(false); setCanTryAgain(false)
         setShowTryAgainBtn(false)
         setCanMoveToNext(false); setShowNextBtn(false)
@@ -64,15 +67,29 @@ const OutcomeContextProvider = (props) => {
             setShowTryAgainBtn(true)
         }else if (outcome === "timeup"){
             setOutcomeInfo(outcomesArray.timeup)
+            setShowMenuBtn(true)
         }else if (outcome === "outofmoves"){
             setIsOutOfMove(true)
             setOutcomeInfo(outcomesArray.outofmoves)
+            setShowMenuBtn(true)
         }else if (outcome === "pause"){
             setIsPauseGame(true)
             setOutcomeInfo(outcomesArray.pause)
         }else if (outcome === "exit"){
             setIsExitGame(true)
             setOutcomeInfo(outcomesArray.exit)
+        }
+
+        if (!isMultiplayer) {
+            if (outcome === "timeup" || outcome === "outofmoves"){
+                if (canSaveMe) {
+                    setShowSaveMeBtn(true)
+                }
+                setShowTryAgainBtn(true)
+
+                console.log("canSaveMe : ", canSaveMe);
+                
+            }
         }
 
         setShowOutcomePopUp(true)
@@ -92,9 +109,8 @@ const OutcomeContextProvider = (props) => {
             isExitGame, setIsExitGame,
             isCodeCracked, setIsCodeCracked,
             isOutOfMove, setIsOutOfMove,
-            gameMoves, setGameMoves,
 
-            saveMe, setSaveMe,
+            canSaveMe, setCanSaveMe,
             showSaveMeBtn, setShowSaveMeBtn,
             canTryAgain, setCanTryAgain,
             showTryAgainBtn, setShowTryAgainBtn,

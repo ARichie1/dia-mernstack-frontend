@@ -2,15 +2,21 @@ import React, { useContext, useEffect, useState } from 'react'
 import { GameContext } from '../../contexts/GameContext'
 import { InGameContext } from '../../contexts/InGameContext'
 import { CodeCreationContext } from '../../contexts/CodeCreationContext'
+import { useTimeContext } from '../../hooks/useTimeContext'
+import { useMoveContext } from '../../hooks/useMoveContext'
 
 const InGameCodeButtons = () => {
     const {
+        chosenDifficulty,
         gameType, isInGame, isOutGame,
         isTurn, setIsTurn,
         showPlayBtn, showSaveBtn, showSendBtn,
         handlePlayBtn, handleSaveBtn, handleSendBtn, 
         codeSelection
     }  = useContext(GameContext)
+
+    const { initiateTimeCount, pauseTime} = useTimeContext()
+    const { initiateMoveCount, pauseMove} = useMoveContext()
 
     const {activePrediction, 
         recieveOpponentAPandCP, setShowOpponentScreen,
@@ -21,14 +27,20 @@ const InGameCodeButtons = () => {
     // Initiate Recieveing oppenents AP and CP 
     // If Player Is Not Player Turn To Play (isTurn = false)
     const initiateRecievingOpponentAPandCP = () => {
-        // if (gameType === "multiplayer"){
-        //     console.log("in multiplayer");
-            
-            recieveOpponentAPandCP()
-            if (!isTurn) {
-                setShowOpponentScreen(true)
-            }
-        // }
+        
+        initiateTimeCount(chosenDifficulty.time)
+        initiateMoveCount(chosenDifficulty.moves)
+        
+        if (!isTurn) {
+            pauseTime()
+            pauseMove()
+        }
+
+        recieveOpponentAPandCP()
+
+        if (!isTurn) {
+            setShowOpponentScreen(true)
+        }
     }
     
     let codeButtonList = codeButtons.sort((a, b) => a - b).map(cb => {

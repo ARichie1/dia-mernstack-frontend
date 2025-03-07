@@ -10,6 +10,7 @@ import { useOutcomeContext } from "../../../hooks/useOutcomeContext";
 const MoveInGameButton = () => {
     const navigate = useNavigate()
     const {defaultDifficulty, chosenDifficulty,
+        isEndlessMode, setIsEndlessMode,
         insertDifficulty, gameMode,
         gameProperties,  switchGameLocation,
         setIsTurn, setIsReadyToPlay} = useGameContext()
@@ -34,13 +35,15 @@ const MoveInGameButton = () => {
         if (gameMode === "survival-mode") {
             insertDifficulty(defaultDifficulty)
         }
+
         setIsReadyToPlay(true)
         setIsTurn(true)
 
-        initiateTimeCount(chosenDifficulty.time)
-        initiateMoveCount(chosenDifficulty.moves)
-
-        setCanSaveMe(true)
+        if (!isEndlessMode){
+            initiateTimeCount(chosenDifficulty.time ? chosenDifficulty.time : 0)
+            initiateMoveCount(chosenDifficulty.moves ? chosenDifficulty.moves : 0)
+            setCanSaveMe(true)
+        }
 
         switchGameLocation("ingame")
         sendGameProperties(true)

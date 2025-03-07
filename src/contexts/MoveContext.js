@@ -69,7 +69,7 @@ const MoveContextProvider = (props) => {
     
     // Reset Moves
     const resetMove = (resetTo) => {
-        initiateMoveCount(resetTo ? resetTo : chosenDifficulty.moves)
+        initiateMoveCount(resetTo ? resetTo : (chosenDifficulty.moves ? chosenDifficulty.moves : 0))
     }
 
     return (

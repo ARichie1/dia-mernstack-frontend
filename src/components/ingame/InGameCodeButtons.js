@@ -28,8 +28,8 @@ const InGameCodeButtons = () => {
     // If Player Is Not Player Turn To Play (isTurn = false)
     const initiateRecievingOpponentAPandCP = () => {
         
-        initiateTimeCount(chosenDifficulty.time)
-        initiateMoveCount(chosenDifficulty.moves)
+        initiateTimeCount(chosenDifficulty.time ? chosenDifficulty.time : 0)
+        initiateMoveCount(chosenDifficulty.moves ? chosenDifficulty.moves : 0)
         
         if (!isTurn) {
             pauseTime()

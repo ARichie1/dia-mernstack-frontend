@@ -501,11 +501,10 @@ li{text-decoration: none; list-style: none;}
 }
 .game .difficultyTable .difficulty{
   display: flex;justify-content: space-around;
-  align-items: center;height: 12%;
-  margin-bottom: 2.5%;border-radius: 10px;
+  align-items: center; height: calc(80%/6.7);
+  margin-bottom: 4.5%;border-radius: 5px;
   background: var(--themeColor);
   color: var(--themeFontColor);
-  box-shadow: var(--shadow);
   cursor: pointer;
   position: relative;
 }
@@ -523,33 +522,44 @@ li{text-decoration: none; list-style: none;}
 .game .difficultyTable .movesAvailable{
   width: 25%;display: flex;justify-content: center;
   text-transform: uppercase;
+  font-size: 13px
 }
 
-.game .findAgents .difficultyTable .difficulty:active, 
-.game .multiPlayerOnline .difficultyTable .difficulty:active{
-  transform: scale(1.1);
-  box-shadow: 0 0 6em var(--themeFontColor) inset;
-}
-
-.game .difficultyTable select{
-  position: absolute;left: 30%;top: 13.5%;
-  width: 20%; height: 35px;
-  border-radius: 5px;
-  background: var(--themeFontColor);
-  font-weight: bold;
-  color: var(--themeColor);
-  display: flex;align-items: center;
-  justify-content: space-evenly; 
+.game .endlessMode p{
+  font-size: 11px;
+  text-align: center;
   cursor: pointer;
 }
-.game .difficultyTable select option{
+.game .difficultyTable .endlessDiffWrapper{
+  position: absolute;
+  left: 15%;bottom: -175px;
+  width: 150px; 
+  display: flex;align-items: center;
+  justify-content: space-evenly; 
+  flex-direction: column;
+  border-radius: 10px;
+  color: var(--themeColor);
+  background-image: linear-gradient(
+        to right bottom,
+        rgba(255, 255, 255, 0.4),
+        rgba(255, 255, 255, 0.1)
+    );
+  backdrop-filter: blur(30px);
+  box-shadow: var(--shadow); 
+  font-weight: bold;
+  z-index: 5;
+}
+.game .difficultyTable .endlessDiffWrapper li{
+  width: 94%; height: 30px; 
+  padding: 2%; margin: 2%;
   border-radius: 5px;
   background: var(--themeColor);
   color: var(--themeFontColor);
-  box-shadow: var(--shadow);
+  text-align: center;
   font-weight: bold;
   cursor: pointer;
 }
+
 .game .difficultyTable .saveGameProperties{
   width: 50%; height: 40px;
   margin-left: 25%;

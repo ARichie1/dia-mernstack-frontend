@@ -13,8 +13,7 @@ const InGameContextProvider = (props) => {
 
     const {pauseTime, resumeTime} = useTimeContext()
 
-    const { gameMove, initiateMoveCount, addMove, reduceMove, 
-            pauseMove, resumeMove, resetMove} = useMoveContext()
+    const { reduceMove, pauseMove, resumeMove} = useMoveContext()
 
     // Player Prediction Logic Starts Here
     const [showPlayerPredictions, setShowPlayerPredictions] = useState(false)

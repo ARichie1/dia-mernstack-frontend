@@ -9,10 +9,30 @@ const DifficultySelector = ({otherActions}) => {
     const navigate = useNavigate()
 
     const { Difficulties, insertDifficulty, chosenDifficulty, 
-            gameType, gameMode,
+            setIsEndlessMode, gameType, gameMode, isMultiplayer,
             gameProperties, setGameProperties,
             isHost, isReady,
             } = useGameContext()
+
+    const [showEndlessDiffList, setShowEndlessDiffList] = useState(false)
+    const [hasSelectedDiff, setHasSelectedDiff] = useState(false)
+
+    const styleSelected = (diff) => {
+        let styleArray = {}
+        if (diff.difficulty !== "endless"){
+            if(chosenDifficulty.difficulty === diff.difficulty){
+                styleArray = {
+                    background: diff.color, 
+                    transform: "scale(1.1)", 
+                    boxShadow: "var(--shadow)"}            
+            }else{
+                styleArray = {
+                    background: diff.color,
+                    transform: "scale(1.05)", boxShadow: "none"}                  
+            }
+        }
+        return styleArray
+    }
 
     // SOCKET IO - send game properties to server
     const sendGameProperties = async () => {
@@ -34,18 +54,23 @@ const DifficultySelector = ({otherActions}) => {
     }
 
     // Generate a list of available and valid difficulties
-    const difficultyList = Difficulties.map( diff => {
+    const difficultyList = Difficulties.filter( diff => diff.difficulty !== "endless"
+    ).map( diff => {
         return (
             <div className={`${diff.difficulty} difficulty`} 
-                style={{background: diff.color}} 
-                onClick={() => {
-                    
+                
+                style={styleSelected(diff)}
+                onClick={() => { 
                     // Set the chosen difficulty for the game context
-                    insertDifficulty(diff);
-                    setGameProperties({
-                        type: gameType, mode: gameMode,
-                        difficulty : diff
-                    })
+                    if (diff.difficulty !== "endless") {
+                        insertDifficulty(diff);
+                        setGameProperties({
+                            type: gameType, mode: gameMode,
+                            multiplayer: isMultiplayer,
+                            difficulty : diff
+                        })
+                        setIsEndlessMode(false)
+                    }
                 }}
                 key={diff.id}>  
                 <div className="difficultyHeader" key={Math.random()}>{diff.difficulty}</div>
@@ -62,7 +87,23 @@ const DifficultySelector = ({otherActions}) => {
 
     endlessDifficultyList = endlessDifficultyList.map( diff => {
         return (
-            <option key={diff.agents}>{diff.agents}</option>
+            <li 
+                onClick={() => {
+                    setShowEndlessDiffList(false)
+
+                    insertDifficulty(
+                        {difficulty : "endless", agents : diff.agents, time: null, moves: null, saveMeTime: null, saveMeMoves: null, color: "var(--themeColor)", id: 1}
+                    );
+
+                    setGameProperties({
+                        type: gameType, mode: gameMode,
+                        multiplayer: isMultiplayer,
+                        difficulty : {difficulty : "endless", agents : diff.agents, time: null, moves: null, saveMeTime: null, saveMeMoves: null, color: "var(--themeColor)", id: 1} 
+                    })
+
+                    setIsEndlessMode(true)
+                }}
+                key={diff.agents}>{diff.agents}</li>
         )
     })
 
@@ -74,11 +115,25 @@ const DifficultySelector = ({otherActions}) => {
                     <div className="timeAvailable">TIME(s)</div>
                     <div className="movesAvailable">MOVES</div>
                 </div>
+
+                <div className="endlessMode difficulty"
+                    style={chosenDifficulty.difficulty === "endless" ? {transform: "scale(1.1)", boxShadow: "var(--shadow)", zIndex: 9} : {transform: "scale(1.05)", boxShadow: "none", zIndex: 9}}>                    
+                    
+                    <div className="difficultyHeader">Endless</div>
+                    <div className="agentsAvailable">
+                        <p onClick={() => setShowEndlessDiffList(!showEndlessDiffList)}>
+                            Select Agents 
+                        </p>
+                        {showEndlessDiffList && <ul className="endlessDiffWrapper">
+                            {endlessDifficultyList}
+                        </ul>}
+                    </div>
+                    <div className="timeAvailable">-</div>
+                    <div className="movesAvailable">-</div>
+                </div>
+
                 {difficultyList}
-                <select>
-                    <option> Select Agents </option>
-                    {endlessDifficultyList}
-                </select>
+                
                 {gameType === "multiplayer" ?
                     <button className="saveGameProperties clkBtn"
                         onClick={() => saveGameProperties()}>

@@ -49,17 +49,19 @@ const GameContextProvider = (props) => {
     }
     
     const Difficulties = [
-        {difficulty : "endless", agents : null, time: null, moves: null, saveMeTime: null, saveMeMoves: null, color: "var(--themeColor)", id: 1} , 
-        {difficulty : "easy", agents : 2, time: 5, moves: 8, saveMeTime: 2.5, saveMeMoves: 4, color: "green", id: 2}, 
-        {difficulty : "medium", agents : 3, time: 10, moves: 12, saveMeTime: 5, saveMeMoves: 6, color: "greenyellow", id: 3}, 
-        {difficulty : "hard", agents : 4, time: 15, moves: 16, saveMeTime: 7.5, saveMeMoves: 8, color: "orange", id: 4}, 
-        {difficulty : "detective", agents : 5, time: 20, moves: 20, saveMeTime: 10, saveMeMoves: 10, color: "red", id: 5}, 
-        {difficulty : "wizard", agents : 6, time: 25, moves: 24, saveMeTime: 12.5, saveMeMoves: 12, color: "purple", id: 6}
+        {difficulty : "endless", agents : null, time: null, moves: null, saveMeTime: null, saveMeMoves: null, color: "var(--themeColor)", selected: false, id: 1} , 
+        {difficulty : "easy", agents : 2, time: 5, moves: 8, saveMeTime: 2.5, saveMeMoves: 4, color: "green", selected: false, id: 2}, 
+        {difficulty : "medium", agents : 3, time: 10, moves: 12, saveMeTime: 5, saveMeMoves: 6, color: "greenyellow", selected: false, id: 3}, 
+        {difficulty : "hard", agents : 4, time: 15, moves: 16, saveMeTime: 7.5, saveMeMoves: 8, color: "orange", selected: false, id: 4}, 
+        {difficulty : "detective", agents : 5, time: 20, moves: 20, saveMeTime: 10, saveMeMoves: 10, color: "red", selected: false, id: 5}, 
+        {difficulty : "wizard", agents : 6, time: 25, moves: 24, saveMeTime: 12.5, saveMeMoves: 12, color: "purple", selected: false, id: 6}
     ]
 
     const defaultDifficulty = Difficulties[1]
     const [chosenDifficulty, setChosenDifficulty] = useState(defaultDifficulty)
     const [hasSelectedDifficulty,  setHasSelectedDifficulty] = useState(false)
+    
+    const [isEndlessMode, setIsEndlessMode] = useState(false)
 
     const insertDifficulty = (diff) => {
       setChosenDifficulty(diff)
@@ -254,6 +256,7 @@ const GameContextProvider = (props) => {
             GameUiLinks, Difficulties, defaultDifficulty,
             chosenDifficulty, setChosenDifficulty,
             hasSelectedDifficulty,  setHasSelectedDifficulty,
+            isEndlessMode, setIsEndlessMode,
             insertDifficulty,
             maxSelection, setMaxSelection,
 

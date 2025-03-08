@@ -1,22 +1,70 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useGameContext } from "../../../hooks/useGameContext";
 import socketInService from "../../../hooks/connections/socketService";
 import socketGameService from "../../../hooks/connections/gameService";
 import { useNavigate } from "react-router-dom";
+import Switch from "../controls/Switch";
 
 
 const DifficultySelector = ({otherActions}) => {
     const navigate = useNavigate()
 
-    const { Difficulties, insertDifficulty, chosenDifficulty, 
+    const { Difficulties, insertDifficulty, chosenDifficulty,
+            setHasSelectedDifficulty,
             setIsEndlessMode, gameType, gameMode, isMultiplayer,
-            gameProperties, setGameProperties,
-            isHost, isReady,
-            } = useGameContext()
+            gameProperties, setGameProperties, isHost, isReady,
+            deadlineParameter, setDeadlineParameter,
+            hasDeadlineParameter, setHasDeadlineParameter,
+            isTimeCountDownEnabled, setIsTimeCountDownEnabled,
+            isMoveCountDownEnabled, setIsMoveCountDownEnabled,
+            enableDeadlineParameters,  disableDeadlineParameters,
+        } = useGameContext()
 
     const [showEndlessDiffList, setShowEndlessDiffList] = useState(false)
-    const [hasSelectedDiff, setHasSelectedDiff] = useState(false)
+    const [showDeadlineSettings, setShowDeadlineSettings] = useState(false)
 
+    // Properties On Deadline Switchces
+    const switchesAttr = [
+        { title: "", parent: "time", 
+            classes: "deadlineSwitch timeSwitches", 
+            state: isTimeCountDownEnabled, 
+            action: [setIsTimeCountDownEnabled],
+            id: 1},
+        { title: "", parent: "move", 
+            classes: "deadlineSwitch moveSwitches", 
+            state: isMoveCountDownEnabled, 
+            action: [setIsMoveCountDownEnabled],
+            id: 2}
+    ]
+    
+    // Updates the Game Props Based on Deadline Params State
+    const setGamePropBasedOnDeadlineParams = (diff) => {
+        insertDifficulty(diff);
+        setGameProperties({
+            type: gameType, mode: gameMode,
+            multiplayer: isMultiplayer,
+            difficulty: diff
+        })
+    }
+
+    // Track the Deadline Params State and 
+    // Update the Game Props Based on dlps state
+    useEffect(() => {
+        console.log("tcd : ", isTimeCountDownEnabled);
+        console.log("MCd : ", isMoveCountDownEnabled);
+
+        if (!isTimeCountDownEnabled && !isMoveCountDownEnabled) {
+            setGamePropBasedOnDeadlineParams({difficulty : "endless", agents : 2, time: null, moves: null, saveMeTime: null, saveMeMoves: null, color: "var(--themeColor)", id: 1})  
+            setIsEndlessMode(true)
+            setHasDeadlineParameter(false)
+        }else{
+            setGamePropBasedOnDeadlineParams(Difficulties[1])  
+            setIsEndlessMode(false)
+            setHasDeadlineParameter(true) 
+        }
+    }, [isTimeCountDownEnabled, isMoveCountDownEnabled])
+
+    // Helps highlights the selected difficulty
     const styleSelected = (diff) => {
         let styleArray = {}
         if (diff.difficulty !== "endless"){
@@ -70,6 +118,10 @@ const DifficultySelector = ({otherActions}) => {
                             difficulty : diff
                         })
                         setIsEndlessMode(false)
+                        if (!hasDeadlineParameter) {
+                            setShowDeadlineSettings(true)
+                            setHasSelectedDifficulty(false)
+                        }
                     }
                 }}
                 key={diff.id}>  
@@ -100,8 +152,8 @@ const DifficultySelector = ({otherActions}) => {
                         multiplayer: isMultiplayer,
                         difficulty : {difficulty : "endless", agents : diff.agents, time: null, moves: null, saveMeTime: null, saveMeMoves: null, color: "var(--themeColor)", id: 1} 
                     })
-
                     setIsEndlessMode(true)
+                    disableDeadlineParameters()
                 }}
                 key={diff.agents}>{diff.agents}</li>
         )
@@ -114,16 +166,37 @@ const DifficultySelector = ({otherActions}) => {
                     <div className="agentsAvailable">AGENTS</div>
                     <div className="timeAvailable">TIME(s)</div>
                     <div className="movesAvailable">MOVES</div>
+                    <div className="deadlineSettingBtn" onClick={() => setShowDeadlineSettings(!showDeadlineSettings)}>⚙</div>
                 </div>
+
+                {showDeadlineSettings && <div className="chooseDeadline difficulty">
+                    <div className="deadlineSettingsHeader"><h4>Set Countdown</h4></div>
+                    <div className="deadlinesWrapper">
+                        <p>&#128336; Enable Time Count Down</p>
+                        <div className="timeAvailable deadlinesSwitchWrapper timeDeadline">
+                            <Switch switchAttr={switchesAttr[0]}/>
+                        </div>
+                    </div>
+                    <div className="deadlinesWrapper">
+                        <p>&#9823; Enable Move Count Down</p>
+                        <div className="deadlinesSwitchWrapper moveDeadline">
+                            <Switch switchAttr={switchesAttr[1]}/>
+                        </div>
+                    </div>
+                    <div className="saveDeadlineSettingsBtn">
+                        <button className="clkBtn" onClick={() => setShowDeadlineSettings(!showDeadlineSettings)}>Save</button>
+                    </div>
+                </div>}
 
                 <div className="endlessMode difficulty"
                     style={chosenDifficulty.difficulty === "endless" ? {transform: "scale(1.1)", boxShadow: "var(--shadow)", zIndex: 9} : {transform: "scale(1.05)", boxShadow: "none", zIndex: 9}}>                    
                     
                     <div className="difficultyHeader">Endless</div>
                     <div className="agentsAvailable">
-                        <p onClick={() => setShowEndlessDiffList(!showEndlessDiffList)}>
+                        <p className="clkBtn" onClick={() => setShowEndlessDiffList(!showEndlessDiffList)}>
                             Select Agents 
                         </p>
+                        <div className="selectedEndlessAgent">{chosenDifficulty.agents}</div>
                         {showEndlessDiffList && <ul className="endlessDiffWrapper">
                             {endlessDifficultyList}
                         </ul>}

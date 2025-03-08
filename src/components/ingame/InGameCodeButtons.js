@@ -8,6 +8,7 @@ import { useMoveContext } from '../../hooks/useMoveContext'
 const InGameCodeButtons = () => {
     const {
         chosenDifficulty,
+        isTimeCountDownEnabled, isMoveCountDownEnabled, 
         gameType, isInGame, isOutGame,
         isTurn, setIsTurn,
         showPlayBtn, showSaveBtn, showSendBtn,
@@ -28,12 +29,16 @@ const InGameCodeButtons = () => {
     // If Player Is Not Player Turn To Play (isTurn = false)
     const initiateRecievingOpponentAPandCP = () => {
         
-        initiateTimeCount(chosenDifficulty.time ? chosenDifficulty.time : 0)
-        initiateMoveCount(chosenDifficulty.moves ? chosenDifficulty.moves : 0)
-        
+       if (isTimeCountDownEnabled) {
+            initiateTimeCount(chosenDifficulty.time ? chosenDifficulty.time : 0)
+        }
+        if (isMoveCountDownEnabled) {
+            initiateMoveCount(chosenDifficulty.moves ? chosenDifficulty.moves : 0)
+        }
+
         if (!isTurn) {
-            pauseTime()
-            pauseMove()
+            if (isTimeCountDownEnabled) {pauseTime()}
+            if (isMoveCountDownEnabled) {pauseMove()}
         }
 
         recieveOpponentAPandCP()

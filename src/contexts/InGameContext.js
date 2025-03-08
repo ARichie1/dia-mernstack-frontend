@@ -9,6 +9,9 @@ import { useMoveContext } from '../hooks/useMoveContext'
 export const InGameContext = new createContext()
 
 const InGameContextProvider = (props) => {
+    const {chosenDifficulty, setIsTurn, isMultiplayer, 
+        isTimeCountDownEnabled, isMoveCountDownEnabled } = useGameContext()
+    
     const {setAndShowOutcomePopUp} = useOutcomeContext()
 
     const {pauseTime, resumeTime} = useTimeContext()
@@ -21,8 +24,6 @@ const InGameContextProvider = (props) => {
     const [showOpponentCurrentPredictions, setShowOpponentCurrentPredictions] = useState(false)
     const [showOpponentScreen, setShowOpponentScreen] = useState(false)
   
-    const {chosenDifficulty, setIsTurn, isMultiplayer} = useGameContext()
-    
     const [activePrediction, setActivePrediction] = useState([]) 
     const [currentPrediction, setCurrentPrediction] = useState(
         {codes: [], results: [], id: 0}
@@ -137,8 +138,10 @@ const InGameContextProvider = (props) => {
                 setAndShowOutcomePopUp("terminated")
             }
 
-            // Reduce Move
-            reduceMove(1)
+            // Reduce Move By 1
+            if (isMoveCountDownEnabled) {
+                reduceMove(1)
+            }
 
             // Switch Turns
             if (isMultiplayer) {

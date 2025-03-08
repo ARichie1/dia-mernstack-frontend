@@ -10,9 +10,10 @@ import { useOutcomeContext } from "../../../hooks/useOutcomeContext";
 const MoveInGameButton = () => {
     const navigate = useNavigate()
     const {defaultDifficulty, chosenDifficulty,
-        isEndlessMode, setIsEndlessMode,
+        isEndlessMode,
         insertDifficulty, gameMode,
         gameProperties,  switchGameLocation,
+        isTimeCountDownEnabled, isMoveCountDownEnabled, 
         setIsTurn, setIsReadyToPlay} = useGameContext()
 
     const { setCanSaveMe } = useOutcomeContext()
@@ -40,8 +41,12 @@ const MoveInGameButton = () => {
         setIsTurn(true)
 
         if (!isEndlessMode){
-            initiateTimeCount(chosenDifficulty.time ? chosenDifficulty.time : 0)
-            initiateMoveCount(chosenDifficulty.moves ? chosenDifficulty.moves : 0)
+            if (isTimeCountDownEnabled) {
+                initiateTimeCount(chosenDifficulty.time ? chosenDifficulty.time : 0)
+            }
+            if (isMoveCountDownEnabled) {
+                initiateMoveCount(chosenDifficulty.moves ? chosenDifficulty.moves : 0)
+            }
             setCanSaveMe(true)
         }
 

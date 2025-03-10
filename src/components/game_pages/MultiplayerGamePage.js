@@ -15,7 +15,7 @@ const MultiplayerGamePage = () => {
         <div className="multiplayerGamePage wrapper">
             <div className="multiPlayerGameSceneWrapper gameSceneWrapper">
                 <div className="opponentTab playersTab">
-                    <PlayerTab playerInfo={currentOpponent} />
+                    <PlayerTab playerInfo={currentOpponent} isOpponent={true}/>
                 </div>
                 <GameScene />
                 <div className="playerTab playersTab">

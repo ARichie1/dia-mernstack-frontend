@@ -9,7 +9,7 @@ import { useMoveContext } from '../hooks/useMoveContext'
 export const InGameContext = new createContext()
 
 const InGameContextProvider = (props) => {
-    const {chosenDifficulty, setIsTurn, isMultiplayer, 
+    const {chosenDifficulty, isTurn, setIsTurn, isMultiplayer, 
         isTimeCountDownEnabled, isMoveCountDownEnabled } = useGameContext()
     
     const {setAndShowOutcomePopUp} = useOutcomeContext()
@@ -81,10 +81,6 @@ const InGameContextProvider = (props) => {
             // Switch turns so reciever can now play
             setIsTurn(true)
             
-            // Resume counting the deadline params
-            resumeTime()
-            resumeMove()
-
             console.log("I am playing now");
         })
         .catch((err) => {
@@ -148,8 +144,8 @@ const InGameContextProvider = (props) => {
                 setIsTurn(false)
 
                 // Pause counting the deadline params
-                pauseMove()
-                pauseTime()
+                if (isTimeCountDownEnabled) {pauseTime()}
+                if (isMoveCountDownEnabled) {pauseMove()}
 
                 // After few seconds show the opponent screen
                 setTimeout(() => {

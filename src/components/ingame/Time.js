@@ -2,12 +2,11 @@ import React from 'react'
 import { useTimeContext } from '../../hooks/useTimeContext'
 
 const Time = () => {
-
-    const {gameTime} = useTimeContext()
+    const {playerGameTime, opponentGameTime} = useTimeContext()
 
     return (
         <div className="timeWrapper">
-            {gameTime}
+            {playerGameTime}
         </div>
     )
 }

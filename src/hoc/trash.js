@@ -735,7 +735,7 @@ module.exports = playerDefaultValue
 
 
     
-    <div className="timeFuncWrapper">
+<div className="timeFuncWrapper">
     <div className='startTime' 
         onClick={() => initiateMoveCount(8)}>sm</div>
     <div className='startTime' 
@@ -748,4 +748,85 @@ module.exports = playerDefaultValue
         onClick={() => reduceMove(1)}>rdm</div>
     <div className='resumeTime' 
         onClick={() => resetMove()}>rstm</div>
+</div>
+
+
+<div className="timeFuncWrapper">
+    <div className='startTime' 
+        onClick={() => playerMoveService.initiateMoveCount(8)}>|sm|</div>
+
+    <div className='addMove' 
+        onClick={() => {
+
+            let moveAttr = playerMoveService.addMove(5, playerGameMove)
+            setPlayerGameMove(moveAttr.gm)
+        }
+    }>|am|</div>
+
+    <div className='reduceTime' 
+        onClick={() => {
+            let moveAttr = playerMoveService.reduceMove(1, playerGameMove, playerMoveCanReduce)
+            setPlayerGameMove(moveAttr.gm)
+            setPlayerMoveCanReduce(moveAttr.crm)
+        }
+    }>|redm|</div>
+    
+    <div className='pauseTime' 
+    onClick={() => {
+            let moveAttr = playerMoveService.pauseMove(false, playerMoveCanReduce)
+            setPlayerMoveCanReduce(moveAttr.crm)
+        }
+    }>|pm|</div>
+
+    <div className='resumeMove' 
+        onClick={() => {
+            let moveAttr = playerMoveService.resumeMove()
+            setPlayerMoveCanReduce(moveAttr.crm)
+        }    
+    }>|rsm|</div>
+
+    <div className='resetMove' 
+        onClick={() => 
+            playerMoveService.resetMove()
+        
+        }>|restm|</div>
+</div>
+
+<div className="timeFuncWrapper">
+<div className='startTime' 
+    onClick={() => {
+        playerTimeService.initiateMoveCount(5)
+    }
+}>|stm|</div>
+
+<div className='addTime' 
+    onClick={() => {
+        playerTimeService.addTime(5, playerCurrentMinutes, playerCurrentSeconds)
+    }
+}>|am|</div>
+
+<div className='reduceTime' 
+    onClick={() => {
+        playerTimeService.reduceTime(1, playerCurrentMinutes, playerCurrentSeconds)
+    }
+}>|redt|</div>
+
+<div className='pauseTime' 
+    onClick={() => {
+        playerTimeService.pauseTime()
+    }
+}>|pt|</div>
+
+<div className='resumeTime' 
+    onClick={() => {
+        playerTimeService.resumeTime(playerCurrentMinutes, playerCurrentSeconds)
+    }
+}>|resm|</div>
+
+<div className='resetTime' 
+    onClick={() => {
+        playerTimeService.resetTime()
+    }
+}>|rstm|</div>
+
 </div>

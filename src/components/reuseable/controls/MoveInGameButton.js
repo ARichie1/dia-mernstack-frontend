@@ -17,8 +17,10 @@ const MoveInGameButton = () => {
         setIsTurn, setIsReadyToPlay} = useGameContext()
 
     const { setCanSaveMe } = useOutcomeContext()
-    const { initiateTimeCount } = useTimeContext()
-    const { initiateMoveCount } = useMoveContext()
+    const { playerTimeService} = useTimeContext()
+    
+    const { playerMoveService, 
+        setPlayerGameMove, setPlayerMoveCanReduce} = useMoveContext()
         
 
     // SOCKET IO - send game properties to server
@@ -42,10 +44,12 @@ const MoveInGameButton = () => {
 
         if (!isEndlessMode){
             if (isTimeCountDownEnabled) {
-                initiateTimeCount(chosenDifficulty.time ? chosenDifficulty.time : 0)
+                playerTimeService.initiateTimeCount(chosenDifficulty.time ? chosenDifficulty.time : 0)
             }
             if (isMoveCountDownEnabled) {
-                initiateMoveCount(chosenDifficulty.moves ? chosenDifficulty.moves : 0)
+                let moveAttr = playerMoveService.initiateMoveCount(chosenDifficulty.moves ? chosenDifficulty.moves : 0)
+                setPlayerGameMove(moveAttr.gm)
+                setPlayerMoveCanReduce(moveAttr.crm)
             }
             setCanSaveMe(true)
         }

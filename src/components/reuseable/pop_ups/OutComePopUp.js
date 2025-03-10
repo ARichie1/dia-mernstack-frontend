@@ -22,12 +22,16 @@ const OutComePopUp = () => {
     } = useOutcomeContext()
 
     const { addTime } = useTimeContext()
-    const { addMove } = useMoveContext()
+    const { playerMoveService, 
+        playerGameMove, setPlayerGameMove} = useMoveContext()
+            
 
     const activateSaveMe = () => {
         if (canSaveMe) {
             addTime(chosenDifficulty.saveMeTime)
-            addMove(chosenDifficulty.saveMeMoves)
+
+            let moveAttr = playerMoveService.addMove(chosenDifficulty.saveMeMoves, playerGameMove)
+            setPlayerGameMove(moveAttr.gm)
 
             setCanSaveMe(false)
             setShowSaveMeBtn(false)

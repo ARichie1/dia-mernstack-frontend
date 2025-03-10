@@ -14,10 +14,10 @@ const InGameContextProvider = (props) => {
     
     const {setAndShowOutcomePopUp} = useOutcomeContext()
 
-    const {pauseTime, resumeTime} = useTimeContext()
-
-    const { reduceMove, pauseMove, resumeMove} = useMoveContext()
-
+    const {playerTimeService} = useTimeContext()
+    const { playerMoveService, playerGameMove, setPlayerGameMove, 
+        playerMoveCanReduce, setPlayerMoveCanReduce } = useMoveContext()
+            
     // Player Prediction Logic Starts Here
     const [showPlayerPredictions, setShowPlayerPredictions] = useState(false)
     const [showOpponentPredictions, setShowOpponentPredictions] = useState(false)
@@ -136,7 +136,13 @@ const InGameContextProvider = (props) => {
 
             // Reduce Move By 1
             if (isMoveCountDownEnabled) {
-                reduceMove(1)
+                let moveAttr = playerMoveService.reduceMove(1, playerGameMove, playerMoveCanReduce)
+                setPlayerGameMove(moveAttr.gm)
+                setPlayerMoveCanReduce(moveAttr.crm)
+
+                if (moveAttr.outOfMove) {
+                    setAndShowOutcomePopUp("outofmoves")
+                }
             }
 
             // Switch Turns
@@ -144,8 +150,11 @@ const InGameContextProvider = (props) => {
                 setIsTurn(false)
 
                 // Pause counting the deadline params
-                if (isTimeCountDownEnabled) {pauseTime()}
-                if (isMoveCountDownEnabled) {pauseMove()}
+                if (isTimeCountDownEnabled) {playerTimeService.pauseTime()}
+                if (isMoveCountDownEnabled) {
+                    let moveAttr = playerMoveService.pauseMove(false, playerMoveCanReduce)
+                    setPlayerMoveCanReduce(moveAttr.crm)
+                }
 
                 // After few seconds show the opponent screen
                 setTimeout(() => {

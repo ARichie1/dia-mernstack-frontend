@@ -1,20 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useGameContext } from "../../../hooks/useGameContext";
+import { useInGameContext } from "../../../hooks/useInGameContext";
+import { useTimeContext } from "../../../hooks/useTimeContext";
+import { useMoveContext } from "../../../hooks/useMoveContext";
 import Screen from "../../ingame/Screen";
 import PowerUps from "../../ingame/PowerUps";
 import InGameMenu from "../../ingame/InGameMenu";
 import InGameCodeButtons from "../../ingame/InGameCodeButtons";
-import { useGameContext } from "../../../hooks/useGameContext";
-import { useInGameContext } from "../../../hooks/useInGameContext";
-import OutComePopUp from "../pop_ups/OutComePopUp";
-import { useTimeContext } from "../../../hooks/useTimeContext";
 
 const GameScene = () => {
 
-    const {gameType, isMultiplayer, isTurn,
+    const {isMultiplayer, isTurn,
         isTimeCountDownEnabled, isMoveCountDownEnabled
     } = useGameContext()
 
-    const {resumeMove, resumeTime} = useTimeContext()
+    const {playerTimeService} = useTimeContext()
+    const {playerMoveService,setPlayerMoveCanReduce} = useMoveContext()
 
     const {showPlayerPredictions, setShowPlayerPredictions,
         showOpponentPredictions, setShowOpponentPredictions,
@@ -24,8 +25,11 @@ const GameScene = () => {
         const turnCheckerInterval = setInterval(() => {
             if (isTurn) {
                 // Resume counting the deadline params
-                if (isTimeCountDownEnabled) {resumeTime()}
-                if (isMoveCountDownEnabled) {resumeMove()}
+                if (isTimeCountDownEnabled) {playerTimeService.resumeTime()}
+                if (isMoveCountDownEnabled) {
+                    let moveAttr = playerMoveService.resumeMove()
+                    setPlayerMoveCanReduce(moveAttr.crm)
+                }
             }else{
                 clearInterval(turnCheckerInterval)
             }
@@ -41,13 +45,14 @@ const GameScene = () => {
     // INTEGRATED PLAYER NETWORK CONNECTIVITY(NETWORK BARS)
      
     useEffect(() => {
-        if (isTurn) {
-
+        if (isMultiplayer && isTurn) {
             console.log("is turn");
-            
             // Resume counting the deadline params
-            if (isTimeCountDownEnabled) {resumeTime()}
-            if (isMoveCountDownEnabled) {resumeMove()}
+            if (isTimeCountDownEnabled) {playerTimeService.resumeTime()}
+            if (isMoveCountDownEnabled) {
+                let moveAttr = playerMoveService.resumeMove()
+                setPlayerMoveCanReduce(moveAttr.crm)
+            }
         }
     }, [isTurn])
 

@@ -16,8 +16,10 @@ const InGameCodeButtons = () => {
         codeSelection
     }  = useContext(GameContext)
 
-    const { initiateTimeCount, pauseTime} = useTimeContext()
-    const { initiateMoveCount, pauseMove} = useMoveContext()
+    const {playerTimeService} = useTimeContext()
+    const {playerMoveService, setPlayerGameMove, 
+        setPlayerMoveCanReduce} = useMoveContext()
+            
 
     const {activePrediction, 
         recieveOpponentAPandCP, setShowOpponentScreen,
@@ -28,17 +30,19 @@ const InGameCodeButtons = () => {
     // Initiate Recieveing oppenents AP and CP 
     // If Player Is Not Player Turn To Play (isTurn = false)
     const initiateRecievingOpponentAPandCP = () => {
-        
+
        if (isTimeCountDownEnabled) {
-            initiateTimeCount(chosenDifficulty.time ? chosenDifficulty.time : 0)
+            playerTimeService.initiateTimeCount(chosenDifficulty.time ? chosenDifficulty.time : 0)
         }
         if (isMoveCountDownEnabled) {
-            initiateMoveCount(chosenDifficulty.moves ? chosenDifficulty.moves : 0)
+            let moveAttr = playerMoveService.initiateMoveCount(chosenDifficulty.moves ? chosenDifficulty.moves : 0)
+            setPlayerGameMove(moveAttr.gm)
+            setPlayerMoveCanReduce(moveAttr.crm)
         }
 
         if (!isTurn) {
-            if (isTimeCountDownEnabled) {pauseTime()}
-            if (isMoveCountDownEnabled) {pauseMove()}
+            if (isTimeCountDownEnabled) {playerTimeService.pauseTime()}
+            if (isMoveCountDownEnabled) {playerMoveService.pauseMove()}
         }
 
         recieveOpponentAPandCP()

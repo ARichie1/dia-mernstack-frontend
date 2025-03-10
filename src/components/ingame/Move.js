@@ -2,13 +2,11 @@ import React from 'react'
 import { useMoveContext } from '../../hooks/useMoveContext'
 
 const Move = () => {
-
-    const { gameMove, initiateMoveCount, addMove, reduceMove, 
-            pauseMove, resumeMove, resetMove} = useMoveContext()
-
+    const { playerGameMove, opponentGameMove} = useMoveContext()
+    
     return (
         <div className="timeWrapper">
-            {gameMove}
+            {playerGameMove}
         </div>
     )
 }

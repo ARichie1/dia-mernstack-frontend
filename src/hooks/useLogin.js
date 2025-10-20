@@ -13,8 +13,8 @@ export const useLogin = () => {
         setErrors({email: "", password: ""})
         console.log(email, password);
         
-
-        const response = await fetch("http://localhost:4000/api/auth/user/login", {
+        // http://localhost:4000/api/auth/user/login
+        const response = await fetch("https://dia-mernstack-backend.onrender.com/api/auth/user/login", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({email, password})

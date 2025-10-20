@@ -1,0 +1,17 @@
+The key fingerprint is:
+SHA256:ofr2zYYdKdiHRa4BvBUTfVmHOVZiCuYV5uaso4QPMZo richardakinmade3@gmail.com
+The key's randomart image is:
++--[ED25519 256]--+
+|     .  ++o ++++o|
+|      o .+o=oo=o |
+|       +.o..+. . |
+|      ....o+     |
+|      +oS= .o    |
+|     +.+= +.     |
+|    E o .=o.     |
+|     ..+.+o.     |
+|     ...+.o      |
++----[SHA256]-----+
+
+
+Agent pid 1723

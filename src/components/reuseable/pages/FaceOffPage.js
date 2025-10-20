@@ -15,6 +15,8 @@ const FaceOffPage = () => {
     const {defaultImage} = useAppGlobalVariableContext()
 
     const {chosenDifficulty, hasSelectedDifficulty,
+        isTimeCountDownEnabled, isMoveCountDownEnabled,
+        setIsTimeCountDownEnabled, setIsMoveCountDownEnabled,
         gameType, gameMode, isMultiplayer,
         isHost, isJoin, setIsInRoom, isRoomFull,  setIsRoomFull, 
         insertDifficulty, setGameProperties,
@@ -57,10 +59,15 @@ const FaceOffPage = () => {
             setHasModifiedGameProps(true)
 
             // Set the chosen difficulty for the game context
-            insertDifficulty(gameProperties);
+            insertDifficulty(gameProperties.gameDiff);
             setGameProperties({
-                difficulty : gameProperties
+                difficulty : gameProperties.gameDiff
             })
+            console.log("tcd :", gameProperties.gameTimeCntDown);
+            setIsTimeCountDownEnabled(gameProperties.gameTimeCntDown)
+            
+            console.log("mcd :", gameProperties.gameMoveCntDown);
+            setIsMoveCountDownEnabled(gameProperties.gameMoveCntDown)
 
             console.log("face off hostIsReady : ", hostIsReady);
 
@@ -124,8 +131,12 @@ const FaceOffPage = () => {
 
         const socket = socketInService.socket
         socketGameService.saveGameProperties(socket,
-            {type: gameType, mode: gameMode,
-                multiplayer: isMultiplayer, difficulty: chosenDifficulty
+            {
+                type: gameType, mode: gameMode,
+                multiplayer: isMultiplayer, 
+                difficulty: chosenDifficulty,
+                isTimeCountDownEnabled: isTimeCountDownEnabled,
+                isMoveCountDownEnabled: isMoveCountDownEnabled
             },
             true)
     }

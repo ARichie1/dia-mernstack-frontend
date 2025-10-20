@@ -16,8 +16,9 @@ const InGameCodeButtons = () => {
         codeSelection
     }  = useContext(GameContext)
 
-    const {playerTimeService} = useTimeContext()
-    const {playerMoveService, setPlayerGameMove, 
+    const {playerTimeService, opponentTimeService} = useTimeContext()
+    const {playerMoveService, opponentMoveService,
+        setPlayerGameMove, playerMoveCanReduce, 
         setPlayerMoveCanReduce} = useMoveContext()
             
 
@@ -33,16 +34,26 @@ const InGameCodeButtons = () => {
 
        if (isTimeCountDownEnabled) {
             playerTimeService.initiateTimeCount(chosenDifficulty.time ? chosenDifficulty.time : 0)
+            opponentTimeService.initiateTimeCount(chosenDifficulty.time ? chosenDifficulty.time : 0)
         }
+        
         if (isMoveCountDownEnabled) {
-            let moveAttr = playerMoveService.initiateMoveCount(chosenDifficulty.moves ? chosenDifficulty.moves : 0)
-            setPlayerGameMove(moveAttr.gm)
-            setPlayerMoveCanReduce(moveAttr.crm)
+            let playerMoveAttr = playerMoveService.initiateMoveCount(chosenDifficulty.moves ? chosenDifficulty.moves : 0)
+            setPlayerGameMove(playerMoveAttr.gm)
+            setPlayerMoveCanReduce(playerMoveAttr.crm)
+
+            let opponentMoveAttr = opponentMoveService.initiateMoveCount(chosenDifficulty.moves ? chosenDifficulty.moves : 0)
+            setPlayerGameMove(opponentMoveAttr.gm)
+            setPlayerMoveCanReduce(opponentMoveAttr.crm)
         }
 
         if (!isTurn) {
+            // Pause counting the deadline params
             if (isTimeCountDownEnabled) {playerTimeService.pauseTime()}
-            if (isMoveCountDownEnabled) {playerMoveService.pauseMove()}
+            if (isMoveCountDownEnabled) {
+                let moveAttr = playerMoveService.pauseMove(false, playerMoveCanReduce)
+                setPlayerMoveCanReduce(moveAttr.crm)
+            }
         }
 
         recieveOpponentAPandCP()
@@ -65,7 +76,7 @@ const InGameCodeButtons = () => {
                         data-sound={`../sounds/${cb.id}.wav"`} 
                         type="button" key={cb.id}
                         onClick={() => handleCodeButton(cb.value, cb.id)}
-                        style={{opacity : `${cb.active ? "1" : "0.2"}`}}
+                        style={{opacity : `${cb.active ? "1" : "0.5"}`}}
                         disabled={isOutGame ? false : (isTurn ? false : true)}>
                         <img id={`_${cb.id}_`} src={`../../../assets/images/faces/pa_${cb.value}.png`} alt={`pa_${cb.value}.png`}/>
                     </button>) : (

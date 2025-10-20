@@ -19,7 +19,7 @@ const MultiplayerGamePage = () => {
                 </div>
                 <GameScene />
                 <div className="playerTab playersTab">
-                    <PlayerTab playerInfo={userInfo}/>
+                    <PlayerTab playerInfo={userInfo} isOpponent={false}/>
                 </div>
                 {showOutcomePopUp && <OutComePopUp />}
             </div>

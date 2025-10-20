@@ -13,7 +13,7 @@ const SinglePlayerGamePage = () => {
         <div className="singlePlayerGamePage wrapper">
             <div className="singlePlayerGameSceneWrapper gameSceneWrapper">
                 <div className="playerTab playersTab">
-                    <PlayerTab playerInfo={userInfo}/>
+                    <PlayerTab playerInfo={userInfo} isOpponent={false}/>
                 </div>
                 <GameScene />
                 {showOutcomePopUp && <OutComePopUp />}

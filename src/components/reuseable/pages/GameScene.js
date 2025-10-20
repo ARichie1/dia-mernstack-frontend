@@ -44,17 +44,17 @@ const GameScene = () => {
     // IF A PLAYER WINS OR LOSSES OUTCOME (LOSS ON DEADLINES OR ANOTHER PLAYER CRACKS THE CODE)
     // INTEGRATED PLAYER NETWORK CONNECTIVITY(NETWORK BARS)
      
-    useEffect(() => {
-        if (isMultiplayer && isTurn) {
-            console.log("is turn");
-            // Resume counting the deadline params
-            if (isTimeCountDownEnabled) {playerTimeService.resumeTime()}
-            if (isMoveCountDownEnabled) {
-                let moveAttr = playerMoveService.resumeMove()
-                setPlayerMoveCanReduce(moveAttr.crm)
-            }
-        }
-    }, [isTurn])
+    // useEffect(() => {
+    //     if (isMultiplayer && isTurn) {
+    //         console.log("is turn");
+    //         // Resume counting the deadline params
+    //         if (isTimeCountDownEnabled) {playerTimeService.resumeTime()}
+    //         if (isMoveCountDownEnabled) {
+    //             let moveAttr = playerMoveService.resumeMove()
+    //             setPlayerMoveCanReduce(moveAttr.crm)
+    //         }
+    //     }
+    // }, [isTurn])
 
     return (
         <div className="inGame">

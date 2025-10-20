@@ -93,12 +93,6 @@ const GameContextProvider = (props) => {
     const [gameType, setGameType] = useState(null)
     const [isMultiplayer, setIsMultiplayer] = useState(null)
 
-    const [gameProperties, setGameProperties] = useState({
-      type: gameType, mode: gameMode,
-      multiplayer: isMultiplayer,
-      difficulty: chosenDifficulty
-    })
-
     const [deadlineParameter, setDeadlineParameter] = useState("time")
     const [hasDeadlineParameter, setHasDeadlineParameter] = useState(true)
     const [isTimeCountDownEnabled, setIsTimeCountDownEnabled] = useState(true)
@@ -114,6 +108,14 @@ const GameContextProvider = (props) => {
       setIsMoveCountDownEnabled(false)
       setHasDeadlineParameter(false)
     }
+
+    const [gameProperties, setGameProperties] = useState({ 
+      type: gameType, mode: gameMode,
+      multiplayer: isMultiplayer,
+      difficulty: chosenDifficulty,
+      isTimeCountDownEnabled: isTimeCountDownEnabled,
+      isMoveCountDownEnabled: isMoveCountDownEnabled
+    })
     
     const [isHost,  setIsHost] = useState(false)
     const [isJoin,  setIsJoin] = useState(false)

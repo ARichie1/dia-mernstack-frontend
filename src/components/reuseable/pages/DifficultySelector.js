@@ -43,8 +43,14 @@ const DifficultySelector = ({otherActions}) => {
         setGameProperties({
             type: gameType, mode: gameMode,
             multiplayer: isMultiplayer,
-            difficulty: diff
+            difficulty: diff,
+            isTimeCountDownEnabled: isTimeCountDownEnabled,
+            isMoveCountDownEnabled: isMoveCountDownEnabled
         })
+
+         console.log('isTimeCountDownEnabled : ', isTimeCountDownEnabled);
+         console.log('isMoveCountDownEnabled : ', isMoveCountDownEnabled);
+         
     }
 
     // Track the Deadline Params State and 
@@ -85,7 +91,15 @@ const DifficultySelector = ({otherActions}) => {
     // SOCKET IO - send game properties to server
     const sendGameProperties = async () => {
         const socket = socketInService.socket
-        let saved = await socketGameService.saveGameProperties(socket, gameProperties, isReady)
+        let saved = await socketGameService.saveGameProperties(socket, 
+            {
+                type: gameType, mode: gameMode,
+                multiplayer: isMultiplayer,
+                difficulty : chosenDifficulty,               
+                isTimeCountDownEnabled: isTimeCountDownEnabled,
+                isMoveCountDownEnabled: isMoveCountDownEnabled
+            }, 
+            isReady)
         .then( ({saved}) => {
             console.log("saved");
         })
@@ -115,7 +129,9 @@ const DifficultySelector = ({otherActions}) => {
                         setGameProperties({
                             type: gameType, mode: gameMode,
                             multiplayer: isMultiplayer,
-                            difficulty : diff
+                            difficulty : diff,
+                            isTimeCountDownEnabled: isTimeCountDownEnabled,
+                            isMoveCountDownEnabled: isMoveCountDownEnabled
                         })
                         setIsEndlessMode(false)
                         if (!hasDeadlineParameter) {
@@ -150,7 +166,9 @@ const DifficultySelector = ({otherActions}) => {
                     setGameProperties({
                         type: gameType, mode: gameMode,
                         multiplayer: isMultiplayer,
-                        difficulty : {difficulty : "endless", agents : diff.agents, time: null, moves: null, saveMeTime: null, saveMeMoves: null, color: "var(--themeColor)", id: 1} 
+                        difficulty : {difficulty : "endless", agents : diff.agents, time: null, moves: null, saveMeTime: null, saveMeMoves: null, color: "var(--themeColor)", id: 1},               
+                        isTimeCountDownEnabled: isTimeCountDownEnabled,
+                        isMoveCountDownEnabled: isMoveCountDownEnabled
                     })
                     setIsEndlessMode(true)
                     disableDeadlineParameters()
@@ -184,7 +202,18 @@ const DifficultySelector = ({otherActions}) => {
                         </div>
                     </div>
                     <div className="saveDeadlineSettingsBtn">
-                        <button className="clkBtn" onClick={() => setShowDeadlineSettings(!showDeadlineSettings)}>Save</button>
+                        <button className="clkBtn" onClick={() => 
+                            {
+                                setShowDeadlineSettings(!showDeadlineSettings)
+                                setGameProperties({
+                                type: gameType, mode: gameMode,
+                                multiplayer: isMultiplayer,
+                                difficulty : chosenDifficulty,
+                                isTimeCountDownEnabled: isTimeCountDownEnabled,
+                                isMoveCountDownEnabled: isMoveCountDownEnabled
+                                })
+                            }
+                        }>Save</button>
                     </div>
                 </div>}
 

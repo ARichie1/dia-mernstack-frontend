@@ -5,7 +5,7 @@ import Time from './Time'
 import Move from './Move'
 import { useGameContext } from '../../hooks/useGameContext'
 
-const PlayerTab = ({playerInfo}) => {
+const PlayerTab = ({playerInfo, isOpponent}) => {
     const {defaultImage} = useAppGlobalVariableContext()
     const {isTimeCountDownEnabled, isMoveCountDownEnabled} = useGameContext()
 
@@ -23,8 +23,8 @@ const PlayerTab = ({playerInfo}) => {
             }
             <div className="playerName">{playerInfo ? playerInfo.username : "name"}</div>
             <div className="playerCountry">usa</div>
-            {isTimeCountDownEnabled && <div className="playerTime"><Time /></div>}
-            {isMoveCountDownEnabled && <div className="playerMoves"><Move /></div>}
+            {isTimeCountDownEnabled && <div className="playerTime"><Time isOpponent={isOpponent}/></div>}
+            {isMoveCountDownEnabled && <div className="playerMoves"><Move isOpponent={isOpponent}/></div>}
         </div>
     )
 }

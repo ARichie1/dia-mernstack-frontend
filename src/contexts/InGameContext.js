@@ -14,9 +14,17 @@ const InGameContextProvider = (props) => {
     
     const {setAndShowOutcomePopUp} = useOutcomeContext()
 
-    const {playerTimeService} = useTimeContext()
-    const { playerMoveService, playerGameMove, setPlayerGameMove, 
-        playerMoveCanReduce, setPlayerMoveCanReduce } = useMoveContext()
+    const {playerTimeService, opponentTimeService,
+            playerCurrentMinutes, playerCurrentSeconds,
+            opponentCurrentMinutes, opponentCurrentSeconds
+        } = useTimeContext()
+
+    const { playerMoveService, opponentMoveService,
+        playerGameMove, setPlayerGameMove, 
+        playerMoveCanReduce, setPlayerMoveCanReduce,
+        opponentGameMove, setOpponentGameMove, 
+        opponentMoveCanReduce, setOpponentMoveCanReduce
+    } = useMoveContext()
             
     // Player Prediction Logic Starts Here
     const [showPlayerPredictions, setShowPlayerPredictions] = useState(false)
@@ -61,6 +69,33 @@ const InGameContextProvider = (props) => {
                 ...opponentPredictions, 
                 {codes : selection, results, id: Math.random()}
             ])
+
+            // if (isMultiplayer && isTurn) {
+                // Resume counting the deadline params
+                if (isTimeCountDownEnabled) {
+                    playerTimeService.resumeTime(playerCurrentMinutes, playerCurrentSeconds)
+                    opponentTimeService.pauseTime()
+                }
+
+                // Reduce Move By 1
+                // if (isMoveCountDownEnabled) {
+                //     let moveAttr = playerMoveService.reduceMove(1, playerGameMove, playerMoveCanReduce)
+                //     setPlayerGameMove(moveAttr.gm)
+                //     setPlayerMoveCanReduce(moveAttr.crm)
+
+                //     if (moveAttr.outOfMove) {
+                //         setAndShowOutcomePopUp("outofmoves")
+                //     }
+                // }
+
+                if (isMoveCountDownEnabled) {
+                    let playerMoveAttr = playerMoveService.resumeMove()
+                    setPlayerMoveCanReduce(playerMoveAttr.crm)
+
+                    let opponentMoveAttr = opponentMoveService.pauseMove(false, playerMoveCanReduce)
+                    setOpponentMoveCanReduce(opponentMoveAttr.crm)
+                }
+            // }
 
             // Switch To Showing CP ON Opponent Screen Mirror
             setShowOpponentCurrentPredictions(true)
@@ -150,10 +185,16 @@ const InGameContextProvider = (props) => {
                 setIsTurn(false)
 
                 // Pause counting the deadline params
-                if (isTimeCountDownEnabled) {playerTimeService.pauseTime()}
+                if (isTimeCountDownEnabled) {
+                    playerTimeService.pauseTime()
+                    opponentTimeService.resumeTime(opponentCurrentMinutes, opponentCurrentSeconds)
+                }
                 if (isMoveCountDownEnabled) {
-                    let moveAttr = playerMoveService.pauseMove(false, playerMoveCanReduce)
-                    setPlayerMoveCanReduce(moveAttr.crm)
+                    let playerMoveAttr = playerMoveService.pauseMove(false, playerMoveCanReduce)
+                    setPlayerMoveCanReduce(playerMoveAttr.crm)
+
+                    let opponentMoveAttr = opponentMoveService.resumeMove()
+                    setOpponentMoveCanReduce(opponentMoveAttr.crm)
                 }
 
                 // After few seconds show the opponent screen

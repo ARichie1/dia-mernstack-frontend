@@ -11,7 +11,7 @@ const LandingPage = () => {
     return (
     <div className="mainWrapper">
         <div className="hero">
-            <h1>WELCOME <br/> TO <br/> WTF</h1>
+            <h1>WELCOME <br/> TO <br/> D . I . A <br/> DEAD💀 INJURED🤕 ALIVE😁</h1>
             <Link 
                 to={user ? "/game" : "/login"}
                 onClick={() => user ? setUserStates() : null}>

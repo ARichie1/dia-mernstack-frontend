@@ -14,7 +14,7 @@ export const useLogin = () => {
         console.log(email, password);
         
         // http://localhost:4000/api/auth/user/login
-        const response = await fetch("dia-mernstack-backend.vercel.app/api/auth/user/login", {
+        const response = await fetch("https://dia-mernstack-backend.onrender.com/api/auth/user/login", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({email, password})

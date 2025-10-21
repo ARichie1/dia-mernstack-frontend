@@ -14,7 +14,7 @@ export const useUser = () => {
         setIsLoading(true)
         setErrors({email: "", password: ""})
 
-        const response = await fetch("https://dia-mernstack-backend.onrender.com/api/user", {
+        const response = await fetch("dia-mernstack-backend.vercel.app/api/user", {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${user.token}`

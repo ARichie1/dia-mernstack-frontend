@@ -11,12 +11,12 @@ const LandingPage = () => {
     return (
     <div className="mainWrapper">
         <div className="hero">
-            <h1>WELCOME <br/> TO <br/> D . I . A <br/> DEAD💀 INJURED🤕 ALIVE😁</h1>
+            <h1>WELCOME <br/> TO <br/> D . I . A <br/><br/> DEAD💀 INJURED🤕 ALIVE😁</h1>
             <Link 
                 to={user ? "/game" : "/login"}
                 onClick={() => user ? setUserStates() : null}>
                 <CustomButton buttonAttr = {
-                    {title: "Let's Go The Fuvk", classes: "ctaButton"}
+                    {title: "Let's Go", classes: "ctaButton"}
                 }/>
             </Link>
         </div>

@@ -3,7 +3,7 @@ import React, { createContext, useState } from 'react'
 export const AppGlobalVariableContext = new createContext()
 
 const AppGlobalVariableContextProvider = (props) => {
-    const appName = "WTF"
+    const appName = "DIA"
     const assetsFolder = "http://localhost:3000/assets/"
     const imgFolder = "../../../assets/images/faces/"
 

@@ -14,7 +14,7 @@ const GameHeader = ({showNavBlock}) => {
     const navigate = useNavigate()
     const handleNavigate = () => {navigate(-1)}
 
-    const {imgFolder} = useContext(AppGlobalVariableContext)
+    const {appName, imgFolder} = useContext(AppGlobalVariableContext)
     const {profileImage, assets} = useUserContext()
     const {defaultImage} = useAppGlobalVariableContext()
 
@@ -33,7 +33,7 @@ const GameHeader = ({showNavBlock}) => {
         <div className="gameHeader">
             <div className="gameHeaderInner">
                 <h3 className="title topStatValues">
-                    <Link to="/game">WTF</Link>
+                    <Link to="/game">{appName}</Link>
                 </h3>
                 <ul>
                     {assetsList}

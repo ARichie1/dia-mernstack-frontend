@@ -15,8 +15,7 @@ export const useSignUp = () => {
         const response = await fetch("https://dia-mernstack-backend.onrender.com/api/auth/user/signup", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                credentials: "include"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({email, password})
         })
